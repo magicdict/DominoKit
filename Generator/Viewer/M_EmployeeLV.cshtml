@@ -1,0 +1,31 @@
+@model M_EmployeeLV
+@{
+if (Model.Code == ConstHelper.NewRecordCode)
+{
+ViewBag.Title = "创建" + M_EmployeeLV.MvcTitle;
+}
+else
+{
+ViewBag.Title = "编辑" + M_EmployeeLV.MvcTitle;
+}
+Layout = "~/Views/Shared/_DashBoardForMin.cshtml";
+}
+@using (Html.BeginForm())
+{
+@Html.AntiForgeryToken()
+<div class="form-horizontal">
+<div class="form-group">
+<div class="col-md-offset-2 col-md-10">
+ @if (Model.Code == ConstHelper.NewRecordCode)
+{
+<input type="submit" value="创建" class="btn btn-success" style="width:120px"/>
+}
+else
+{
+<input type="submit" value="保存" class="btn btn-success" style="width:120px" />
+}
+@Html.ActionLink("返回列表", "Index", new { }, new { @class = "btn btn-default", style = "width:120px" })
+</div>
+</div>
+</div>
+}

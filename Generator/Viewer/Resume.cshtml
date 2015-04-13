@@ -1,0 +1,71 @@
+@model Resume
+@{
+if (Model.Code == ConstHelper.NewRecordCode)
+{
+ViewBag.Title = "创建" + Resume.MvcTitle;
+}
+else
+{
+ViewBag.Title = "编辑" + Resume.MvcTitle;
+}
+Layout = "~/Views/Shared/_DashBoardForMin.cshtml";
+}
+@using (Html.BeginForm())
+{
+@Html.AntiForgeryToken()
+<div class="form-horizontal">
+<div class="form-group">
+@Html.LabelFor(model => model.TalentCode, new { @class = "control-label col-md-2" })
+<div class="col-md-10">
+@Html.EditorFor(model => model.TalentCode, new { htmlAttributes = new { @class = "form-control" } })
+@Html.ValidationMessageFor(model => model.TalentCode, new { @class = "text-danger" })
+</div>
+</div>
+
+<div class="form-group">
+@Html.LabelFor(model => model.FileName, new { @class = "control-label col-md-2" })
+<div class="col-md-10">
+@Html.EditorFor(model => model.FileName, new { htmlAttributes = new { @class = "form-control" } })
+@Html.ValidationMessageFor(model => model.FileName, new { @class = "text-danger" })
+</div>
+</div>
+
+<div class="form-group">
+@Html.LabelFor(model => model.DBFileName, new { @class = "control-label col-md-2" })
+<div class="col-md-10">
+@Html.EditorFor(model => model.DBFileName, new { htmlAttributes = new { @class = "form-control" } })
+@Html.ValidationMessageFor(model => model.DBFileName, new { @class = "text-danger" })
+</div>
+</div>
+
+<div class="form-group">
+@Html.LabelFor(model => model.ContentType, new { @class = "control-label col-md-2" })
+<div class="col-md-10">
+@Html.EditorFor(model => model.ContentType, new { htmlAttributes = new { @class = "form-control" } })
+@Html.ValidationMessageFor(model => model.ContentType, new { @class = "text-danger" })
+</div>
+</div>
+
+<div class="form-group">
+@Html.LabelFor(model => model.Comment, new { @class = "control-label col-md-2" })
+<div class="col-md-10">
+@Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
+@Html.ValidationMessageFor(model => model.Comment, new { @class = "text-danger" })
+</div>
+</div>
+
+<div class="form-group">
+<div class="col-md-offset-2 col-md-10">
+ @if (Model.Code == ConstHelper.NewRecordCode)
+{
+<input type="submit" value="创建" class="btn btn-success" style="width:120px"/>
+}
+else
+{
+<input type="submit" value="保存" class="btn btn-success" style="width:120px" />
+}
+@Html.ActionLink("返回列表", "Index", new { }, new { @class = "btn btn-default", style = "width:120px" })
+</div>
+</div>
+</div>
+}

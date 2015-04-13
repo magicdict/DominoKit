@@ -1,0 +1,63 @@
+@model FilterSetReport
+@{
+if (Model.Code == ConstHelper.NewRecordCode)
+{
+ViewBag.Title = "创建" + FilterSetReport.MvcTitle;
+}
+else
+{
+ViewBag.Title = "编辑" + FilterSetReport.MvcTitle;
+}
+Layout = "~/Views/Shared/_DashBoardForMin.cshtml";
+}
+@using (Html.BeginForm())
+{
+@Html.AntiForgeryToken()
+<div class="form-horizontal">
+<div class="form-group">
+@Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+<div class="col-md-10">
+@Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+@Html.ValidationMessageFor(model => model.Name, new { @class = "text-danger" })
+</div>
+</div>
+
+<div class="form-group">
+@Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
+<div class="col-md-10">
+@Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+@Html.ValidationMessageFor(model => model.Description, new { @class = "text-danger" })
+</div>
+</div>
+
+<div class="form-group">
+@Html.LabelFor(model => model.FinalStatusList, new { @class = "control-label col-md-2" })
+<div class="col-md-10">
+@Html.EditorFor(model => model.FinalStatusList, new { htmlAttributes = new { @class = "form-control" } })
+@Html.ValidationMessageFor(model => model.FinalStatusList, new { @class = "text-danger" })
+</div>
+</div>
+
+<div class="form-group">
+@Html.LabelFor(model => model.OpenDateDiff, new { @class = "control-label col-md-2" })
+<div class="col-md-10">
+@Html.EditorFor(model => model.OpenDateDiff, new { htmlAttributes = new { @class = "form-control" } })
+@Html.ValidationMessageFor(model => model.OpenDateDiff, new { @class = "text-danger" })
+</div>
+</div>
+
+<div class="form-group">
+<div class="col-md-offset-2 col-md-10">
+ @if (Model.Code == ConstHelper.NewRecordCode)
+{
+<input type="submit" value="创建" class="btn btn-success" style="width:120px"/>
+}
+else
+{
+<input type="submit" value="保存" class="btn btn-success" style="width:120px" />
+}
+@Html.ActionLink("返回列表", "Index", new { }, new { @class = "btn btn-default", style = "width:120px" })
+</div>
+</div>
+</div>
+}

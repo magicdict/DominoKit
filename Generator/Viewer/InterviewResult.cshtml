@@ -1,0 +1,103 @@
+@model InterviewResult
+@{
+if (Model.Code == ConstHelper.NewRecordCode)
+{
+ViewBag.Title = "创建" + InterviewResult.MvcTitle;
+}
+else
+{
+ViewBag.Title = "编辑" + InterviewResult.MvcTitle;
+}
+Layout = "~/Views/Shared/_DashBoardForMin.cshtml";
+}
+@using (Html.BeginForm())
+{
+@Html.AntiForgeryToken()
+<div class="form-horizontal">
+<div class="form-group">
+@Html.LabelFor(model => model.TalentCode, new { @class = "control-label col-md-2" })
+<div class="col-md-10">
+@Html.EditorFor(model => model.TalentCode, new { htmlAttributes = new { @class = "form-control" } })
+@Html.ValidationMessageFor(model => model.TalentCode, new { @class = "text-danger" })
+</div>
+</div>
+
+<div class="form-group">
+@Html.LabelFor(model => model.PositionCode, new { @class = "control-label col-md-2" })
+<div class="col-md-10">
+@Html.EditorFor(model => model.PositionCode, new { htmlAttributes = new { @class = "form-control" } })
+@Html.ValidationMessageFor(model => model.PositionCode, new { @class = "text-danger" })
+</div>
+</div>
+
+<div class="form-group">
+@Html.LabelFor(model => model.HiringTrackCode, new { @class = "control-label col-md-2" })
+<div class="col-md-10">
+@Html.EditorFor(model => model.HiringTrackCode, new { htmlAttributes = new { @class = "form-control" } })
+@Html.ValidationMessageFor(model => model.HiringTrackCode, new { @class = "text-danger" })
+</div>
+</div>
+
+<div class="form-group">
+@Html.LabelFor(model => model.InterviewType, new { @class = "control-label col-md-2" })
+<div class="col-md-10">
+@Html.EditorFor(model => model.InterviewType, new { htmlAttributes = new { @class = "form-control" } })
+@Html.ValidationMessageFor(model => model.InterviewType, new { @class = "text-danger" })
+</div>
+</div>
+
+<div class="form-group">
+@Html.LabelFor(model => model.Process, new { @class = "control-label col-md-2" })
+<div class="col-md-10">
+@Html.EditorFor(model => model.Process, new { htmlAttributes = new { @class = "form-control" } })
+@Html.ValidationMessageFor(model => model.Process, new { @class = "text-danger" })
+</div>
+</div>
+
+<div class="form-group">
+@Html.LabelFor(model => model.Interviewer, new { @class = "control-label col-md-2" })
+<div class="col-md-10">
+@Html.EditorFor(model => model.Interviewer, new { htmlAttributes = new { @class = "form-control" } })
+@Html.ValidationMessageFor(model => model.Interviewer, new { @class = "text-danger" })
+</div>
+</div>
+
+<div class="form-group">
+@Html.LabelFor(model => model.RunDate, new { @class = "control-label col-md-2" })
+<div class="col-md-10">
+@HtmlUIHelper.GetDatePicker("RunDate", Model.RunDate)
+@Html.ValidationMessageFor(model => model.RunDate, new { @class = "text-danger" })
+</div>
+</div>
+
+<div class="form-group">
+@Html.LabelFor(model => model.Result, new { @class = "control-label col-md-2" })
+<div class="col-md-10">
+@Html.EditorFor(model => model.Result, new { htmlAttributes = new { @class = "form-control" } })
+@Html.ValidationMessageFor(model => model.Result, new { @class = "text-danger" })
+</div>
+</div>
+
+<div class="form-group">
+@Html.LabelFor(model => model.Comment, new { @class = "control-label col-md-2" })
+<div class="col-md-10">
+@Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
+@Html.ValidationMessageFor(model => model.Comment, new { @class = "text-danger" })
+</div>
+</div>
+
+<div class="form-group">
+<div class="col-md-offset-2 col-md-10">
+ @if (Model.Code == ConstHelper.NewRecordCode)
+{
+<input type="submit" value="创建" class="btn btn-success" style="width:120px"/>
+}
+else
+{
+<input type="submit" value="保存" class="btn btn-success" style="width:120px" />
+}
+@Html.ActionLink("返回列表", "Index", new { }, new { @class = "btn btn-default", style = "width:120px" })
+</div>
+</div>
+</div>
+}
