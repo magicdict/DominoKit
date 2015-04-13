@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProjectInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Sample</Name>
+  <NameSpace>Sample</NameSpace>
+  <DevLanguage>CSharp</DevLanguage>
+  <DevFramework>C# MVC5.0</DevFramework>
+  <DataBaseType>MySql</DataBaseType>
+  <BasePath>C:\中和软件\Misc</BasePath>
+</ProjectInfo>
