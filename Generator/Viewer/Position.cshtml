@@ -15,10 +15,10 @@ Layout = "~/Views/Shared/_DashBoardForMin.cshtml";
 @Html.AntiForgeryToken()
 <div class="form-horizontal">
 <div class="form-group">
-@Html.LabelFor(model => model.Manager, new { @class = "control-label col-md-2" })
+@Html.LabelFor(model => model.DepartmentCode, new { @class = "control-label col-md-2" })
 <div class="col-md-10">
-@(HtmlUIHelper.GetSingleValueUI<M_EmployeeDepartment>("Manager", ViewBag.EmployeeDepartmentList, Model.Manager))
-@Html.ValidationMessageFor(model => model.Manager, new { @class = "text-danger" })
+@(HtmlUIHelper.GetSingleValueUI<M_EmployeeDepartment>("DepartmentCode", ViewBag.EmployeeDepartmentList, Model.DepartmentCode))
+@Html.ValidationMessageFor(model => model.DepartmentCode, new { @class = "text-danger" })
 </div>
 </div>
 
@@ -31,6 +31,14 @@ Layout = "~/Views/Shared/_DashBoardForMin.cshtml";
 </div>
 
 <div class="form-group">
+@Html.LabelFor(model => model.EmploymentType, new { @class = "control-label col-md-2" })
+<div class="col-md-10">
+@(HtmlUIHelper.GetSingleValueUI<M_EmploymentType>("EmploymentType", ViewBag.EmploymentTypeList, Model.EmploymentType))
+@Html.ValidationMessageFor(model => model.EmploymentType, new { @class = "text-danger" })
+</div>
+</div>
+
+<div class="form-group">
 @Html.LabelFor(model => model.Target, new { @class = "control-label col-md-2" })
 <div class="col-md-10">
 @Html.EditorFor(model => model.Target, new { htmlAttributes = new { @class = "form-control" } })
@@ -39,58 +47,18 @@ Layout = "~/Views/Shared/_DashBoardForMin.cshtml";
 </div>
 
 <div class="form-group">
-@Html.LabelFor(model => model.OpenDate, new { @class = "control-label col-md-2" })
+@Html.LabelFor(model => model.Location, new { @class = "control-label col-md-2" })
 <div class="col-md-10">
-@HtmlUIHelper.GetDatePicker("OpenDate", Model.OpenDate)
-@Html.ValidationMessageFor(model => model.OpenDate, new { @class = "text-danger" })
+@(HtmlUIHelper.GetSingleValueUI<M_WorkSite>("Location", ViewBag.WorkSiteList, Model.Location))
+@Html.ValidationMessageFor(model => model.Location, new { @class = "text-danger" })
 </div>
 </div>
 
 <div class="form-group">
-@Html.LabelFor(model => model.WWApprovedDate, new { @class = "control-label col-md-2" })
+@Html.LabelFor(model => model.JodDetails, new { @class = "control-label col-md-2" })
 <div class="col-md-10">
-@HtmlUIHelper.GetDatePicker("WWApprovedDate", Model.WWApprovedDate)
-@Html.ValidationMessageFor(model => model.WWApprovedDate, new { @class = "text-danger" })
-</div>
-</div>
-
-<div class="form-group">
-@Html.LabelFor(model => model.EmployeeLVList, new { @class = "control-label col-md-2" })
-<div class="col-md-10">
-@(HtmlUIHelper.GetMultiValueUI<M_EmployeeLevel>("EmployeeLVList", ViewBag.EmployeeLevelList, Model.EmployeeLVList))
-@Html.ValidationMessageFor(model => model.EmployeeLVList, new { @class = "text-danger" })
-</div>
-</div>
-
-<div class="form-group">
-@Html.LabelFor(model => model.InterviewList, new { @class = "control-label col-md-2" })
-<div class="col-md-10">
-@(HtmlUIHelper.GetMultiValueUI<M_InterviewType>("InterviewList", ViewBag.InterviewTypeList, Model.InterviewList))
-@Html.ValidationMessageFor(model => model.InterviewList, new { @class = "text-danger" })
-</div>
-</div>
-
-<div class="form-group">
-@Html.LabelFor(model => model.FinalStatus, new { @class = "control-label col-md-2" })
-<div class="col-md-10">
-@(HtmlUIHelper.GetSingleValueUI<M_PositionStatus>("FinalStatus", ViewBag.PositionStatusList, Model.FinalStatus))
-@Html.ValidationMessageFor(model => model.FinalStatus, new { @class = "text-danger" })
-</div>
-</div>
-
-<div class="form-group">
-@Html.LabelFor(model => model.Comment, new { @class = "control-label col-md-2" })
-<div class="col-md-10">
-@Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
-@Html.ValidationMessageFor(model => model.Comment, new { @class = "text-danger" })
-</div>
-</div>
-
-<div class="form-group">
-@Html.LabelFor(model => model.Priority, new { @class = "control-label col-md-2" })
-<div class="col-md-10">
-@Html.EditorFor(model => model.Priority, new { htmlAttributes = new { @class = "form-control" } })
-@Html.ValidationMessageFor(model => model.Priority, new { @class = "text-danger" })
+@Html.EditorFor(model => model.JodDetails, new { htmlAttributes = new { @class = "form-control" } })
+@Html.ValidationMessageFor(model => model.JodDetails, new { @class = "text-danger" })
 </div>
 </div>
 
@@ -111,26 +79,58 @@ Layout = "~/Views/Shared/_DashBoardForMin.cshtml";
 </div>
 
 <div class="form-group">
-@Html.LabelFor(model => model.EmploymentType, new { @class = "control-label col-md-2" })
+@Html.LabelFor(model => model.OpenDate, new { @class = "control-label col-md-2" })
 <div class="col-md-10">
-@(HtmlUIHelper.GetSingleValueUI<M_EmploymentType>("EmploymentType", ViewBag.EmploymentTypeList, Model.EmploymentType))
-@Html.ValidationMessageFor(model => model.EmploymentType, new { @class = "text-danger" })
+@HtmlUIHelper.GetDatePicker("OpenDate", Model.OpenDate)
+@Html.ValidationMessageFor(model => model.OpenDate, new { @class = "text-danger" })
 </div>
 </div>
 
 <div class="form-group">
-@Html.LabelFor(model => model.Location, new { @class = "control-label col-md-2" })
+@Html.LabelFor(model => model.WWApprovedDate, new { @class = "control-label col-md-2" })
 <div class="col-md-10">
-@(HtmlUIHelper.GetSingleValueUI<M_WorkSite>("Location", ViewBag.WorkSiteList, Model.Location))
-@Html.ValidationMessageFor(model => model.Location, new { @class = "text-danger" })
+@HtmlUIHelper.GetDatePicker("WWApprovedDate", Model.WWApprovedDate)
+@Html.ValidationMessageFor(model => model.WWApprovedDate, new { @class = "text-danger" })
 </div>
 </div>
 
 <div class="form-group">
-@Html.LabelFor(model => model.JodDetails, new { @class = "control-label col-md-2" })
+@Html.LabelFor(model => model.EmployeeLevelList, new { @class = "control-label col-md-2" })
 <div class="col-md-10">
-@Html.EditorFor(model => model.JodDetails, new { htmlAttributes = new { @class = "form-control" } })
-@Html.ValidationMessageFor(model => model.JodDetails, new { @class = "text-danger" })
+@(HtmlUIHelper.GetMultiValueUI<M_EmployeeLevel>("EmployeeLevelList", ViewBag.EmployeeLevelList, Model.EmployeeLevelList))
+@Html.ValidationMessageFor(model => model.EmployeeLevelList, new { @class = "text-danger" })
+</div>
+</div>
+
+<div class="form-group">
+@Html.LabelFor(model => model.InterviewList, new { @class = "control-label col-md-2" })
+<div class="col-md-10">
+@(HtmlUIHelper.GetMultiValueUI<M_InterviewType>("InterviewList", ViewBag.InterviewTypeList, Model.InterviewList))
+@Html.ValidationMessageFor(model => model.InterviewList, new { @class = "text-danger" })
+</div>
+</div>
+
+<div class="form-group">
+@Html.LabelFor(model => model.Priority, new { @class = "control-label col-md-2" })
+<div class="col-md-10">
+@Html.EditorFor(model => model.Priority, new { htmlAttributes = new { @class = "form-control" } })
+@Html.ValidationMessageFor(model => model.Priority, new { @class = "text-danger" })
+</div>
+</div>
+
+<div class="form-group">
+@Html.LabelFor(model => model.FinalStatus, new { @class = "control-label col-md-2" })
+<div class="col-md-10">
+@(HtmlUIHelper.GetSingleValueUI<M_PositionStatus>("FinalStatus", ViewBag.PositionStatusList, Model.FinalStatus))
+@Html.ValidationMessageFor(model => model.FinalStatus, new { @class = "text-danger" })
+</div>
+</div>
+
+<div class="form-group">
+@Html.LabelFor(model => model.Comment, new { @class = "control-label col-md-2" })
+<div class="col-md-10">
+@Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
+@Html.ValidationMessageFor(model => model.Comment, new { @class = "text-danger" })
 </div>
 </div>
 

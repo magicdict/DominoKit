@@ -39,6 +39,16 @@ namespace DevKit.MVCTool
         private const string FilterMultiMasterTableWithGrade = "[FilterItem(MetaType = typeof(@MasterName@), MetaStructType = FilterItemAttribute.StructType.MultiMasterTableWithGrade)]";
 
         /// <summary>
+        /// Single MasterTable Catalog的过滤器
+        /// </summary>
+        private const string FilterSingleCatalogMasterTable = "[FilterItem(MetaType = typeof(@MasterName@), MetaStructType = FilterItemAttribute.StructType.SingleCatalogMasterTable)]";
+        /// <summary>
+        /// Multi MasterTable Catalog 的过滤器
+        /// </summary>
+        private const string FilterMulitCatalogMasterTable = "[FilterItem(MetaType = typeof(@MasterName@), MetaStructType = FilterItemAttribute.StructType.MultiCatalogMasterTable)]";
+
+
+        /// <summary>
         /// Multi Enum 的过滤器
         /// </summary>
         private const string FilterMultiEnum = "[FilterItem(MetaType = typeof(@MasterName@), MetaStructType = FilterItemAttribute.StructType.MultiEnum)]";
@@ -62,9 +72,9 @@ namespace DevKit.MVCTool
         private const string UsingMongo = "using MongoDB.Bson.Serialization.Attributes;";
         private const string UsingList = "using System.Collections.Generic;";
         private const string UsingMvc = "using System.Web.Mvc;";
-        private const string UsingInfra = "using InfraStructure.DataBase;";
+        private const string UsingInfraDataBase = "using InfraStructure.DataBase;";
         private const string UsingFilterSet = "using InfraStructure.FilterSet;";
-
+        private const string UsingInfra = "using InfraStructure;";
         #endregion
 
         /// <summary>
@@ -84,7 +94,7 @@ namespace DevKit.MVCTool
             bool NeedMvc = false;
             // 缩进
             int indent;
-            StreamWriter codeWriter = new StreamWriter(filename, false);
+            StreamWriter codeWriter = new StreamWriter(filename, false, Encoding.Unicode);
             StringBuilder code = new StringBuilder();
             //缩进用空格
             char space = " ".ToCharArray()[0];
@@ -112,12 +122,17 @@ namespace DevKit.MVCTool
             {
                 SuperClass = model.SuperClass;
             }
-            isOrgClass = SuperClass == "EntityBase" || SuperClass == "MasterTable" || SuperClass == "CompanyTable";
+            isOrgClass = SuperClass == "EntityBase" ||
+                         SuperClass == "Organization" ||
+                         SuperClass == "MasterTable" ||
+                         SuperClass == "StatusMasterTable" ||
+                         SuperClass == "CatalogMasterTable";
 
             //EntityBase ORM用
             code.AppendLine(new string(space, indent) + "/// <summary>");
             code.AppendLine(new string(space, indent) + "/// " + model.Description);
             code.AppendLine(new string(space, indent) + "/// </summary>");
+            code.AppendLine(new string(space, indent) + "[DisplayName(\"" + model.Description + "\")]");
             code.AppendLine(new string(space, indent) + "public partial class " + model.ModelName + " : " + SuperClass);
             code.AppendLine(new string(space, indent) + "{");
             indent += 4;
@@ -222,7 +237,7 @@ namespace DevKit.MVCTool
                 }
                 //类型
                 string strType = string.Empty;
-                
+
                 //特性设定
                 switch (item.MetaType)
                 {
@@ -262,28 +277,40 @@ namespace DevKit.MVCTool
                         {
                             if (item.IsList)
                             {
-                                code.AppendLine(new string(space, indent) + FilterMultiMasterTable.Replace("@MasterName@", strType));
+                                code.AppendLine(new string(space, indent) + FilterMultiMasterTable.Replace("@MasterName@", item.EnumOrMasterType));
 
                             }
                             else
                             {
-                                code.AppendLine(new string(space, indent) + FilterSingleMasterTable.Replace("@MasterName@", strType));
+                                code.AppendLine(new string(space, indent) + FilterSingleMasterTable.Replace("@MasterName@", item.EnumOrMasterType));
                             }
                         }
                         break;
                     case "辅助评价表":
-                        strType = Common.CSharp.MetaData["字符串"];
+                        strType = "ItemWithGrade";
                         if (!String.IsNullOrEmpty(item.EnumOrMasterType))
                         {
                             if (item.IsList)
                             {
-                                code.AppendLine(new string(space, indent) + FilterMultiMasterTableWithGrade.Replace("@MasterName@", strType));
+                                code.AppendLine(new string(space, indent) + FilterMultiMasterTableWithGrade.Replace("@MasterName@", item.EnumOrMasterType));
 
                             }
                             else
                             {
-                                code.AppendLine(new string(space, indent) + FilterSingleMasterTableWithGrade.Replace("@MasterName@", strType));
+                                code.AppendLine(new string(space, indent) + FilterSingleMasterTableWithGrade.Replace("@MasterName@", item.EnumOrMasterType));
                             }
+                        }
+                        break;
+                    case "目录表":
+                        strType = Common.CSharp.MetaData["字符串"];
+                        if (item.IsList)
+                        {
+                            code.AppendLine(new string(space, indent) + FilterMulitCatalogMasterTable.Replace("@MasterName@", item.EnumOrMasterType));
+
+                        }
+                        else
+                        {
+                            code.AppendLine(new string(space, indent) + FilterSingleCatalogMasterTable.Replace("@MasterName@", item.EnumOrMasterType));
                         }
                         break;
                     default:
@@ -367,18 +394,18 @@ namespace DevKit.MVCTool
             code.AppendLine(new string(space, indent) + "}");
             indent -= 4;
             code.AppendLine("}");
-            //*定制
+
             codeWriter.WriteLine(UsingInfra);
-            //常规
+            codeWriter.WriteLine(UsingFilterSet);
+            //codeWriter.WriteLine(UsingInfraDataBase);
+            if (NeedMongo) codeWriter.WriteLine(UsingMongo);
             codeWriter.WriteLine(UsingSystem);
+            if (NeedList) codeWriter.WriteLine(UsingList);
             if (NeedComponentModel) codeWriter.WriteLine(UsingComponentModel);
             if (NeedDataAnnotations) codeWriter.WriteLine(UsingDataAnnotations);
             if (NeedWebMvc) codeWriter.WriteLine(UsingWebMvc);
-            if (NeedMongo) codeWriter.WriteLine(UsingMongo);
-            if (NeedList) codeWriter.WriteLine(UsingList);
             if (NeedMvc) codeWriter.WriteLine(UsingMvc);
-            //FilterSet
-            codeWriter.WriteLine(UsingFilterSet);
+
             codeWriter.Write(code);
             codeWriter.Close();
         }
@@ -407,6 +434,9 @@ namespace DevKit.MVCTool
                     break;
                 case "时间":
                     strDataType = "[DataType(DataType.Time)]";
+                    break;
+                case "手机":
+                    strDataType = "[DataType(DataType.PhoneNumber)]";
                     break;
                 default:
                     break;

@@ -15,10 +15,18 @@ Layout = "~/Views/Shared/_DashBoardForMin.cshtml";
 @Html.AntiForgeryToken()
 <div class="form-horizontal">
 <div class="form-group">
-@Html.LabelFor(model => model.ID, new { @class = "control-label col-md-2" })
+@Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
 <div class="col-md-10">
-@Html.EditorFor(model => model.ID, new { htmlAttributes = new { @class = "form-control" } })
-@Html.ValidationMessageFor(model => model.ID, new { @class = "text-danger" })
+@Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+@Html.ValidationMessageFor(model => model.Name, new { @class = "text-danger" })
+</div>
+</div>
+
+<div class="form-group">
+@Html.LabelFor(model => model.EnglishName, new { @class = "control-label col-md-2" })
+<div class="col-md-10">
+@Html.EditorFor(model => model.EnglishName, new { htmlAttributes = new { @class = "form-control" } })
+@Html.ValidationMessageFor(model => model.EnglishName, new { @class = "text-danger" })
 </div>
 </div>
 
@@ -27,6 +35,22 @@ Layout = "~/Views/Shared/_DashBoardForMin.cshtml";
 <div class="col-md-10">
 @HtmlUIHelper.GetDatePicker("BirthDay", Model.BirthDay)
 @Html.ValidationMessageFor(model => model.BirthDay, new { @class = "text-danger" })
+</div>
+</div>
+
+<div class="form-group">
+@Html.LabelFor(model => model.BornIn, new { @class = "control-label col-md-2" })
+<div class="col-md-10">
+@Html.EditorFor(model => model.BornIn, new { htmlAttributes = new { @class = "form-control" } })
+@Html.ValidationMessageFor(model => model.BornIn, new { @class = "text-danger" })
+</div>
+</div>
+
+<div class="form-group">
+@Html.LabelFor(model => model.Location, new { @class = "control-label col-md-2" })
+<div class="col-md-10">
+@Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control" } })
+@Html.ValidationMessageFor(model => model.Location, new { @class = "text-danger" })
 </div>
 </div>
 
@@ -63,6 +87,62 @@ Layout = "~/Views/Shared/_DashBoardForMin.cshtml";
 </div>
 
 <div class="form-group">
+@Html.LabelFor(model => model.Academic, new { @class = "control-label col-md-2" })
+<div class="col-md-10">
+@Html.EditorFor(model => model.Academic, new { htmlAttributes = new { @class = "form-control" } })
+@Html.ValidationMessageFor(model => model.Academic, new { @class = "text-danger" })
+</div>
+</div>
+
+<div class="form-group">
+@Html.LabelFor(model => model.OverseaWork, new { @class = "control-label col-md-2" })
+<div class="col-md-10">
+@HtmlUIHelper.GetMVCCheckBox("","OverseaWork", Model.OverseaWork)
+@Html.ValidationMessageFor(model => model.OverseaWork, new { @class = "text-danger" })
+</div>
+</div>
+
+<div class="form-group">
+@Html.LabelFor(model => model.OverseaEdu, new { @class = "control-label col-md-2" })
+<div class="col-md-10">
+@HtmlUIHelper.GetMVCCheckBox("","OverseaEdu", Model.OverseaEdu)
+@Html.ValidationMessageFor(model => model.OverseaEdu, new { @class = "text-danger" })
+</div>
+</div>
+
+<div class="form-group">
+@Html.LabelFor(model => model.IndustryBackgroundList, new { @class = "control-label col-md-2" })
+<div class="col-md-10">
+@(HtmlUIHelper.GetMultiValueUI<M_IndustryBackground>("IndustryBackgroundList", ViewBag.IndustryBackgroundList, Model.IndustryBackgroundList))
+@Html.ValidationMessageFor(model => model.IndustryBackgroundList, new { @class = "text-danger" })
+</div>
+</div>
+
+<div class="form-group">
+@Html.LabelFor(model => model.PreEmp, new { @class = "control-label col-md-2" })
+<div class="col-md-10">
+@Html.EditorFor(model => model.PreEmp, new { htmlAttributes = new { @class = "form-control" } })
+@Html.ValidationMessageFor(model => model.PreEmp, new { @class = "text-danger" })
+</div>
+</div>
+
+<div class="form-group">
+@Html.LabelFor(model => model.PerInd, new { @class = "control-label col-md-2" })
+<div class="col-md-10">
+@(HtmlUIHelper.GetSingleValueUI<M_IndustryBackground>("PerInd", ViewBag.IndustryBackgroundList, Model.PerInd))
+@Html.ValidationMessageFor(model => model.PerInd, new { @class = "text-danger" })
+</div>
+</div>
+
+<div class="form-group">
+@Html.LabelFor(model => model.Channel, new { @class = "control-label col-md-2" })
+<div class="col-md-10">
+@(HtmlUIHelper.GetSingleValueUI<M_Channel>("Channel", ViewBag.ChannelList, Model.Channel))
+@Html.ValidationMessageFor(model => model.Channel, new { @class = "text-danger" })
+</div>
+</div>
+
+<div class="form-group">
 @Html.LabelFor(model => model.LanguageList, new { @class = "control-label col-md-2" })
 <div class="col-md-10">
 @HtmlUIHelper.GetMultiValueWithGradeUI("LanguageList", ViewBag.LanguageList, Model.LanguageList)
@@ -79,26 +159,18 @@ Layout = "~/Views/Shared/_DashBoardForMin.cshtml";
 </div>
 
 <div class="form-group">
-@Html.LabelFor(model => model.MarketBGList, new { @class = "control-label col-md-2" })
+@Html.LabelFor(model => model.TalentRank, new { @class = "control-label col-md-2" })
 <div class="col-md-10">
-@(HtmlUIHelper.GetMultiValueUI<M_MarketBG>("MarketBGList", ViewBag.MarketBGList, Model.MarketBGList))
-@Html.ValidationMessageFor(model => model.MarketBGList, new { @class = "text-danger" })
+@Html.EditorFor(model => model.TalentRank, new { htmlAttributes = new { @class = "form-control" } })
+@Html.ValidationMessageFor(model => model.TalentRank, new { @class = "text-danger" })
 </div>
 </div>
 
 <div class="form-group">
-@Html.LabelFor(model => model.TechniqueBG, new { @class = "control-label col-md-2" })
+@Html.LabelFor(model => model.Evaluate, new { @class = "control-label col-md-2" })
 <div class="col-md-10">
-@(HtmlUIHelper.GetSingleValueUI<M_TechniqueBG>("TechniqueBG", ViewBag.TechniqueBGList, Model.TechniqueBG))
-@Html.ValidationMessageFor(model => model.TechniqueBG, new { @class = "text-danger" })
-</div>
-</div>
-
-<div class="form-group">
-@Html.LabelFor(model => model.Channel, new { @class = "control-label col-md-2" })
-<div class="col-md-10">
-@Html.EditorFor(model => model.Channel, new { htmlAttributes = new { @class = "form-control" } })
-@Html.ValidationMessageFor(model => model.Channel, new { @class = "text-danger" })
+@Html.EditorFor(model => model.Evaluate, new { htmlAttributes = new { @class = "form-control" } })
+@Html.ValidationMessageFor(model => model.Evaluate, new { @class = "text-danger" })
 </div>
 </div>
 
@@ -107,22 +179,6 @@ Layout = "~/Views/Shared/_DashBoardForMin.cshtml";
 <div class="col-md-10">
 @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
 @Html.ValidationMessageFor(model => model.Comment, new { @class = "text-danger" })
-</div>
-</div>
-
-<div class="form-group">
-@Html.LabelFor(model => model.SearchKey, new { @class = "control-label col-md-2" })
-<div class="col-md-10">
-@Html.EditorFor(model => model.SearchKey, new { htmlAttributes = new { @class = "form-control" } })
-@Html.ValidationMessageFor(model => model.SearchKey, new { @class = "text-danger" })
-</div>
-</div>
-
-<div class="form-group">
-@Html.LabelFor(model => model.AccessRight, new { @class = "control-label col-md-2" })
-<div class="col-md-10">
-@HtmlUIHelper.GetMVCCheckBox("","AccessRight", Model.AccessRight)
-@Html.ValidationMessageFor(model => model.AccessRight, new { @class = "text-danger" })
 </div>
 </div>
 
