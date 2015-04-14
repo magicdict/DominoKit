@@ -17,10 +17,12 @@ namespace DevKit.MVCTool
         /// 日期格式
         /// </summary>
         private const string DateFormat = "[DisplayFormat(DataFormatString = \"{0:yyyy-MM-dd}\",ApplyFormatInEditMode= true)]";
+        
         /// <summary>
         /// 日期型 的过滤器
         /// </summary>
         private const string FilterDateTime = "[FilterItem(MetaStructType = FilterItemAttribute.StructType.Datetime)]";
+        
         /// <summary>
         /// Multi Master 的过滤器
         /// </summary>
@@ -29,6 +31,7 @@ namespace DevKit.MVCTool
         /// Single Master 的过滤器
         /// </summary>
         private const string FilterSingleMasterTable = "[FilterItem(MetaType = typeof(@MasterName@), MetaStructType = FilterItemAttribute.StructType.SingleMasterTable)]";
+
         /// <summary>
         /// Single MasterTable WithGrade的过滤器
         /// </summary>
@@ -47,7 +50,6 @@ namespace DevKit.MVCTool
         /// </summary>
         private const string FilterMulitCatalogMasterTable = "[FilterItem(MetaType = typeof(@MasterName@), MetaStructType = FilterItemAttribute.StructType.MultiCatalogMasterTable)]";
 
-
         /// <summary>
         /// Multi Enum 的过滤器
         /// </summary>
@@ -56,8 +58,9 @@ namespace DevKit.MVCTool
         /// Single Enum 的过滤器
         /// </summary>
         private const string FilterSingleEnum = "[FilterItem(MetaType = typeof(@MasterName@), MetaStructType = FilterItemAttribute.StructType.SingleEnum)]";
+        
         /// <summary>
-        /// Boolean
+        /// Boolean 的过滤器
         /// </summary>
         private const string FilterBoolean = "[FilterItem(MetaStructType = FilterItemAttribute.StructType.Boolean)]";
 
@@ -70,8 +73,7 @@ namespace DevKit.MVCTool
         private const string UsingDataAnnotations = "using System.ComponentModel.DataAnnotations;";
         private const string UsingWebMvc = "using System.Web.Mvc;";
         private const string UsingMongo = "using MongoDB.Bson.Serialization.Attributes;";
-        private const string UsingList = "using System.Collections.Generic;";
-        private const string UsingMvc = "using System.Web.Mvc;";
+        private const string UsingCollections = "using System.Collections.Generic;";
         private const string UsingInfraDataBase = "using InfraStructure.DataBase;";
         private const string UsingFilterSet = "using InfraStructure.FilterSet;";
         private const string UsingInfra = "using InfraStructure;";
@@ -91,20 +93,13 @@ namespace DevKit.MVCTool
             bool NeedWebMvc = false;
             bool NeedMongo = false;
             bool NeedList = false;
-            bool NeedMvc = false;
             // 缩进
-            int indent;
+            int indent = 0;
             StreamWriter codeWriter = new StreamWriter(filename, false, Encoding.Unicode);
             StringBuilder code = new StringBuilder();
             //缩进用空格
             char space = " ".ToCharArray()[0];
-            //Init
-            indent = 0;
-            NeedComponentModel = false;
-            NeedDataAnnotations = false;
-            NeedWebMvc = false;
 
-            code.AppendLine(String.Empty);
             if (String.IsNullOrEmpty(model.NameSpace))
             {
                 code.AppendLine("namespace " + proinfo.NameSpace);
@@ -150,7 +145,7 @@ namespace DevKit.MVCTool
                 {
                     //Hidden
                     code.AppendLine(new string(space, indent) + "[HiddenInput]");
-                    NeedMvc = true;
+                    NeedWebMvc = true;
                 }
 
                 if (!string.IsNullOrEmpty(item.DisplayName))
@@ -394,18 +389,17 @@ namespace DevKit.MVCTool
             code.AppendLine(new string(space, indent) + "}");
             indent -= 4;
             code.AppendLine("}");
-
+            //Using List
             codeWriter.WriteLine(UsingInfra);
             codeWriter.WriteLine(UsingFilterSet);
-            //codeWriter.WriteLine(UsingInfraDataBase);
             if (NeedMongo) codeWriter.WriteLine(UsingMongo);
             codeWriter.WriteLine(UsingSystem);
-            if (NeedList) codeWriter.WriteLine(UsingList);
+            if (NeedList) codeWriter.WriteLine(UsingCollections);
             if (NeedComponentModel) codeWriter.WriteLine(UsingComponentModel);
             if (NeedDataAnnotations) codeWriter.WriteLine(UsingDataAnnotations);
             if (NeedWebMvc) codeWriter.WriteLine(UsingWebMvc);
-            if (NeedMvc) codeWriter.WriteLine(UsingMvc);
-
+            codeWriter.WriteLine(String.Empty);
+            //Entity Code
             codeWriter.Write(code);
             codeWriter.Close();
         }

@@ -30,6 +30,11 @@ namespace DevKit.MVCTool
             excelObj.Quit();
             excelObj = null;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ExcelSheet"></param>
+        /// <param name="SourceCodefilename"></param>
         private static void GenerateEnum(dynamic ExcelSheet, string SourceCodefilename)
         {
             StreamWriter codeWriter = new StreamWriter(SourceCodefilename, false);

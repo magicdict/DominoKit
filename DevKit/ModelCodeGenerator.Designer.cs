@@ -40,6 +40,7 @@
             this.txtModelSourcePath = new System.Windows.Forms.TextBox();
             this.btnGernerateCode = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radMsSql = new System.Windows.Forms.RadioButton();
             this.radOracle = new System.Windows.Forms.RadioButton();
             this.radMySql = new System.Windows.Forms.RadioButton();
@@ -50,7 +51,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.btnPageSourcePath = new System.Windows.Forms.Button();
-            this.txtPageSourcePath = new System.Windows.Forms.TextBox();
+            this.txtViewSourcePath = new System.Windows.Forms.TextBox();
+            this.chkCreateModel = new System.Windows.Forms.CheckBox();
+            this.chkCreateView = new System.Windows.Forms.CheckBox();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -60,9 +63,9 @@
             this.groupBox3.Controls.Add(this.radJavaStruts2);
             this.groupBox3.Controls.Add(this.radJavaSpring);
             this.groupBox3.Controls.Add(this.radCSharpMVC5);
-            this.groupBox3.Location = new System.Drawing.Point(25, 12);
+            this.groupBox3.Location = new System.Drawing.Point(118, 21);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(376, 46);
+            this.groupBox3.Size = new System.Drawing.Size(429, 46);
             this.groupBox3.TabIndex = 17;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "开发框架";
@@ -104,7 +107,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(21, 69);
+            this.label2.Location = new System.Drawing.Point(23, 134);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(65, 12);
             this.label2.TabIndex = 25;
@@ -113,7 +116,7 @@
             // btnDocumentPath
             // 
             this.btnDocumentPath.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnDocumentPath.Location = new System.Drawing.Point(403, 64);
+            this.btnDocumentPath.Location = new System.Drawing.Point(553, 129);
             this.btnDocumentPath.Name = "btnDocumentPath";
             this.btnDocumentPath.Size = new System.Drawing.Size(75, 23);
             this.btnDocumentPath.TabIndex = 24;
@@ -123,16 +126,16 @@
             // 
             // txtDocumentPath
             // 
-            this.txtDocumentPath.Location = new System.Drawing.Point(116, 63);
+            this.txtDocumentPath.Location = new System.Drawing.Point(118, 128);
             this.txtDocumentPath.Name = "txtDocumentPath";
-            this.txtDocumentPath.Size = new System.Drawing.Size(281, 21);
+            this.txtDocumentPath.Size = new System.Drawing.Size(429, 21);
             this.txtDocumentPath.TabIndex = 23;
             this.txtDocumentPath.Text = "E:\\WorkSpace\\DominoKit\\Generator\\Entity\\Document\\Position.xlsx";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(21, 99);
+            this.label3.Location = new System.Drawing.Point(23, 164);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(89, 12);
             this.label3.TabIndex = 28;
@@ -141,7 +144,7 @@
             // btnModelSourcePath
             // 
             this.btnModelSourcePath.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnModelSourcePath.Location = new System.Drawing.Point(403, 94);
+            this.btnModelSourcePath.Location = new System.Drawing.Point(553, 159);
             this.btnModelSourcePath.Name = "btnModelSourcePath";
             this.btnModelSourcePath.Size = new System.Drawing.Size(75, 23);
             this.btnModelSourcePath.TabIndex = 27;
@@ -151,15 +154,15 @@
             // 
             // txtModelSourcePath
             // 
-            this.txtModelSourcePath.Location = new System.Drawing.Point(116, 93);
+            this.txtModelSourcePath.Location = new System.Drawing.Point(118, 158);
             this.txtModelSourcePath.Name = "txtModelSourcePath";
-            this.txtModelSourcePath.Size = new System.Drawing.Size(281, 21);
+            this.txtModelSourcePath.Size = new System.Drawing.Size(429, 21);
             this.txtModelSourcePath.TabIndex = 26;
             // 
             // btnGernerateCode
             // 
             this.btnGernerateCode.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnGernerateCode.Location = new System.Drawing.Point(407, 244);
+            this.btnGernerateCode.Location = new System.Drawing.Point(553, 251);
             this.btnGernerateCode.Name = "btnGernerateCode";
             this.btnGernerateCode.Size = new System.Drawing.Size(75, 23);
             this.btnGernerateCode.TabIndex = 29;
@@ -169,31 +172,43 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.radioButton1);
             this.groupBox1.Controls.Add(this.radMsSql);
             this.groupBox1.Controls.Add(this.radOracle);
             this.groupBox1.Controls.Add(this.radMySql);
-            this.groupBox1.Location = new System.Drawing.Point(25, 161);
+            this.groupBox1.Location = new System.Drawing.Point(118, 73);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(212, 46);
+            this.groupBox1.Size = new System.Drawing.Size(431, 46);
             this.groupBox1.TabIndex = 30;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "数据库";
             // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(260, 20);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(65, 16);
+            this.radioButton1.TabIndex = 3;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "MongoDB";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            // 
             // radMsSql
             // 
             this.radMsSql.AutoSize = true;
-            this.radMsSql.Location = new System.Drawing.Point(140, 20);
+            this.radMsSql.Location = new System.Drawing.Point(182, 20);
             this.radMsSql.Name = "radMsSql";
             this.radMsSql.Size = new System.Drawing.Size(53, 16);
             this.radMsSql.TabIndex = 2;
             this.radMsSql.TabStop = true;
-            this.radMsSql.Text = "MSSql";
+            this.radMsSql.Text = "MsSql";
             this.radMsSql.UseVisualStyleBackColor = true;
             // 
             // radOracle
             // 
             this.radOracle.AutoSize = true;
-            this.radOracle.Location = new System.Drawing.Point(75, 20);
+            this.radOracle.Location = new System.Drawing.Point(110, 20);
             this.radOracle.Name = "radOracle";
             this.radOracle.Size = new System.Drawing.Size(59, 16);
             this.radOracle.TabIndex = 1;
@@ -216,7 +231,7 @@
             // chkCreateDDL
             // 
             this.chkCreateDDL.AutoSize = true;
-            this.chkCreateDDL.Location = new System.Drawing.Point(290, 182);
+            this.chkCreateDDL.Location = new System.Drawing.Point(433, 255);
             this.chkCreateDDL.Name = "chkCreateDDL";
             this.chkCreateDDL.Size = new System.Drawing.Size(102, 16);
             this.chkCreateDDL.TabIndex = 31;
@@ -225,15 +240,15 @@
             // 
             // txtSqlPath
             // 
-            this.txtSqlPath.Location = new System.Drawing.Point(107, 215);
+            this.txtSqlPath.Location = new System.Drawing.Point(118, 222);
             this.txtSqlPath.Name = "txtSqlPath";
-            this.txtSqlPath.Size = new System.Drawing.Size(294, 21);
+            this.txtSqlPath.Size = new System.Drawing.Size(427, 21);
             this.txtSqlPath.TabIndex = 26;
             // 
             // btnSqlPath
             // 
             this.btnSqlPath.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnSqlPath.Location = new System.Drawing.Point(407, 216);
+            this.btnSqlPath.Location = new System.Drawing.Point(553, 223);
             this.btnSqlPath.Name = "btnSqlPath";
             this.btnSqlPath.Size = new System.Drawing.Size(75, 23);
             this.btnSqlPath.TabIndex = 27;
@@ -244,7 +259,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(25, 221);
+            this.label4.Location = new System.Drawing.Point(25, 225);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(59, 12);
             this.label4.TabIndex = 28;
@@ -253,16 +268,18 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(105, 146);
+            this.label1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.ForeColor = System.Drawing.Color.DodgerBlue;
+            this.label1.Location = new System.Drawing.Point(425, 281);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(113, 12);
+            this.label1.Size = new System.Drawing.Size(122, 12);
             this.label1.TabIndex = 32;
             this.label1.Text = "代码路径可以不填写";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(21, 128);
+            this.label5.Location = new System.Drawing.Point(23, 193);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(89, 12);
             this.label5.TabIndex = 35;
@@ -271,7 +288,7 @@
             // btnPageSourcePath
             // 
             this.btnPageSourcePath.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnPageSourcePath.Location = new System.Drawing.Point(403, 123);
+            this.btnPageSourcePath.Location = new System.Drawing.Point(553, 188);
             this.btnPageSourcePath.Name = "btnPageSourcePath";
             this.btnPageSourcePath.Size = new System.Drawing.Size(75, 23);
             this.btnPageSourcePath.TabIndex = 34;
@@ -281,21 +298,43 @@
             // 
             // txtPageSourcePath
             // 
-            this.txtPageSourcePath.Location = new System.Drawing.Point(116, 122);
-            this.txtPageSourcePath.Name = "txtPageSourcePath";
-            this.txtPageSourcePath.Size = new System.Drawing.Size(281, 21);
-            this.txtPageSourcePath.TabIndex = 33;
+            this.txtViewSourcePath.Location = new System.Drawing.Point(118, 187);
+            this.txtViewSourcePath.Name = "txtPageSourcePath";
+            this.txtViewSourcePath.Size = new System.Drawing.Size(429, 21);
+            this.txtViewSourcePath.TabIndex = 33;
+            // 
+            // chkCreateModel
+            // 
+            this.chkCreateModel.AutoSize = true;
+            this.chkCreateModel.Location = new System.Drawing.Point(325, 255);
+            this.chkCreateModel.Name = "chkCreateModel";
+            this.chkCreateModel.Size = new System.Drawing.Size(96, 16);
+            this.chkCreateModel.TabIndex = 31;
+            this.chkCreateModel.Text = "生成数据模型";
+            this.chkCreateModel.UseVisualStyleBackColor = true;
+            // 
+            // chkCreateView
+            // 
+            this.chkCreateView.AutoSize = true;
+            this.chkCreateView.Location = new System.Drawing.Point(217, 255);
+            this.chkCreateView.Name = "chkCreateView";
+            this.chkCreateView.Size = new System.Drawing.Size(96, 16);
+            this.chkCreateView.TabIndex = 31;
+            this.chkCreateView.Text = "生成MVC5视图";
+            this.chkCreateView.UseVisualStyleBackColor = true;
             // 
             // ModelCodeGenerator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(490, 279);
+            this.ClientSize = new System.Drawing.Size(655, 302);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.btnPageSourcePath);
-            this.Controls.Add(this.txtPageSourcePath);
+            this.Controls.Add(this.txtViewSourcePath);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.chkCreateView);
+            this.Controls.Add(this.chkCreateModel);
             this.Controls.Add(this.chkCreateDDL);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnGernerateCode);
@@ -344,6 +383,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnPageSourcePath;
-        private System.Windows.Forms.TextBox txtPageSourcePath;
+        private System.Windows.Forms.TextBox txtViewSourcePath;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.CheckBox chkCreateModel;
+        private System.Windows.Forms.CheckBox chkCreateView;
     }
 }

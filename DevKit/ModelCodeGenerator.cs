@@ -30,7 +30,7 @@ namespace DevKit
         {
             if (radCSharpMVC5.Checked)
             {
-                txtPageSourcePath.Text = Common.Utility.PickFile(Common.Utility.FileDialogMode.Save, Common.Utility.CSHTMLFilter);
+                txtViewSourcePath.Text = Common.Utility.PickFile(Common.Utility.FileDialogMode.Save, Common.Utility.CSHTMLFilter);
             }
         }
         /// <summary>
@@ -83,14 +83,20 @@ namespace DevKit
                     txtModelSourcePath.Text = SystemMonitor.CurrentProject.EntityPath.SourcePath + "\\" + f.Name.Replace(".xlsx", ".cs");
                 }
             }
-            if (string.IsNullOrEmpty(txtPageSourcePath.Text))
+            if (string.IsNullOrEmpty(txtViewSourcePath.Text))
             {
-                txtPageSourcePath.Text = SystemMonitor.CurrentProject.ViewerPath + "\\" + f.Name.Replace(".xlsx", ".cshtml");
+                txtViewSourcePath.Text = SystemMonitor.CurrentProject.ViewerPath + "\\" + f.Name.Replace(".xlsx", ".cshtml");
             }
             if (radCSharpMVC5.Checked)
             {
-                ModelGenerator.GenerateCSharp(txtModelSourcePath.Text, model);
-                ViewerGenerator.GenerateCSharp(txtPageSourcePath.Text, model);
+                if (chkCreateModel.Checked)
+                {
+                    ModelGenerator.GenerateCSharp(txtModelSourcePath.Text, model);
+                }
+                if (chkCreateView.Checked)
+                {
+                    ViewerGenerator.GenerateCSharp(txtViewSourcePath.Text, model);
+                }
             }
             if (radJavaSpring.Checked)
             {
