@@ -50,6 +50,7 @@
             this.GenerateAllCodetoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExportToPrjToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.ModifyPrjToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RefreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.工具ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.native2ASCIIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -71,7 +72,7 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.trvCodeSnippet = new System.Windows.Forms.TreeView();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.ModifyPrjToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.struts2数据验证ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -109,27 +110,27 @@
             // NewPrjToolStripMenuItem
             // 
             this.NewPrjToolStripMenuItem.Name = "NewPrjToolStripMenuItem";
-            this.NewPrjToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.NewPrjToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.NewPrjToolStripMenuItem.Text = "新建工程";
             this.NewPrjToolStripMenuItem.Click += new System.EventHandler(this.NewPrjToolStripMenuItem_Click);
             // 
             // OpenPrjToolStripMenuItem
             // 
             this.OpenPrjToolStripMenuItem.Name = "OpenPrjToolStripMenuItem";
-            this.OpenPrjToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.OpenPrjToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.OpenPrjToolStripMenuItem.Text = "打开工程";
             this.OpenPrjToolStripMenuItem.Click += new System.EventHandler(this.OpenPrjToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(142, 6);
             // 
             // 关闭ToolStripMenuItem
             // 
             this.关闭ToolStripMenuItem.Name = "关闭ToolStripMenuItem";
             this.关闭ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.关闭ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.关闭ToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.关闭ToolStripMenuItem.Text = "关闭";
             // 
             // ProjectToolStripMenuItem
@@ -260,6 +261,13 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(161, 6);
             // 
+            // ModifyPrjToolStripMenuItem
+            // 
+            this.ModifyPrjToolStripMenuItem.Name = "ModifyPrjToolStripMenuItem";
+            this.ModifyPrjToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.ModifyPrjToolStripMenuItem.Text = "修改工程";
+            this.ModifyPrjToolStripMenuItem.Click += new System.EventHandler(this.ModifyPrjToolStripMenuItem_Click);
+            // 
             // RefreshToolStripMenuItem
             // 
             this.RefreshToolStripMenuItem.Name = "RefreshToolStripMenuItem";
@@ -275,6 +283,7 @@
             this.toolStripMenuItem3,
             this.NETMVCRouteEditorToolStripMenuItem,
             this.struts2路由编辑ToolStripMenuItem,
+            this.struts2数据验证ToolStripMenuItem,
             this.toolStripMenuItem4,
             this.代码示例ToolStripMenuItem});
             this.工具ToolStripMenuItem.Name = "工具ToolStripMenuItem";
@@ -442,12 +451,12 @@
             this.textBox1.Size = new System.Drawing.Size(480, 364);
             this.textBox1.TabIndex = 0;
             // 
-            // ModifyPrjToolStripMenuItem
+            // struts2数据验证ToolStripMenuItem
             // 
-            this.ModifyPrjToolStripMenuItem.Name = "ModifyPrjToolStripMenuItem";
-            this.ModifyPrjToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.ModifyPrjToolStripMenuItem.Text = "修改工程";
-            this.ModifyPrjToolStripMenuItem.Click += new System.EventHandler(this.ModifyPrjToolStripMenuItem_Click);
+            this.struts2数据验证ToolStripMenuItem.Name = "struts2数据验证ToolStripMenuItem";
+            this.struts2数据验证ToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.struts2数据验证ToolStripMenuItem.Text = "Struts2 数据验证";
+            this.struts2数据验证ToolStripMenuItem.Click += new System.EventHandler(this.struts2数据验证ToolStripMenuItem_Click);
             // 
             // Main
             // 
@@ -524,6 +533,7 @@
         private System.Windows.Forms.ToolStripMenuItem GenerateMasterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem GenerateAllMasterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ModifyPrjToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem struts2数据验证ToolStripMenuItem;
     }
 }
 

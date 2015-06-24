@@ -301,8 +301,8 @@ namespace DevKit.MVCTool
                 //model.NameSpace = NameSpace;
                 if (DevLanguage == EnumAndConst.Language.CSharp)
                 {
-                    ModelGenerator.GenerateCSharp(_PathSet.SourcePath + "\\" + model.ModelName + ".cs", model);
-                    ViewerGenerator.GenerateCSharp(ViewerPath + "\\" + model.ModelName + ".cshtml", model);
+                    ModelGenerator.GenerateCSharp(_PathSet.SourcePath + "\\" + model.ModelName + ".cs", model, model.Items);
+                    ViewerGenerator.GenerateCSharp(ViewerPath + "\\" + model.ModelName + ".cshtml", model, model.Items);
                 }
             }
             GC.Collect();

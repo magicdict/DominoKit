@@ -186,6 +186,7 @@
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
+            this.radioButton1.Checked = true;
             this.radioButton1.Location = new System.Drawing.Point(260, 20);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(65, 16);
@@ -201,7 +202,6 @@
             this.radMsSql.Name = "radMsSql";
             this.radMsSql.Size = new System.Drawing.Size(53, 16);
             this.radMsSql.TabIndex = 2;
-            this.radMsSql.TabStop = true;
             this.radMsSql.Text = "MsSql";
             this.radMsSql.UseVisualStyleBackColor = true;
             // 
@@ -212,19 +212,16 @@
             this.radOracle.Name = "radOracle";
             this.radOracle.Size = new System.Drawing.Size(59, 16);
             this.radOracle.TabIndex = 1;
-            this.radOracle.TabStop = true;
             this.radOracle.Text = "Oracle";
             this.radOracle.UseVisualStyleBackColor = true;
             // 
             // radMySql
             // 
             this.radMySql.AutoSize = true;
-            this.radMySql.Checked = true;
             this.radMySql.Location = new System.Drawing.Point(16, 20);
             this.radMySql.Name = "radMySql";
             this.radMySql.Size = new System.Drawing.Size(53, 16);
             this.radMySql.TabIndex = 0;
-            this.radMySql.TabStop = true;
             this.radMySql.Text = "MySql";
             this.radMySql.UseVisualStyleBackColor = true;
             // 
@@ -268,7 +265,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.ForeColor = System.Drawing.Color.DodgerBlue;
             this.label1.Location = new System.Drawing.Point(425, 281);
             this.label1.Name = "label1";
@@ -296,16 +293,18 @@
             this.btnPageSourcePath.UseVisualStyleBackColor = false;
             this.btnPageSourcePath.Click += new System.EventHandler(this.btnPageSourcePath_Click);
             // 
-            // txtPageSourcePath
+            // txtViewSourcePath
             // 
             this.txtViewSourcePath.Location = new System.Drawing.Point(118, 187);
-            this.txtViewSourcePath.Name = "txtPageSourcePath";
+            this.txtViewSourcePath.Name = "txtViewSourcePath";
             this.txtViewSourcePath.Size = new System.Drawing.Size(429, 21);
             this.txtViewSourcePath.TabIndex = 33;
             // 
             // chkCreateModel
             // 
             this.chkCreateModel.AutoSize = true;
+            this.chkCreateModel.Checked = true;
+            this.chkCreateModel.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkCreateModel.Location = new System.Drawing.Point(325, 255);
             this.chkCreateModel.Name = "chkCreateModel";
             this.chkCreateModel.Size = new System.Drawing.Size(96, 16);
@@ -316,6 +315,8 @@
             // chkCreateView
             // 
             this.chkCreateView.AutoSize = true;
+            this.chkCreateView.Checked = true;
+            this.chkCreateView.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkCreateView.Location = new System.Drawing.Point(217, 255);
             this.chkCreateView.Name = "chkCreateView";
             this.chkCreateView.Size = new System.Drawing.Size(96, 16);

@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Class\DataBase\GenerateMySqlDDL.cs" />
     <Compile Include="Class\Enum\EnumGenerator.cs" />
+    <Compile Include="Class\Model\ValidationStruts2.cs" />
     <Compile Include="Class\Model\ViewerGenerator.cs" />
     <Compile Include="Class\Model\ModelCodeGeneratorJavaSpring.cs" />
     <Compile Include="Class\Model\ModelCodeGeneratorJavaStruts2.cs" />

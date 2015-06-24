@@ -289,6 +289,16 @@ namespace DevKit
             Common.Utility.SetUp(new frmRouteRuleForStruts());
         }
         /// <summary>
+        /// struts2数据验证
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void struts2数据验证ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ModelInfo model = ModelUtility.ReadModelFromExcel(@"E:\WorkSpace\DominoKit\Generator\Entity\Document\Position.xlsx");
+            MVCTool.ValidationStruts2.GenerateValidation("Position.xml", model);
+        }
+        /// <summary>
         /// 代码示例
         /// </summary>
         /// <param name="sender"></param>
@@ -329,10 +339,11 @@ namespace DevKit
             MessageBox.Show(strAbout, "关于");
         }
 
+
+
+
+
         #endregion
-
-
-
 
 
     }

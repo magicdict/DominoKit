@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
@@ -44,11 +45,11 @@ namespace DevKit.MVCTool
         /// <summary>
         /// Single MasterTable Catalog的过滤器
         /// </summary>
-        private const string FilterSingleCatalogMasterTable = "[FilterItem(MetaType = typeof(@MasterName@), MetaStructType = FilterItemAttribute.StructType.SingleCatalogMasterTable)]";
+        private const string FilterSingleCatalogMasterTable = "[FilterItem(MetaType = typeof(@MasterName@), CatalogType = typeof(@CatalogName@), MetaStructType = FilterItemAttribute.StructType.SingleCatalogMasterTable)]";
         /// <summary>
         /// Multi MasterTable Catalog 的过滤器
         /// </summary>
-        private const string FilterMulitCatalogMasterTable = "[FilterItem(MetaType = typeof(@MasterName@), MetaStructType = FilterItemAttribute.StructType.MultiCatalogMasterTable)]";
+        private const string FilterMulitCatalogMasterTable = "[FilterItem(MetaType = typeof(@MasterName@), CatalogType = typeof(@CatalogName@), MetaStructType = FilterItemAttribute.StructType.MultiCatalogMasterTable)]";
 
         /// <summary>
         /// Multi Enum 的过滤器
@@ -84,7 +85,7 @@ namespace DevKit.MVCTool
         /// </summary>
         /// <param name="filename"></param>
         /// <param name="model"></param>
-        public static void GenerateCSharp(string filename, ModelInfo model)
+        public static void GenerateCSharp(string filename, ModelInfo model,List<ModelItem> ModelItems)
         {
 
             //数据操作
@@ -118,7 +119,7 @@ namespace DevKit.MVCTool
                 SuperClass = model.SuperClass;
             }
             isOrgClass = SuperClass == "EntityBase" ||
-                         SuperClass == "Organization" ||
+                         SuperClass == "CompanyTable" ||
                          SuperClass == "MasterTable" ||
                          SuperClass == "StatusMasterTable" ||
                          SuperClass == "CatalogMasterTable";
@@ -134,7 +135,7 @@ namespace DevKit.MVCTool
             code.AppendLine(new string(space, indent) + "#region \"model\"");
             code.AppendLine(String.Empty);
             indent += 4;
-            foreach (var item in model.Items)
+            foreach (var item in ModelItems)
             {
                 //# Skip
                 if (item.Flag.Equals("SKIP")) continue;
@@ -298,14 +299,22 @@ namespace DevKit.MVCTool
                         break;
                     case "目录表":
                         strType = Common.CSharp.MetaData["字符串"];
+                        if (string.IsNullOrEmpty(item.CatalogType))
+                        {
+                            item.CatalogType = item.EnumOrMasterType + "Catalog";
+                        }
                         if (item.IsList)
                         {
-                            code.AppendLine(new string(space, indent) + FilterMulitCatalogMasterTable.Replace("@MasterName@", item.EnumOrMasterType));
+                            code.AppendLine(new string(space, indent) + 
+                                FilterMulitCatalogMasterTable.Replace("@MasterName@", item.EnumOrMasterType)
+                                                             .Replace("@CatalogName@",item.CatalogType));
 
                         }
                         else
                         {
-                            code.AppendLine(new string(space, indent) + FilterSingleCatalogMasterTable.Replace("@MasterName@", item.EnumOrMasterType));
+                            code.AppendLine(new string(space, indent) +
+                                FilterSingleCatalogMasterTable.Replace("@MasterName@", item.EnumOrMasterType)
+                                                              .Replace("@CatalogName@", item.CatalogType));
                         }
                         break;
                     default:

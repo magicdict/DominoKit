@@ -91,11 +91,11 @@ namespace DevKit
             {
                 if (chkCreateModel.Checked)
                 {
-                    ModelGenerator.GenerateCSharp(txtModelSourcePath.Text, model);
+                    ModelGenerator.GenerateCSharp(txtModelSourcePath.Text, model, model.Items);
                 }
                 if (chkCreateView.Checked)
                 {
-                    ViewerGenerator.GenerateCSharp(txtViewSourcePath.Text, model);
+                    ViewerGenerator.GenerateCSharp(txtViewSourcePath.Text, model,model.Items);
                 }
             }
             if (radJavaSpring.Checked)

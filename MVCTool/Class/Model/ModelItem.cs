@@ -23,7 +23,8 @@ namespace DevKit.MVCTool
             //Developer
             VarName,
             MetaType,
-            EnumType,
+            EnumOrMasterType,
+            CatalogType,
             IsList,
             DisplayName,
             //数据库
@@ -137,7 +138,8 @@ namespace DevKit.MVCTool
                 //基本校验
                 item.VarName = ExcelSheet.Cells(seekrow, ModelSheetStruct.VarName).Text;
                 item.MetaType = ExcelSheet.Cells(seekrow, ModelSheetStruct.MetaType).Text;
-                item.EnumOrMasterType = ExcelSheet.Cells(seekrow, ModelSheetStruct.EnumType).Text;
+                item.EnumOrMasterType = ExcelSheet.Cells(seekrow, ModelSheetStruct.EnumOrMasterType).Text;
+                item.CatalogType = ExcelSheet.Cells(seekrow, ModelSheetStruct.CatalogType).Text;
                 item.IsList = !string.IsNullOrEmpty(ExcelSheet.Cells(seekrow, ModelSheetStruct.IsList).Text);
                 item.DisplayName = ExcelSheet.Cells(seekrow, ModelSheetStruct.DisplayName).Text;
                 //数据库
@@ -229,6 +231,10 @@ namespace DevKit.MVCTool
         /// 枚举/MasterTable类型
         /// </summary>
         public string EnumOrMasterType;
+        /// <summary>
+        /// 目录类型
+        /// </summary>
+        public string CatalogType;
         /// <summary>
         /// 是否为列表
         /// </summary>

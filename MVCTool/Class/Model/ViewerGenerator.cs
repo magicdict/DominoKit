@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace DevKit.MVCTool
@@ -10,9 +11,9 @@ namespace DevKit.MVCTool
         /// </summary>
         /// <param name="filename"></param>
         /// <param name="model"></param>
-        public static void GenerateCSharp(string filename, ModelInfo model)
+        public static void GenerateCSharp(string filename, ModelInfo model,List<ModelItem> ModelItems)
         {
-            StreamWriter codeWriter = new StreamWriter(filename, false);
+            StreamWriter codeWriter = new StreamWriter(filename, false,Encoding.Unicode);
             StringBuilder code = new StringBuilder();
             code.Append(GernerateHeader(model.CollectionName));
             code.AppendLine("@using (Html.BeginForm())");
@@ -21,7 +22,7 @@ namespace DevKit.MVCTool
             code.AppendLine("@Html.AntiForgeryToken()");
             //nest open @2
             code.AppendLine("<div class=\"form-horizontal\">");
-            foreach (var item in model.Items)
+            foreach (ModelItem item in ModelItems)
             {
                 code.AppendLine("<div class=\"form-group\">");
                 code.AppendLine("@Html.LabelFor(model => model." + item.VarName + ", new { @class = \"control-label col-md-2\" })");
@@ -49,7 +50,7 @@ namespace DevKit.MVCTool
                         code.Append(GenerateEditor(item.VarName));
                         break;
                 }
-                code.AppendLine("@Html.ValidationMessageFor(model => model." + item.VarName + ", new { @class = \"text-danger\" })");
+                code.AppendLine("@Html.ValidationMessageFor(model => model." + item.VarName + ", \"\", new { @class = \"text-danger\" })");
                 code.AppendLine("</div>");
                 code.AppendLine("</div>");
                 code.AppendLine(string.Empty);
