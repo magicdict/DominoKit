@@ -102,10 +102,6 @@ namespace DevKit
             {
                 ModelGenerator.GenerateJavaSpring(txtModelSourcePath.Text, model);
             }
-            if (radJavaStruts2.Checked)
-            {
-                ModelGenerator.GenerateJavaStruct2(txtModelSourcePath.Text, model);
-            }
             //建表Sql文
             if (chkCreateDDL.Checked && (!string.IsNullOrEmpty(txtSqlPath.Text)))
             {

@@ -53,7 +53,6 @@
     <Compile Include="Class\Model\ValidationStruts2.cs" />
     <Compile Include="Class\Model\ViewerGenerator.cs" />
     <Compile Include="Class\Model\ModelCodeGeneratorJavaSpring.cs" />
-    <Compile Include="Class\Model\ModelCodeGeneratorJavaStruts2.cs" />
     <Compile Include="Class\Model\ModelItem.cs" />
     <Compile Include="Class\Model\ModelCodeGeneratorCSharp.cs" />
     <Compile Include="Class\Project\ProjectInfo.cs" />

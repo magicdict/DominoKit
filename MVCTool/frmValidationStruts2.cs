@@ -14,7 +14,7 @@ namespace DevKit.MVCTool
         {
             ModelInfo model = ModelUtility.ReadModelFromExcel(txtDocumentPath.Text);
             string xmlfilename = txtSourcePath.Text + "\\" + txtAction.Text + "Action-validation.xml";
-            MVCTool.ValidationStruts2.GenerateValidation(xmlfilename, model,chkExternProperties.Checked);
+            ValidationStruts2.GenerateValidation(xmlfilename, model,chkExternProperties.Checked);
             MessageBox.Show("验证文件已经生成：" + xmlfilename);
         }
 
