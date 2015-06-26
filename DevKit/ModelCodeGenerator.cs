@@ -76,7 +76,7 @@ namespace DevKit
             {
                 if (model.ModelName.StartsWith(EnumAndConst.MasterPrefix))
                 {
-                    txtModelSourcePath.Text = SystemMonitor.CurrentProject.MasterPath.SourcePath + "\\" + f.Name.Replace(".xlsx",".cs");
+                    txtModelSourcePath.Text = SystemMonitor.CurrentProject.MasterPath.SourcePath + "\\" + f.Name.Replace(".xlsx", ".cs");
                 }
                 else
                 {
@@ -95,7 +95,7 @@ namespace DevKit
                 }
                 if (chkCreateView.Checked)
                 {
-                    ViewerGenerator.GenerateCSharp(txtViewSourcePath.Text, model,model.Items);
+                    ViewerGenerator.GenerateCSharp(txtViewSourcePath.Text, model, model.Items);
                 }
             }
             if (radJavaSpring.Checked)
@@ -107,9 +107,9 @@ namespace DevKit
                 ModelGenerator.GenerateJavaStruct2(txtModelSourcePath.Text, model);
             }
             //建表Sql文
-            if (chkCreateDDL.Checked && (!String.IsNullOrEmpty(txtSqlPath.Text)))
+            if (chkCreateDDL.Checked && (!string.IsNullOrEmpty(txtSqlPath.Text)))
             {
-                DDLGenerator.MySql(model,txtSqlPath.Text);
+                DDLGenerator.MySql(model, txtSqlPath.Text);
             }
             GC.Collect();
             MessageBox.Show("代码生成完毕！");

@@ -127,7 +127,7 @@ namespace DevKit.Common
 		/// 删除制定编号数据
 		/// </summary>
 		/// <param name="DBId"></param>
-		public void DelRecByDBID(String DBId)
+		public void DelRecByDBID(string DBId)
 		{
 			for (int i = 0; i < list.Count; i++) {
 				if (DBId == list[i].DBId) {
@@ -205,7 +205,7 @@ namespace DevKit.Common
 		/// </summary>
 		/// <param name="DBID">数据号</param>
 		/// <returns></returns>
-		public Model<T> SearchAsDBRecordByDBID(String DBID)
+		public Model<T> SearchAsDBRecordByDBID(string DBID)
 		{
 			Refresh();
 			Model<T> result = list.Find((x) => x.DBId == DBID && !x.IsDel);
@@ -228,7 +228,7 @@ namespace DevKit.Common
 		/// </summary>
 		/// <param name="DBID"></param>
 		/// <returns></returns>
-		public bool IsRecordExistsByDBID(String DBID)
+		public bool IsRecordExistsByDBID(string DBID)
 		{
 			Func<Model<T>,Boolean> inner = (x) => (x.DBId == DBID && !x.IsDel);
 			return list.FindAll(new Predicate<Model<T>>(inner)).Count != 0;
@@ -240,7 +240,7 @@ namespace DevKit.Common
 		/// </summary>
 		/// <param name="DBID">数据号</param>
 		/// <returns></returns>
-		public T SearchAsSimpleRecordByDBID(String DBID)
+		public T SearchAsSimpleRecordByDBID(string DBID)
 		{
 			Refresh();
 			Model<T> result = list.Find((x) => x.DBId == DBID);

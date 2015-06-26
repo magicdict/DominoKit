@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DevKit.MVCTool
@@ -23,12 +16,12 @@ namespace DevKit.MVCTool
         /// <param name="e"></param>
         private void btnConvert_Click(object sender, EventArgs e)
         {
-            if (!String.IsNullOrEmpty(txtNative.Text))
+            if (!string.IsNullOrEmpty(txtNative.Text))
             {
                 txtASCII.Text = Common.Native2AsciiUtils.native2Ascii(txtNative.Text);
                 return;
             }
-            if (!String.IsNullOrEmpty(txtASCII.Text))
+            if (!string.IsNullOrEmpty(txtASCII.Text))
             {
                 txtNative.Text = Common.Native2AsciiUtils.ascii2Native(txtASCII.Text);
             }
@@ -40,7 +33,7 @@ namespace DevKit.MVCTool
         /// <param name="e"></param>
         private void btnBatchConvert_Click(object sender, EventArgs e)
         {
-            if (!String.IsNullOrEmpty(txtDocumentPath.Text)) Common.Native2AsciiUtils.BatchConvert(txtDocumentPath.Text);
+            if (!string.IsNullOrEmpty(txtDocumentPath.Text)) Common.Native2AsciiUtils.BatchConvert(txtDocumentPath.Text);
         }
         /// <summary>
         /// 

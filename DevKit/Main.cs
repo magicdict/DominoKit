@@ -128,7 +128,7 @@ namespace DevKit
         private void NewModelToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string ModelName = Common.Utility.InputBox("请输入模型名称：");
-            if (!String.IsNullOrEmpty(ModelName))
+            if (!string.IsNullOrEmpty(ModelName))
             {
                 SystemMonitor.CurrentProject.NewModel(ModelName);
                 SystemMonitor.CurrentProject.SetProjectTree(this.trvProject);
@@ -161,7 +161,7 @@ namespace DevKit
         private void NewEnumStripMenuItem_Click(object sender, EventArgs e)
         {
             string EnumName = Common.Utility.InputBox("请输入枚举名称：");
-            if (!String.IsNullOrEmpty(EnumName))
+            if (!string.IsNullOrEmpty(EnumName))
             {
                 SystemMonitor.CurrentProject.NewEnum(EnumName);
                 SystemMonitor.CurrentProject.SetProjectTree(this.trvProject);
@@ -200,7 +200,7 @@ namespace DevKit
                 return;
             }
 
-            if (!String.IsNullOrEmpty(MasterName))
+            if (!string.IsNullOrEmpty(MasterName))
             {
                 SystemMonitor.CurrentProject.NewModel(MasterName);
                 SystemMonitor.CurrentProject.SetProjectTree(this.trvProject);
@@ -295,8 +295,7 @@ namespace DevKit
         /// <param name="e"></param>
         private void struts2数据验证ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ModelInfo model = ModelUtility.ReadModelFromExcel(@"E:\WorkSpace\DominoKit\Generator\Entity\Document\Position.xlsx");
-            MVCTool.ValidationStruts2.GenerateValidation("Position.xml", model);
+            Common.Utility.SetUp(new frmValidationStruts2());
         }
         /// <summary>
         /// 代码示例

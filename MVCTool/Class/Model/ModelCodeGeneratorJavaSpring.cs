@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Text;
 
 namespace DevKit.MVCTool
@@ -19,12 +18,12 @@ namespace DevKit.MVCTool
             char space = " ".ToCharArray()[0];
             int indent = 0;
             code.AppendLine("package " + model.NameSpace + ";");
-            code.AppendLine(String.Empty);
+            code.AppendLine(string.Empty);
             //Hibernate实现验证
             code.AppendLine("import org.hibernate.validator.constraints.*;");
-            code.AppendLine(String.Empty);
+            code.AppendLine(string.Empty);
             code.AppendLine("public class " + model.ModelName + " {");
-            code.AppendLine(String.Empty);
+            code.AppendLine(string.Empty);
             indent += 4;
             foreach (var item in model.Items)
             {
@@ -41,7 +40,7 @@ namespace DevKit.MVCTool
                 //必须
                 if (item.Required)
                 {
-                    if (!String.IsNullOrEmpty(item.RequiredMessage))
+                    if (!string.IsNullOrEmpty(item.RequiredMessage))
                     {
                         code.AppendLine(new string(space, indent) + "@NotEmpty(message = \"" + item.RequiredMessage + "\")");
                     }
@@ -54,7 +53,7 @@ namespace DevKit.MVCTool
                 if (item.RangeMin != 0 || item.RangeMax != 0)
                 {
                     string strRange = new string(space, indent) + " @Range(min = @Min, max = @Max @ErrorMessage )";
-                    strRange = strRange.Replace("@ErrorMessage", (String.IsNullOrEmpty(item.RangeMessage) ? string.Empty : ", message = \"@ErrorMessage\""));
+                    strRange = strRange.Replace("@ErrorMessage", (string.IsNullOrEmpty(item.RangeMessage) ? string.Empty : ", message = \"@ErrorMessage\""));
                     code.AppendLine(strRange.Replace("@Min", item.RangeMin.ToString())
                                             .Replace("@Max", item.RangeMax.ToString())
                                             .Replace("@ErrorMessage", item.RangeMessage));
@@ -63,20 +62,20 @@ namespace DevKit.MVCTool
                 if (item.MinLength != 0 || item.MaxLength != 0)
                 {
                     string strLength = new string(space, indent) + " @Length(min = @Min, max = @Max @ErrorMessage )";
-                    strLength = strLength.Replace("@ErrorMessage", (String.IsNullOrEmpty(item.LengthMessage) ? string.Empty : ", ErrorMessage = \"@ErrorMessage\""));
+                    strLength = strLength.Replace("@ErrorMessage", (string.IsNullOrEmpty(item.LengthMessage) ? string.Empty : ", ErrorMessage = \"@ErrorMessage\""));
                     code.AppendLine(strLength.Replace("@Min", item.MinLength.ToString())
                                              .Replace("@Max", item.MaxLength.ToString())
                                              .Replace("@ErrorMessage", item.LengthMessage));
                 }
                 //正则表达
-                if (!String.IsNullOrEmpty(item.RegularExpress))
+                if (!string.IsNullOrEmpty(item.RegularExpress))
                 {
                     string strRange = new string(space, indent) + "@Pattern(regex = @express @ErrorMessage )";
-                    strRange = strRange.Replace("@ErrorMessage", (String.IsNullOrEmpty(item.RegularMessage) ? string.Empty : ", ErrorMessage = \"@ErrorMessage\""));
+                    strRange = strRange.Replace("@ErrorMessage", (string.IsNullOrEmpty(item.RegularMessage) ? string.Empty : ", ErrorMessage = \"@ErrorMessage\""));
                     code.AppendLine(strRange.Replace("@express", item.RegularExpress)
                                             .Replace("@ErrorMessage", item.RegularMessage));
                 }
-                string strMetaType = (!String.IsNullOrEmpty(item.EnumOrMasterType) ? item.EnumOrMasterType : Common.Java.MetaData[item.MetaType]);
+                string strMetaType = (!string.IsNullOrEmpty(item.EnumOrMasterType) ? item.EnumOrMasterType : Common.Java.MetaData[item.MetaType]);
                 //Define
                 code.AppendLine(new string(space, indent) + "private @type @name ;"
                                 .Replace("@type", strMetaType)
@@ -106,7 +105,7 @@ namespace DevKit.MVCTool
                 indent -= 4;
                 code.AppendLine(new string(space, indent) + "}");
 
-                code.AppendLine(String.Empty);
+                code.AppendLine(string.Empty);
             }
             indent -= 4;
             code.AppendLine("}");

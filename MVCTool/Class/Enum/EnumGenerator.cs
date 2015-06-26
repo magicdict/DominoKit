@@ -43,14 +43,14 @@ namespace DevKit.MVCTool
             bool IsFlag = false;
             string EnumTypeName = string.Empty;
             EnumTypeName = ExcelSheet.Cells(3, 4).Text;
-            IsFlag = !String.IsNullOrEmpty(ExcelSheet.Cells(4, 4).Text);
+            IsFlag = !string.IsNullOrEmpty(ExcelSheet.Cells(4, 4).Text);
             int indent = 0;
             char space = " ".ToCharArray()[0];
             var nameSpace = ExcelSheet.Cells(5, 4).Text;
             if (string.IsNullOrEmpty(nameSpace)) nameSpace = proinfo.NameSpace;
             code.AppendLine(new string(space, indent) + "using " + nameSpace + ";");
             code.AppendLine(new string(space, indent) + "using System;");
-            code.AppendLine(String.Empty);
+            code.AppendLine(string.Empty);
             if (IsFlag)
             {
                 code.AppendLine(new string(space, indent) + "[Flags]");
@@ -62,9 +62,9 @@ namespace DevKit.MVCTool
             indent += 4;
 
             int itemOrder = 0;
-            while (!String.IsNullOrEmpty(ExcelSheet.Cells(seekrow, 3).Text))
+            while (!string.IsNullOrEmpty(ExcelSheet.Cells(seekrow, 3).Text))
             {
-                if (!String.IsNullOrEmpty(ExcelSheet.Cells(seekrow, 4).Text))
+                if (!string.IsNullOrEmpty(ExcelSheet.Cells(seekrow, 4).Text))
                 {
                     code.AppendLine(new string(space, indent) + "/// <summary>");
                     code.AppendLine(new string(space, indent) + "/// " + ExcelSheet.Cells(seekrow, 4).Text);
@@ -80,11 +80,11 @@ namespace DevKit.MVCTool
                 else
                 {
                     code.AppendLine(new string(space, indent) + ExcelSheet.Cells(seekrow, 3).Text +
-                                   (String.IsNullOrEmpty(ExcelSheet.Cells(seekrow, 5).Text) ? string.Empty : (" = " + ExcelSheet.Cells(seekrow, 5).Text)) + " ,");
+                                   (string.IsNullOrEmpty(ExcelSheet.Cells(seekrow, 5).Text) ? string.Empty : (" = " + ExcelSheet.Cells(seekrow, 5).Text)) + " ,");
                 }
                 itemOrder++;
                 seekrow++;
-                code.AppendLine(String.Empty);
+                code.AppendLine(string.Empty);
             }
             indent -= 4;
             code.AppendLine(new string(space, indent) + "}");

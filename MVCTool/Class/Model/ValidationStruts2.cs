@@ -5,11 +5,12 @@ namespace DevKit.MVCTool
     public class ValidationStruts2
     {
         /// <summary>
-        /// 
+        /// DTD Link
         /// </summary>
-        private static string dtdLink = "http://www.opensymphony.com/xwork/xwork-validator-1.0.2.dtd";
+        private static string dtdLink = "http://struts.apache.org/dtds/xwork-validator-1.0.2.dtd";
+        //private static string dtdLink = "http://www.opensymphony.com/xwork/xwork-validator-1.0.2.dtd";
         /// <summary>
-        /// 
+        /// DTD Def
         /// </summary>
         private static string dtdDef = "-//OpenSymphony Group//XWork Validator 1.0.2//EN";
         /// <summary>
@@ -17,10 +18,9 @@ namespace DevKit.MVCTool
         /// </summary>
         /// <param name="filename"></param>
         /// <param name="model"></param>
-        /// <param name="ModelItems"></param>
-        public static void GenerateValidation(string filename, ModelInfo model)
+        /// <param name="isConfigMessage"></param>
+        public static void GenerateValidation(string filename, ModelInfo model,bool isConfigMessage = false)
         {
-
             //初始化一个xml实例 
             XmlDocument myXmlDoc = new XmlDocument();
             myXmlDoc.XmlResolver = null;
@@ -41,7 +41,68 @@ namespace DevKit.MVCTool
                     var field_validator = myXmlDoc.CreateElement("field-validator");
                     field_validator.SetAttribute("type", "requiredstring");
                     var message = myXmlDoc.CreateElement("message");
-                    message.SetAttribute("key", item.RequiredMessage);
+                    if (isConfigMessage)
+                    {
+                        message.SetAttribute("key", item.RequiredMessage);
+                    }
+                    else {
+                        message.InnerText = item.RequiredMessage;
+                    }
+                    field_validator.AppendChild(message);
+                    field.AppendChild(field_validator);
+                    has_validator = true;
+                }
+                if (item.RangeMin != 0 || item.RangeMax != 0) {
+                    var field_validator = myXmlDoc.CreateElement("field-validator");
+                    field_validator.SetAttribute("type", "int");
+
+                    var min = myXmlDoc.CreateElement("param");
+                    min.SetAttribute("name", "min");
+                    min.InnerText = item.RangeMin.ToString();
+
+                    var max = myXmlDoc.CreateElement("param");
+                    max.SetAttribute("name", "max");
+                    max.InnerText = item.RangeMax.ToString();
+
+                    var message = myXmlDoc.CreateElement("message");
+                    if (isConfigMessage)
+                    {
+                        message.SetAttribute("key", item.RangeMessage);
+                    }
+                    else
+                    {
+                        message.InnerText = item.RangeMessage;
+                    }
+                    field_validator.AppendChild(min);
+                    field_validator.AppendChild(max);
+                    field_validator.AppendChild(message);
+                    field.AppendChild(field_validator);
+                    has_validator = true;
+                }
+                if (item.MinLength != 0 || item.MaxLength != 0)
+                {
+                    var field_validator = myXmlDoc.CreateElement("field-validator");
+                    field_validator.SetAttribute("type", "stringlength");
+
+                    var min = myXmlDoc.CreateElement("param");
+                    min.SetAttribute("name", "minLength");
+                    min.InnerText = item.RangeMin.ToString();
+
+                    var max = myXmlDoc.CreateElement("param");
+                    max.SetAttribute("name", "maxLength");
+                    max.InnerText = item.RangeMax.ToString();
+
+                    var message = myXmlDoc.CreateElement("message");
+                    if (isConfigMessage)
+                    {
+                        message.SetAttribute("key", item.LengthMessage);
+                    }
+                    else
+                    {
+                        message.InnerText = item.LengthMessage;
+                    }
+                    field_validator.AppendChild(min);
+                    field_validator.AppendChild(max);
                     field_validator.AppendChild(message);
                     field.AppendChild(field_validator);
                     has_validator = true;

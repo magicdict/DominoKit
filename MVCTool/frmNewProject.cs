@@ -13,7 +13,7 @@ namespace DevKit.MVCTool
         {
             InitializeComponent();
             _proj = proj;
-            if (!String.IsNullOrEmpty(_proj.Name))
+            if (!string.IsNullOrEmpty(_proj.Name))
             {
                 txtProjectName.Text = _proj.Name;
                 txtNameSpace.Text = _proj.NameSpace;

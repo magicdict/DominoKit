@@ -30,7 +30,7 @@ namespace DevKit.Common
 		/// <returns></returns>
 		public static bool GetExcelBooleanValue(dynamic Cell)
 		{
-			return !String.IsNullOrEmpty(Cell.Text);
+			return !string.IsNullOrEmpty(Cell.Text);
 		}
 		#endregion
 
@@ -62,7 +62,7 @@ namespace DevKit.Common
 		/// </summary>
 		/// <param name="saveFilename"></param>
 		/// <param name="ResFilename"></param>
-		public static void getResource(String saveFilename, String ResFilename)
+		public static void getResource(string saveFilename, string ResFilename)
 		{
 			Assembly asm = Assembly.GetExecutingAssembly();
 			if (File.Exists(saveFilename)) {

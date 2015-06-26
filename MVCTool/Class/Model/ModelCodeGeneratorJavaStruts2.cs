@@ -1,5 +1,4 @@
-﻿using System;
-using System.Xml;
+﻿using System.Xml;
 
 namespace DevKit.MVCTool
 {
@@ -29,7 +28,7 @@ namespace DevKit.MVCTool
                 }
 
                 //正则表达式
-                if (!String.IsNullOrEmpty(item.RegularExpress))
+                if (!string.IsNullOrEmpty(item.RegularExpress))
                 {
                     XmlNode regexNode = validators.CreateElement("field-validator");
                     ((XmlElement)regexNode).SetAttribute("field-validator", "regex");

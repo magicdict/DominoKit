@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
@@ -18,12 +17,12 @@ namespace DevKit.MVCTool
         /// 日期格式
         /// </summary>
         private const string DateFormat = "[DisplayFormat(DataFormatString = \"{0:yyyy-MM-dd}\",ApplyFormatInEditMode= true)]";
-        
+
         /// <summary>
         /// 日期型 的过滤器
         /// </summary>
         private const string FilterDateTime = "[FilterItem(MetaStructType = FilterItemAttribute.StructType.Datetime)]";
-        
+
         /// <summary>
         /// Multi Master 的过滤器
         /// </summary>
@@ -59,7 +58,7 @@ namespace DevKit.MVCTool
         /// Single Enum 的过滤器
         /// </summary>
         private const string FilterSingleEnum = "[FilterItem(MetaType = typeof(@MasterName@), MetaStructType = FilterItemAttribute.StructType.SingleEnum)]";
-        
+
         /// <summary>
         /// Boolean 的过滤器
         /// </summary>
@@ -85,7 +84,7 @@ namespace DevKit.MVCTool
         /// </summary>
         /// <param name="filename"></param>
         /// <param name="model"></param>
-        public static void GenerateCSharp(string filename, ModelInfo model,List<ModelItem> ModelItems)
+        public static void GenerateCSharp(string filename, ModelInfo model, List<ModelItem> ModelItems)
         {
 
             //数据操作
@@ -101,7 +100,7 @@ namespace DevKit.MVCTool
             //缩进用空格
             char space = " ".ToCharArray()[0];
 
-            if (String.IsNullOrEmpty(model.NameSpace))
+            if (string.IsNullOrEmpty(model.NameSpace))
             {
                 code.AppendLine("namespace " + proinfo.NameSpace);
             }
@@ -133,7 +132,7 @@ namespace DevKit.MVCTool
             code.AppendLine(new string(space, indent) + "{");
             indent += 4;
             code.AppendLine(new string(space, indent) + "#region \"model\"");
-            code.AppendLine(String.Empty);
+            code.AppendLine(string.Empty);
             indent += 4;
             foreach (var item in ModelItems)
             {
@@ -167,7 +166,7 @@ namespace DevKit.MVCTool
                 if (item.Required)
                 {
                     //Required Without Error Message
-                    if (!String.IsNullOrEmpty(item.RequiredMessage))
+                    if (!string.IsNullOrEmpty(item.RequiredMessage))
                     {
                         code.AppendLine(new string(space, indent) + "[Required(ErrorMessage = \"" + item.RequiredMessage + "\")]");
                     }
@@ -181,7 +180,7 @@ namespace DevKit.MVCTool
                 if (item.RangeMin != 0 || item.RangeMax != 0)
                 {
                     string strRange = new string(space, indent) + "[Range(@Min , @Max @ErrorMessage)]";
-                    strRange = strRange.Replace("@ErrorMessage", (String.IsNullOrEmpty(item.RangeMessage) ? string.Empty : ", ErrorMessage = \"@ErrorMessage\""));
+                    strRange = strRange.Replace("@ErrorMessage", (string.IsNullOrEmpty(item.RangeMessage) ? string.Empty : ", ErrorMessage = \"@ErrorMessage\""));
                     code.AppendLine(strRange.Replace("@Min", item.RangeMin.ToString())
                                             .Replace("@Max", item.RangeMax.ToString())
                                             .Replace("@ErrorMessage", item.RangeMessage));
@@ -206,27 +205,27 @@ namespace DevKit.MVCTool
                             strLength = new string(space, indent) + "[MaxLength(@Max @ErrorMessage)]";
                         }
                     }
-                    strLength = strLength.Replace("@ErrorMessage", (String.IsNullOrEmpty(item.LengthMessage) ? string.Empty : ", ErrorMessage = \"@ErrorMessage\""));
+                    strLength = strLength.Replace("@ErrorMessage", (string.IsNullOrEmpty(item.LengthMessage) ? string.Empty : ", ErrorMessage = \"@ErrorMessage\""));
                     code.AppendLine(strLength.Replace("@Min", item.MinLength.ToString())
                                              .Replace("@Max", item.MaxLength.ToString())
                                              .Replace("@ErrorMessage", item.LengthMessage));
                     NeedDataAnnotations = true;
                 }
 
-                if (!String.IsNullOrEmpty(item.RegularExpress))
+                if (!string.IsNullOrEmpty(item.RegularExpress))
                 {
                     string strRange = new string(space, indent) + "[RegularExpression(@\"@express\" @ErrorMessage)]";
-                    strRange = strRange.Replace("@ErrorMessage", (String.IsNullOrEmpty(item.RegularMessage) ? string.Empty : ", ErrorMessage = \"@ErrorMessage\""));
+                    strRange = strRange.Replace("@ErrorMessage", (string.IsNullOrEmpty(item.RegularMessage) ? string.Empty : ", ErrorMessage = \"@ErrorMessage\""));
                     code.AppendLine(strRange.Replace("@express", item.RegularExpress)
                                             .Replace("@ErrorMessage", item.RegularMessage));
                     NeedDataAnnotations = true;
                 }
-                if (!String.IsNullOrEmpty(item.DataType))
+                if (!string.IsNullOrEmpty(item.DataType))
                 {
                     code.AppendLine(new string(space, indent) + GetDataType(item.DataType));
                     NeedDataAnnotations = true;
                 }
-                if (!String.IsNullOrEmpty(item.DisplayFormat))
+                if (!string.IsNullOrEmpty(item.DisplayFormat))
                 {
                     code.AppendLine(new string(space, indent) + "[DisplayFormat(DataFormatString = \"{0:" + item.DisplayFormat + "}\")]");
                     NeedDataAnnotations = true;
@@ -240,7 +239,7 @@ namespace DevKit.MVCTool
                     case "日期":
                         strType = Common.CSharp.MetaData[item.MetaType];
                         code.AppendLine(new string(space, indent) + FilterDateTime);
-                        if (String.IsNullOrEmpty(item.DisplayFormat))
+                        if (string.IsNullOrEmpty(item.DisplayFormat))
                         {
                             code.AppendLine(new string(space, indent) + DateFormat);
                         }
@@ -269,7 +268,7 @@ namespace DevKit.MVCTool
                         break;
                     case "辅助表":
                         strType = Common.CSharp.MetaData["字符串"];
-                        if (!String.IsNullOrEmpty(item.EnumOrMasterType))
+                        if (!string.IsNullOrEmpty(item.EnumOrMasterType))
                         {
                             if (item.IsList)
                             {
@@ -284,7 +283,7 @@ namespace DevKit.MVCTool
                         break;
                     case "辅助评价表":
                         strType = "ItemWithGrade";
-                        if (!String.IsNullOrEmpty(item.EnumOrMasterType))
+                        if (!string.IsNullOrEmpty(item.EnumOrMasterType))
                         {
                             if (item.IsList)
                             {
@@ -305,9 +304,9 @@ namespace DevKit.MVCTool
                         }
                         if (item.IsList)
                         {
-                            code.AppendLine(new string(space, indent) + 
+                            code.AppendLine(new string(space, indent) +
                                 FilterMulitCatalogMasterTable.Replace("@MasterName@", item.EnumOrMasterType)
-                                                             .Replace("@CatalogName@",item.CatalogType));
+                                                             .Replace("@CatalogName@", item.CatalogType));
 
                         }
                         else
@@ -331,7 +330,7 @@ namespace DevKit.MVCTool
                     .Replace("@type", strType)
                     .Replace("@name", item.VarName)
                 );
-                code.AppendLine(String.Empty);
+                code.AppendLine(string.Empty);
             }
 
             //*定制
@@ -342,16 +341,16 @@ namespace DevKit.MVCTool
             code.AppendLine(new string(space, indent) + "{");
             code.AppendLine(new string(space, indent) + "    return \"" + model.CollectionName + "\";");
             code.AppendLine(new string(space, indent) + "}");
-            code.AppendLine(String.Empty);
+            code.AppendLine(string.Empty);
 
             code.AppendLine(new string(space, indent) + "/// <summary>");
             code.AppendLine(new string(space, indent) + "/// 数据集名称静态字段");
             code.AppendLine(new string(space, indent) + "/// </summary>");
             code.AppendLine(new string(space, indent) + "public static " + (!isOrgClass ? "new " : "") + "string CollectionName = \"" + model.CollectionName + "\";");
 
-            code.AppendLine(String.Empty);
+            code.AppendLine(string.Empty);
 
-            code.AppendLine(String.Empty);
+            code.AppendLine(string.Empty);
             code.AppendLine(new string(space, indent) + "/// <summary>");
             code.AppendLine(new string(space, indent) + "/// 数据主键前缀");
             code.AppendLine(new string(space, indent) + "/// </summary>");
@@ -366,7 +365,7 @@ namespace DevKit.MVCTool
                 code.AppendLine(new string(space, indent) + "    return \"" + model.Prefix + "\";");
             }
             code.AppendLine(new string(space, indent) + "}");
-            code.AppendLine(String.Empty);
+            code.AppendLine(string.Empty);
 
             code.AppendLine(new string(space, indent) + "/// <summary>");
             code.AppendLine(new string(space, indent) + "/// 数据主键前缀静态字段");
@@ -379,7 +378,7 @@ namespace DevKit.MVCTool
             {
                 code.AppendLine(new string(space, indent) + "public static " + (!isOrgClass ? "new " : "") + "string Prefix = \"" + model.Prefix + "\";");
             }
-            code.AppendLine(String.Empty);
+            code.AppendLine(string.Empty);
 
             code.AppendLine(new string(space, indent) + "/// <summary>");
             code.AppendLine(new string(space, indent) + "/// Mvc画面的标题");
@@ -392,7 +391,7 @@ namespace DevKit.MVCTool
             code.AppendLine(new string(space, indent) + "public static " + (!isOrgClass ? "new " : "") + "string MvcTitle = \"" + model.Description + "\";");
 
             indent -= 4;
-            code.AppendLine(String.Empty);
+            code.AppendLine(string.Empty);
             code.AppendLine(new string(space, indent) + "#endregion");
             indent -= 4;
             code.AppendLine(new string(space, indent) + "}");
@@ -407,7 +406,7 @@ namespace DevKit.MVCTool
             if (NeedComponentModel) codeWriter.WriteLine(UsingComponentModel);
             if (NeedDataAnnotations) codeWriter.WriteLine(UsingDataAnnotations);
             if (NeedWebMvc) codeWriter.WriteLine(UsingWebMvc);
-            codeWriter.WriteLine(String.Empty);
+            codeWriter.WriteLine(string.Empty);
             //Entity Code
             codeWriter.Write(code);
             codeWriter.Close();
@@ -418,7 +417,7 @@ namespace DevKit.MVCTool
         /// </summary>
         /// <param name="DataType"></param>
         /// <returns></returns>
-        private static string GetDataType(String DataType)
+        private static string GetDataType(string DataType)
         {
             string strDataType = string.Empty;
             switch (DataType)

@@ -9,13 +9,13 @@ namespace DevKit.Common
         /// <summary>
         /// 
         /// </summary>
-        private static String PREFIX = "\\u";
+        private static string PREFIX = "\\u";
         /// <summary>
         /// 
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>
-        public static String native2Ascii(String str)
+        public static string native2Ascii(string str)
         {
             char[] chars = str.ToCharArray();
             StringBuilder sb = new StringBuilder();
@@ -30,7 +30,7 @@ namespace DevKit.Common
         /// </summary>
         /// <param name="c"></param>
         /// <returns></returns>
-        private static String char2Ascii(char c)
+        private static string char2Ascii(char c)
         {
             if (c > 255)
             {
@@ -38,7 +38,7 @@ namespace DevKit.Common
                 sb.Append(PREFIX);
                 int code = (c >> 8);
 
-                String tmp = Convert.ToString(code, 16);
+                string tmp = Convert.ToString(code, 16);
                 if (tmp.Length == 1)
                 {
                     sb.Append("0");
@@ -63,7 +63,7 @@ namespace DevKit.Common
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>
-        public static String ascii2Native(String str)
+        public static string ascii2Native(string str)
         {
             StringBuilder sb = new StringBuilder();
             int begin = 0;
@@ -83,7 +83,7 @@ namespace DevKit.Common
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>
-        private static char ascii2Char(String str)
+        private static char ascii2Char(string str)
         {
             if (str.Length != 6)
             {
@@ -95,7 +95,7 @@ namespace DevKit.Common
                 throw new ArgumentException(
                         "Ascii string of a native character must start with \"\\u\".");
             }
-            String tmp = str.Substring(2, 2);
+            string tmp = str.Substring(2, 2);
             int code = Convert.ToInt16(tmp, 16) << 8;
             tmp = str.Substring(4, 2);
             code += Convert.ToInt16(tmp, 16);
@@ -113,9 +113,9 @@ namespace DevKit.Common
             workbook = excelObj.Workbooks.Open(ExcelFilename);
             dynamic worksheet = workbook.Sheets(1);
             int row = 5;
-            while (!String.IsNullOrEmpty(worksheet.Cells(row,2).Text))
+            while (!string.IsNullOrEmpty(worksheet.Cells(row,2).Text))
             {
-                if (!String.IsNullOrEmpty(worksheet.Cells(row, 3).Text))
+                if (!string.IsNullOrEmpty(worksheet.Cells(row, 3).Text))
                 {
                     worksheet.Cells(row, 4).Value = Common.Native2AsciiUtils.native2Ascii(worksheet.Cells(row, 3).Text);
                 }

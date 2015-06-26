@@ -7,13 +7,12 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
-using DevKit.Common;
 namespace DevKit.CodeSnippetMgr
 {
-	/// <summary>
-	/// Description of codeSnippet.
-	/// </summary>
-	[Serializable]
+    /// <summary>
+    /// Description of codeSnippet.
+    /// </summary>
+    [Serializable]
 	public class codeSnippet
 	{
 		/// <summary>

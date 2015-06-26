@@ -1,5 +1,4 @@
-﻿using DevKit.CodeSnippetMgr;
-/*
+﻿/*
  * Created by SharpDevelop.
  * User: scs
  * Date: 2014/12/30
@@ -10,12 +9,12 @@
 using System;
 using System.Windows.Forms;
 
-namespace  DevKit.HtmlUtility
+namespace DevKit.HtmlUtility
 {
-	/// <summary>
-	/// Class with program entry point.
-	/// </summary>
-	internal sealed class Program
+    /// <summary>
+    /// Class with program entry point.
+    /// </summary>
+    internal sealed class Program
 	{
 		/// <summary>
 		/// Program entry point.

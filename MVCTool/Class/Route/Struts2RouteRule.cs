@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualBasic;
-using System;
 using System.Xml;
 
 namespace DevKit.MVCTool
@@ -11,7 +10,7 @@ namespace DevKit.MVCTool
     {
         internal static void GenerateRouteXml(string ExcelFilename, string XMLfilename, string PackageName)
         {
-            if (String.IsNullOrEmpty(ExcelFilename))
+            if (string.IsNullOrEmpty(ExcelFilename))
             {
                 ExcelFilename = Common.Utility.PickFile(Common.Utility.FileDialogMode.Open, Common.Utility.XlsxFilter);
             }
@@ -26,10 +25,10 @@ namespace DevKit.MVCTool
             ((XmlElement)package).SetAttribute("name", PackageName);
             ((XmlElement)package).SetAttribute("extends", "struts-default");
             XmlNode action = null;
-            while (!String.IsNullOrEmpty(worksheet.Cells(seekrow, 3).Text) || !String.IsNullOrEmpty(worksheet.Cells(seekrow, 5).Text))
+            while (!string.IsNullOrEmpty(worksheet.Cells(seekrow, 3).Text) || !string.IsNullOrEmpty(worksheet.Cells(seekrow, 5).Text))
             {
                 //ActionName或者Result不为空
-                if (!String.IsNullOrEmpty(worksheet.Cells(seekrow, 3).Text))
+                if (!string.IsNullOrEmpty(worksheet.Cells(seekrow, 3).Text))
                 {
                     if (action != null)
                     {

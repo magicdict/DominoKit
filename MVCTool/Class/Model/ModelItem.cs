@@ -63,7 +63,7 @@ namespace DevKit.MVCTool
         /// <returns></returns>
         public static ModelInfo ReadModelFromExcel(string ExcelFilename = "")
         {
-            if (String.IsNullOrEmpty(ExcelFilename))
+            if (string.IsNullOrEmpty(ExcelFilename))
             {
                 ExcelFilename = Common.Utility.PickFile(Common.Utility.FileDialogMode.Open, Common.Utility.XlsxFilter);
             }
@@ -130,7 +130,7 @@ namespace DevKit.MVCTool
             }
 
             int seekrow = firstRow;
-            while (!String.IsNullOrEmpty(ExcelSheet.Cells(seekrow, ModelSheetStruct.DomainName).Text))
+            while (!string.IsNullOrEmpty(ExcelSheet.Cells(seekrow, ModelSheetStruct.DomainName).Text))
             {
                 ModelItem item = new ModelItem();
                 item.Flag = ExcelSheet.Cells(seekrow, ModelSheetStruct.Flag).Text;

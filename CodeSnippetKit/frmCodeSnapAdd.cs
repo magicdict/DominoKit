@@ -54,7 +54,7 @@ namespace DevKit.CodeSnippetMgr
 		{
 			db = new Common.XmlDataBase<codeSnippet>(_dbfile);
 			Common.Utility.FillComberWithArray(cmbCatalog, codeSnippet.strCatalog);
-			if (!String.IsNullOrEmpty(_dbid)) {
+			if (!string.IsNullOrEmpty(_dbid)) {
 				model = db.SearchAsDBRecordByDBID(_dbid);
 				code = model.DataRec;
 				txtTitle.Text = code.Title;
@@ -77,7 +77,7 @@ namespace DevKit.CodeSnippetMgr
 			code.Tag = txtTag.Text;
 			code.Code = txtCode.Text;
 			code.Catalog = cmbCatalog.Text;
-			if (!String.IsNullOrEmpty(_dbid)) {
+			if (!string.IsNullOrEmpty(_dbid)) {
 				db.UpdataRec(model);
 			}else{
 				db.AppendRec(code);
