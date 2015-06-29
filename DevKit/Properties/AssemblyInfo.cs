@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle ("MvcTool")]
+[assembly: AssemblyTitle("Develop Tool For MVC")]
 [assembly: AssemblyDescription ("")]
 [assembly: AssemblyConfiguration ("")]
-[assembly: AssemblyCompany ("Microsoft")]
-[assembly: AssemblyProduct ("MvcTool")]
+[assembly: AssemblyCompany("上海中和软件公司")]
+[assembly: AssemblyProduct("Develop Tool For MVC")]
 [assembly: AssemblyCopyright ("Copyright © 上海中和软件公司 2014-2015")]
 [assembly: AssemblyTrademark ("")]
 [assembly: AssemblyCulture ("")]

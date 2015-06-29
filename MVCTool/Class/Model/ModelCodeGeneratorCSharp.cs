@@ -77,6 +77,7 @@ namespace DevKit.MVCTool
         private const string UsingInfraDataBase = "using InfraStructure.DataBase;";
         private const string UsingFilterSet = "using InfraStructure.FilterSet;";
         private const string UsingInfra = "using InfraStructure;";
+
         #endregion
 
         /// <summary>
@@ -419,7 +420,10 @@ namespace DevKit.MVCTool
         /// <returns></returns>
         private static string GetDataType(string DataType)
         {
+            //https://msdn.microsoft.com/en-us/library/system.componentmodel.dataannotations.datatype.aspx
+
             string strDataType = string.Empty;
+
             switch (DataType)
             {
                 case "密码":
@@ -439,6 +443,9 @@ namespace DevKit.MVCTool
                     break;
                 case "手机":
                     strDataType = "[DataType(DataType.PhoneNumber)]";
+                    break;
+                case "网络地址":
+                    strDataType = "[DataType(DataType.Url)]";
                     break;
                 default:
                     break;
