@@ -37,9 +37,9 @@ namespace DevKit.MVCTool
                 if (item.KeyField && isHibernateORM){
                     code.AppendLine(new string(space, indent) + "@Id");
                 }
-                if (!string.IsNullOrEmpty(item.DisplayName))
+                if (!string.IsNullOrEmpty(item.DomainName))
                 {
-                    code.AppendLine(new string(space, indent) + "//" + item.DisplayName);
+                    code.AppendLine(new string(space, indent) + "//" + item.DomainName);
                 }
                 else
                 {
@@ -109,7 +109,7 @@ namespace DevKit.MVCTool
                               .Replace("@name", item.VarName)
                 );
                 indent += 4;
-                code.AppendLine(new string(space, indent) + "return this.@name;"
+                code.AppendLine(new string(space, indent) + "return @name;"
                                .Replace("@name", item.VarName)
                 );
                 indent -= 4;

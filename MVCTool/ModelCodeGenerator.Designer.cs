@@ -131,7 +131,6 @@
             this.txtDocumentPath.Name = "txtDocumentPath";
             this.txtDocumentPath.Size = new System.Drawing.Size(429, 21);
             this.txtDocumentPath.TabIndex = 23;
-            this.txtDocumentPath.Text = "E:\\WorkSpace\\DominoKit\\Generator\\Entity\\Document\\Position.xlsx";
             // 
             // label3
             // 

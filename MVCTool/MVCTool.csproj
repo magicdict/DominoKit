@@ -70,12 +70,6 @@
     <Compile Include="frmNative2ASCII.Designer.cs">
       <DependentUpon>frmNative2ASCII.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmNewProject.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmNewProject.Designer.cs">
-      <DependentUpon>frmNewProject.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmRouteRuleForStruts.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -94,6 +88,12 @@
     <Compile Include="frmValidationStruts2.Designer.cs">
       <DependentUpon>frmValidationStruts2.cs</DependentUpon>
     </Compile>
+    <Compile Include="ModelCodeGenerator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ModelCodeGenerator.Designer.cs">
+      <DependentUpon>ModelCodeGenerator.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="frmEnumCodeGenerator.resx">
@@ -101,9 +101,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmNative2ASCII.resx">
       <DependentUpon>frmNative2ASCII.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmNewProject.resx">
-      <DependentUpon>frmNewProject.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmRouteRuleForStruts.resx">
       <DependentUpon>frmRouteRuleForStruts.cs</DependentUpon>
@@ -113,6 +110,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmValidationStruts2.resx">
       <DependentUpon>frmValidationStruts2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ModelCodeGenerator.resx">
+      <DependentUpon>ModelCodeGenerator.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

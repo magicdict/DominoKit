@@ -151,6 +151,7 @@ namespace DevKit
         /// <param name="e"></param>
         private void GenerateModelCodeToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            ModelCodeGenerator.CurrentProject = SystemMonitor.CurrentProject;
             Common.Utility.SetUp(new ModelCodeGenerator());
         }
         /// <summary>
@@ -223,6 +224,7 @@ namespace DevKit
         /// <param name="e"></param>
         private void GenerateMasterToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            ModelCodeGenerator.CurrentProject = SystemMonitor.CurrentProject;
             Common.Utility.SetUp(new ModelCodeGenerator());
         }
         /// <summary>

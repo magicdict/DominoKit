@@ -8,6 +8,9 @@ namespace DevKit
 {
     public partial class ModelCodeGenerator : Form
     {
+
+        public static ProjectInfo CurrentProject = null;
+
         public ModelCodeGenerator()
         {
             InitializeComponent();
@@ -74,18 +77,27 @@ namespace DevKit
             FileInfo f = new FileInfo(txtDocumentPath.Text);
             if (string.IsNullOrEmpty(txtModelSourcePath.Text))
             {
+                string extendsion = ".cs";
+                if (radJavaSpring.Checked || radJavaStruts2.Checked) {
+                    extendsion = ".java";
+                }
                 if (model.ModelName.StartsWith(EnumAndConst.MasterPrefix))
                 {
-                    txtModelSourcePath.Text = SystemMonitor.CurrentProject.MasterPath.SourcePath + "\\" + f.Name.Replace(".xlsx", ".cs");
+                    txtModelSourcePath.Text = CurrentProject.MasterPath.SourcePath + "\\" + f.Name.Replace(".xlsx", extendsion);
                 }
                 else
                 {
-                    txtModelSourcePath.Text = SystemMonitor.CurrentProject.EntityPath.SourcePath + "\\" + f.Name.Replace(".xlsx", ".cs");
+                    txtModelSourcePath.Text = CurrentProject.EntityPath.SourcePath + "\\" + f.Name.Replace(".xlsx", extendsion);
                 }
             }
             if (string.IsNullOrEmpty(txtViewSourcePath.Text))
             {
-                txtViewSourcePath.Text = SystemMonitor.CurrentProject.ViewerPath + "\\" + f.Name.Replace(".xlsx", ".cshtml");
+                string extendsion = ".cshtml";
+                if (radJavaSpring.Checked || radJavaStruts2.Checked)
+                {
+                    extendsion = ".jsp";
+                }
+                txtViewSourcePath.Text = CurrentProject.ViewerPath + "\\" + f.Name.Replace(".xlsx", extendsion);
             }
             if (radCSharpMVC5.Checked)
             {
