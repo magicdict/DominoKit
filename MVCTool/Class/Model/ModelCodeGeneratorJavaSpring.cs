@@ -10,7 +10,7 @@ namespace DevKit.MVCTool
         /// </summary>
         /// <param name="filename"></param>
         /// <param name="model"></param>
-        public static void GenerateJavaSpring(string filename, ModelInfo model)
+        public static void GenerateJavaSpring(string filename, ModelInfo model,bool isHibernateORM = false)
         {
             StreamWriter codeWriter = new StreamWriter(filename, false);
             StringBuilder code = new StringBuilder();
@@ -21,12 +21,22 @@ namespace DevKit.MVCTool
             code.AppendLine(string.Empty);
             //Hibernate实现验证
             code.AppendLine("import org.hibernate.validator.constraints.*;");
+            //使用hibernate作为ORM系统
+            if (isHibernateORM) {
+                code.AppendLine("import javax.persistence.*;");
+            }
             code.AppendLine(string.Empty);
+            if (isHibernateORM) {
+                code.AppendLine("@Entity");
+            }
             code.AppendLine("public class " + model.ModelName + " {");
             code.AppendLine(string.Empty);
             indent += 4;
             foreach (var item in model.Items)
             {
+                if (item.KeyField && isHibernateORM){
+                    code.AppendLine(new string(space, indent) + "@Id");
+                }
                 if (!string.IsNullOrEmpty(item.DisplayName))
                 {
                     code.AppendLine(new string(space, indent) + "//" + item.DisplayName);

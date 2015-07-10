@@ -100,7 +100,7 @@ namespace DevKit
             }
             if (radJavaSpring.Checked)
             {
-                ModelGenerator.GenerateJavaSpring(txtModelSourcePath.Text, model);
+                ModelGenerator.GenerateJavaSpring(txtModelSourcePath.Text, model,chkHibernateORM.Checked);
             }
             //建表Sql文
             if (chkCreateDDL.Checked && (!string.IsNullOrEmpty(txtSqlPath.Text)))

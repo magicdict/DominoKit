@@ -54,6 +54,7 @@
             this.txtViewSourcePath = new System.Windows.Forms.TextBox();
             this.chkCreateModel = new System.Windows.Forms.CheckBox();
             this.chkCreateView = new System.Windows.Forms.CheckBox();
+            this.chkHibernateORM = new System.Windows.Forms.CheckBox();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -265,7 +266,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.ForeColor = System.Drawing.Color.DodgerBlue;
             this.label1.Location = new System.Drawing.Point(425, 281);
             this.label1.Name = "label1";
@@ -317,12 +318,24 @@
             this.chkCreateView.AutoSize = true;
             this.chkCreateView.Checked = true;
             this.chkCreateView.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkCreateView.Location = new System.Drawing.Point(217, 255);
+            this.chkCreateView.Location = new System.Drawing.Point(226, 255);
             this.chkCreateView.Name = "chkCreateView";
             this.chkCreateView.Size = new System.Drawing.Size(96, 16);
             this.chkCreateView.TabIndex = 31;
             this.chkCreateView.Text = "生成MVC5视图";
             this.chkCreateView.UseVisualStyleBackColor = true;
+            // 
+            // chkHibernateORM
+            // 
+            this.chkHibernateORM.AutoSize = true;
+            this.chkHibernateORM.Checked = true;
+            this.chkHibernateORM.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkHibernateORM.Location = new System.Drawing.Point(118, 255);
+            this.chkHibernateORM.Name = "chkHibernateORM";
+            this.chkHibernateORM.Size = new System.Drawing.Size(102, 16);
+            this.chkHibernateORM.TabIndex = 36;
+            this.chkHibernateORM.Text = "Hibernate ORM";
+            this.chkHibernateORM.UseVisualStyleBackColor = true;
             // 
             // ModelCodeGenerator
             // 
@@ -330,6 +343,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(655, 302);
+            this.Controls.Add(this.chkHibernateORM);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.btnPageSourcePath);
             this.Controls.Add(this.txtViewSourcePath);
@@ -388,5 +402,6 @@
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.CheckBox chkCreateModel;
         private System.Windows.Forms.CheckBox chkCreateView;
+        private System.Windows.Forms.CheckBox chkHibernateORM;
     }
 }
