@@ -10,20 +10,21 @@ namespace DevKit.MVCTool
         /// </summary>
         /// <param name="model"></param>
         /// <param name="sqlFilename"></param>
-        public static void MySql(ModelInfo model, string sqlFilename)
+        /// <param name="schema"></param>
+        public static void MySql(ModelInfo model, string sqlFilename,string schema)
         {
             // 缩进
             int indent;
-            StreamWriter codeWriter = new StreamWriter(sqlFilename, false);
+            StreamWriter codeWriter = new StreamWriter(sqlFilename, false, Encoding.Unicode);
             StringBuilder code = new StringBuilder();
             //缩进用空格
             char space = " ".ToCharArray()[0];
             //Init
             indent = 0;
             //删除旧表
-            code.AppendLine("DROP TABLE IF EXISTS `test`.`" + model.ModelName + "`;");
+            code.AppendLine("DROP TABLE IF EXISTS `" + schema + "`.`" + model.ModelName + "`;");
             //建表
-            code.AppendLine("CREATE TABLE  `test`.`" + model.ModelName + "` (");
+            code.AppendLine("CREATE TABLE  `" + schema + "`.`" + model.ModelName + "` (");
             indent += 2;
 
             //单一主健
@@ -89,11 +90,17 @@ namespace DevKit.MVCTool
             }
 
             //主健
-            code.AppendLine("  PRIMARY KEY (`" + strkey + "`)");
-
+            if (!strkey.Equals(string.Empty))
+            {
+                code.AppendLine("  PRIMARY KEY (`" + strkey + "`)");
+            }
+            else {
+                code.AppendLine("$$$");
+            }
             indent -= 2;
             code.AppendLine(") ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;");
-            codeWriter.Write(code);
+            //无主键时候的最后项目末尾逗号的处理
+            codeWriter.Write(code.Replace("," + System.Environment.NewLine + "$$$",""));
             codeWriter.Close();
         }
     }

@@ -44,15 +44,34 @@ namespace DevKit.Common
         /// </summary>
         public const string strJavaStruts2 = "Java Struts2";
         /// <summary>
-        /// 数据类型
+        /// Java JFinal
+        /// </summary>
+        public const string strJavaJFinal = "Java JFinal";
+        /// <summary>
+        /// 数据基础类型
         /// Key：中文数据类型说明
         /// Value：Java实际元数据类型
         /// </summary>
         public static Dictionary<string, string> MetaData = new Dictionary<string, string> { 
             {"整型","int"},
             {"字符串","String"},
-            {"布尔值","bool"},
-            {"日期","DateTime"}
+            {"布尔值","boolean"},
+            {"日期","Date"},
+            {"单精度浮点","float"},
+            {"双精度浮点","double"},
+            {"高精度浮点","BigDecimal"}
+        };
+        /// <summary>
+        /// 数据包装类型
+        /// </summary>
+        public static Dictionary<string, string> MetaDataWrapType = new Dictionary<string, string> {
+            {"整型","Integer"},
+            {"字符串","String"},
+            {"布尔值","Boolean"},
+            {"日期","Date"},
+            {"单精度浮点","Float"},
+            {"双精度浮点","Double"},
+            {"高精度浮点","BigDecimal"}
         };
     }
 }

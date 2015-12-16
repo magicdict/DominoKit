@@ -53,7 +53,7 @@ namespace DevKit.CodeSnippetMgr
 		void FrmCodeManagerLoad(object sender, EventArgs e)
 		{
 			db = new Common.XmlDataBase<codeSnippet>(_dbfile);
-			Common.Utility.FillComberWithArray(cmbCatalog, codeSnippet.strCatalog);
+            Utility.FillComberWithArray(cmbCatalog, codeSnippet.strCatalog);
 			if (!string.IsNullOrEmpty(_dbid)) {
 				model = db.SearchAsDBRecordByDBID(_dbid);
 				code = model.DataRec;
@@ -84,7 +84,7 @@ namespace DevKit.CodeSnippetMgr
 			}
 			db.Commit();
 			MessageBox.Show("添加成功");
-			this.Close();
+            Close();
 		}
 	}
 }

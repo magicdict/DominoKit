@@ -61,7 +61,7 @@ namespace DevKit.MVCTool
         /// 从Excel读取Model
         /// </summary>
         /// <returns></returns>
-        public static ModelInfo ReadModelFromExcel(string ExcelFilename = "")
+        public static List<ModelInfo> ReadModelFromExcel(bool SingleFileMode,string ExcelFilename = "")
         {
             if (string.IsNullOrEmpty(ExcelFilename))
             {
@@ -71,25 +71,43 @@ namespace DevKit.MVCTool
             excelObj.Visible = true;
             dynamic workbook;
             workbook = excelObj.Workbooks.Open(ExcelFilename);
-            ModelInfo model = ModelUtility.ReadModelFromExcelSheet(workbook.Sheets(1));
-            workbook.Close();
-            excelObj.Quit();
-            excelObj = null;
-            if (model.SuperClass == "MasterTable")
+
+            List<ModelInfo> models = new List<ModelInfo>();
+
+            if (SingleFileMode)
             {
-                FileInfo f = new FileInfo(ExcelFilename);
-                if (!f.Name.StartsWith("M_"))
+                for (int i = 0; i < workbook.Sheets.Count; i++)
                 {
-                    var msg = "MasterTable没有以\"M_\"作为模型类型名字的开始字母，是否要重命名文件?" + System.Environment.NewLine +
-                             "[" + f.Name + "] -> [" + "M_" + f.Name + "]";
-                    if (Microsoft.VisualBasic.Interaction.MsgBox(msg, MsgBoxStyle.OkCancel) == MsgBoxResult.Ok)
+                    ModelInfo model = ModelUtility.ReadModelFromExcelSheet(workbook.Sheets(i + 1));
+                    models.Add(model);
+                    //TODO:MasterTable Check
+                }
+                workbook.Close();
+                excelObj.Quit();
+                excelObj = null;
+            }
+            else {
+                ModelInfo model = ModelUtility.ReadModelFromExcelSheet(workbook.Sheets(1));
+                workbook.Close();
+                excelObj.Quit();
+                excelObj = null;
+                if (model.SuperClass == "MasterTable")
+                {
+                    FileInfo f = new FileInfo(ExcelFilename);
+                    if (!f.Name.StartsWith("M_"))
                     {
-                        var targetfilename = ExcelFilename.Replace(f.Name, "M_" + f.Name);
-                        File.Move(ExcelFilename, targetfilename);
+                        var msg = "MasterTable没有以\"M_\"作为模型类型名字的开始字母，是否要重命名文件?" + System.Environment.NewLine +
+                                 "[" + f.Name + "] -> [" + "M_" + f.Name + "]";
+                        if (Interaction.MsgBox(msg, MsgBoxStyle.OkCancel) == MsgBoxResult.Ok)
+                        {
+                            var targetfilename = ExcelFilename.Replace(f.Name, "M_" + f.Name);
+                            File.Move(ExcelFilename, targetfilename);
+                        }
                     }
                 }
+                models.Add(model);
             }
-            return model;
+            return models;
         }
         /// <summary>
         /// 从ExcelSheet中读取单个Model信息
@@ -105,7 +123,16 @@ namespace DevKit.MVCTool
             model.Prefix = ExcelSheet.Cells(3, 6).Text;
             model.SuperClass = ExcelSheet.Cells(2, 9).Text;
             model.Description = ExcelSheet.Cells(3, 9).Text;
-
+            string Version = ExcelSheet.Cells(2, 12).Text;
+            model.Version = 1;
+            if (!string.IsNullOrEmpty(Version))
+            {
+                int x;
+                if (int.TryParse(Version, out x))
+                {
+                    model.Version = x;
+                }
+            }
             if (model.SuperClass == "MasterTable")
             {
                 var IsNeedSave = false;
@@ -130,7 +157,8 @@ namespace DevKit.MVCTool
             }
 
             int seekrow = firstRow;
-            while (!string.IsNullOrEmpty(ExcelSheet.Cells(seekrow, ModelSheetStruct.DomainName).Text))
+            //认为VarName是结束标识位，如果VarName没有，则没有
+            while (!string.IsNullOrEmpty(ExcelSheet.Cells(seekrow, ModelSheetStruct.VarName).Text))
             {
                 ModelItem item = new ModelItem();
                 item.Flag = ExcelSheet.Cells(seekrow, ModelSheetStruct.Flag).Text;
@@ -200,6 +228,10 @@ namespace DevKit.MVCTool
         /// 说明
         /// </summary>
         public string Description { set; get; }
+        /// <summary>
+        /// 版本号
+        /// </summary>
+        public int Version { set; get; }
         /// <summary>
         /// 模型项目
         /// </summary>

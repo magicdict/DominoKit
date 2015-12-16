@@ -30,6 +30,9 @@ namespace DevKit.MVCTool
                     case Common.Java.strJavaStruts2:
                         radJavaStruts2.Checked = true;
                         break;
+                    case Common.Java.strJavaJFinal:
+                        radJavaJFinal.Checked = true;
+                        break;
                     default:
                         break;
                 }
@@ -63,6 +66,7 @@ namespace DevKit.MVCTool
             _proj.NameSpace = txtNameSpace.Text;
             _proj.PrjToolPath = txtPrjPath.Text;
             _proj.PrjRootPath = txtPrjRootPath.Text;
+            _proj.DataBaseSchema = txtSchema.Text;
             //语言和框架
             if (radCSharpMVC5.Checked)
             {
@@ -79,13 +83,18 @@ namespace DevKit.MVCTool
                 _proj.DevFramework = Common.Java.strJavaStruts2;
                 _proj.DevLanguage = Common.EnumAndConst.Language.Java;
             }
+            if (radJavaJFinal.Checked)
+            {
+                _proj.DevFramework = Common.Java.strJavaJFinal;
+                _proj.DevLanguage = Common.EnumAndConst.Language.Java;
+            }
             //数据库
             if (radMySql.Checked) _proj.DataBaseType = Common.EnumAndConst.DataBase.MySql;
             if (radOracle.Checked) _proj.DataBaseType = Common.EnumAndConst.DataBase.Oracle;
             if (radMsSql.Checked) _proj.DataBaseType = Common.EnumAndConst.DataBase.MSSql;
             if (radMongo.Checked) _proj.DataBaseType = Common.EnumAndConst.DataBase.MongoDB;
 
-            this.Close();
+            Close();
         }
         /// <summary>
         /// 

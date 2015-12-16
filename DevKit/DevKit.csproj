@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -28,6 +28,11 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>False</Prefer32Bit>
+    <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
+    <StartAction>Project</StartAction>
+    <BaseAddress>4194304</BaseAddress>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -38,6 +43,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <BaseAddress>4194304</BaseAddress>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
@@ -108,15 +116,15 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CodesnippetKit\CodeSnippetKit.csproj">
-      <Project>{dc9189f2-e02f-46b6-8099-bac25330147b}</Project>
+      <Project>{DC9189F2-E02F-46B6-8099-BAC25330147B}</Project>
       <Name>CodeSnippetKit</Name>
     </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{a560bcbd-d784-4832-b98d-d38bb85f4f09}</Project>
+      <Project>{A560BCBD-D784-4832-B98D-D38BB85F4F09}</Project>
       <Name>Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\MVCTool\MVCTool.csproj">
-      <Project>{2a8f41f4-d1fd-480d-8aa3-04b7998f0cc5}</Project>
+      <Project>{2A8F41F4-D1FD-480D-8AA3-04B7998F0CC5}</Project>
       <Name>MVCTool</Name>
     </ProjectReference>
   </ItemGroup>

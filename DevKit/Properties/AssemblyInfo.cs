@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration ("")]
 [assembly: AssemblyCompany("上海中和软件公司")]
 [assembly: AssemblyProduct("Develop Tool For MVC")]
-[assembly: AssemblyCopyright ("Copyright © 上海中和软件公司 2014-2015")]
+[assembly: AssemblyCopyright("Copyright © 上海中和软件公司 2014-2016")]
 [assembly: AssemblyTrademark ("")]
 [assembly: AssemblyCulture ("")]
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -30,5 +30,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.0.3.3")]
-[assembly: AssemblyFileVersion("0.0.3.3")]
+[assembly: AssemblyVersion("0.0.3.6")]
+[assembly: AssemblyFileVersion("0.0.3.6")]

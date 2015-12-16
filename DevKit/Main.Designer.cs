@@ -57,6 +57,7 @@
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.NETMVCRouteEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.struts2路由编辑ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.struts2数据验证ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
             this.代码示例ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.帮助ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,7 +73,6 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.trvCodeSnippet = new System.Windows.Forms.TreeView();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.struts2数据验证ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -162,21 +162,21 @@
             // NewModelToolStripMenuItem
             // 
             this.NewModelToolStripMenuItem.Name = "NewModelToolStripMenuItem";
-            this.NewModelToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.NewModelToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.NewModelToolStripMenuItem.Text = "新建";
             this.NewModelToolStripMenuItem.Click += new System.EventHandler(this.NewModelToolStripMenuItem_Click);
             // 
             // GenerateModelCodeToolStripMenuItem
             // 
             this.GenerateModelCodeToolStripMenuItem.Name = "GenerateModelCodeToolStripMenuItem";
-            this.GenerateModelCodeToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.GenerateModelCodeToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.GenerateModelCodeToolStripMenuItem.Text = "生成代码";
             this.GenerateModelCodeToolStripMenuItem.Click += new System.EventHandler(this.GenerateModelCodeToolStripMenuItem_Click);
             // 
             // GenerateAllModelCodetoolStripMenuItem
             // 
             this.GenerateAllModelCodetoolStripMenuItem.Name = "GenerateAllModelCodetoolStripMenuItem";
-            this.GenerateAllModelCodetoolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.GenerateAllModelCodetoolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.GenerateAllModelCodetoolStripMenuItem.Text = "生成所有代码";
             this.GenerateAllModelCodetoolStripMenuItem.Click += new System.EventHandler(this.GenerateAllModelCodeToolStripMenuItem_Click);
             // 
@@ -316,6 +316,13 @@
             this.struts2路由编辑ToolStripMenuItem.Text = "Struts2 路由编辑";
             this.struts2路由编辑ToolStripMenuItem.Click += new System.EventHandler(this.struts2路由编辑ToolStripMenuItem_Click);
             // 
+            // struts2数据验证ToolStripMenuItem
+            // 
+            this.struts2数据验证ToolStripMenuItem.Name = "struts2数据验证ToolStripMenuItem";
+            this.struts2数据验证ToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.struts2数据验证ToolStripMenuItem.Text = "Struts2 数据验证";
+            this.struts2数据验证ToolStripMenuItem.Click += new System.EventHandler(this.struts2数据验证ToolStripMenuItem_Click);
+            // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
@@ -450,13 +457,6 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(480, 364);
             this.textBox1.TabIndex = 0;
-            // 
-            // struts2数据验证ToolStripMenuItem
-            // 
-            this.struts2数据验证ToolStripMenuItem.Name = "struts2数据验证ToolStripMenuItem";
-            this.struts2数据验证ToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-            this.struts2数据验证ToolStripMenuItem.Text = "Struts2 数据验证";
-            this.struts2数据验证ToolStripMenuItem.Click += new System.EventHandler(this.struts2数据验证ToolStripMenuItem_Click);
             // 
             // Main
             // 

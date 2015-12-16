@@ -5,28 +5,56 @@ namespace DevKit.MVCTool
 {
     public static partial class ModelGenerator
     {
+        //缩进用空格
+        public static char space = " ".ToCharArray()[0];
+        /// <summary>
+        /// 插入Java的注释
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="Comment"></param>
+        public static void InsertJavaComment(StringBuilder code, string Comment, int indent) {
+            code.AppendLine(new string(space, indent) + "/**");
+            code.AppendLine(new string(space, indent) + " * " + Comment);
+            code.AppendLine(new string(space, indent) + " */");
+        }
+        /// <summary>
+        /// 插入Java的方法用注释
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="strMethodName"></param>
+        /// <param name="indent"></param>
+        /// <param name="strParam"></param>
+        /// <param name="strReturn"></param>
+        public static void InsertJavaMethodComment(StringBuilder code, string strMethodName, int indent,string strParam,string strReturn)
+        {
+            code.AppendLine(new string(space, indent) + "/**");
+            code.AppendLine(new string(space, indent) + " * " + strMethodName);
+            code.AppendLine(new string(space, indent) + " * @param " + strParam);
+            if (strReturn != "") code.AppendLine(new string(space, indent) + " * @return " + strReturn);
+            code.AppendLine(new string(space, indent) + " */");
+        }
         /// <summary>
         /// 生成ModelCode
         /// </summary>
         /// <param name="filename"></param>
         /// <param name="model"></param>
-        public static void GenerateJavaSpring(string filename, ModelInfo model,bool isHibernateORM = false)
+        public static void GenerateJavaSpring(string filename, ModelInfo model, bool isHibernateORM = false)
         {
             StreamWriter codeWriter = new StreamWriter(filename, false);
             StringBuilder code = new StringBuilder();
-            //缩进用空格
-            char space = " ".ToCharArray()[0];
             int indent = 0;
             code.AppendLine("package " + model.NameSpace + ";");
             code.AppendLine(string.Empty);
             //Hibernate实现验证
             code.AppendLine("import org.hibernate.validator.constraints.*;");
             //使用hibernate作为ORM系统
-            if (isHibernateORM) {
+            if (isHibernateORM)
+            {
                 code.AppendLine("import javax.persistence.*;");
             }
             code.AppendLine(string.Empty);
-            if (isHibernateORM) {
+            if (isHibernateORM)
+            {
                 code.AppendLine("@Entity");
             }
             code.AppendLine("public class " + model.ModelName + " {");
@@ -34,16 +62,17 @@ namespace DevKit.MVCTool
             indent += 4;
             foreach (var item in model.Items)
             {
-                if (item.KeyField && isHibernateORM){
+                if (item.KeyField && isHibernateORM)
+                {
                     code.AppendLine(new string(space, indent) + "@Id");
                 }
                 if (!string.IsNullOrEmpty(item.DomainName))
                 {
-                    code.AppendLine(new string(space, indent) + "//" + item.DomainName);
+                    InsertJavaComment(code, item.DomainName, indent);
                 }
                 else
                 {
-                    code.AppendLine(new string(space, indent) + "//" + item.VarName);
+                    InsertJavaComment(code, item.VarName, indent);
                 }
 
                 //验证注解
@@ -104,10 +133,22 @@ namespace DevKit.MVCTool
                 indent -= 4;
                 code.AppendLine(new string(space, indent) + "}");
                 //Get
-                code.AppendLine(new string(space, indent) + "public @type get@name(){"
-                              .Replace("@type", strMetaType)
-                              .Replace("@name", item.VarName)
-                );
+                if (strMetaType == "boolean")
+                {
+                    //布尔型使用 isXXXX()
+                    code.AppendLine(new string(space, indent) + "public @type is@name(){"
+                          .Replace("@type", strMetaType)
+                          .Replace("@name", item.VarName)
+                        );
+                }
+                else
+                {
+                    code.AppendLine(new string(space, indent) + "public @type get@name(){"
+                      .Replace("@type", strMetaType)
+                      .Replace("@name", item.VarName)
+                    );
+                }
+
                 indent += 4;
                 code.AppendLine(new string(space, indent) + "return @name;"
                                .Replace("@name", item.VarName)

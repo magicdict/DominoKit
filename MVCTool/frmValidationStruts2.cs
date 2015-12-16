@@ -12,7 +12,7 @@ namespace DevKit.MVCTool
 
         private void btnGernerateCode_Click(object sender, EventArgs e)
         {
-            ModelInfo model = ModelUtility.ReadModelFromExcel(txtDocumentPath.Text);
+            ModelInfo model = ModelUtility.ReadModelFromExcel(false,txtDocumentPath.Text)[0];
             string xmlfilename = txtSourcePath.Text + "\\" + txtAction.Text + "Action-validation.xml";
             ValidationStruts2.GenerateValidation(xmlfilename, model,chkExternProperties.Checked);
             MessageBox.Show("验证文件已经生成：" + xmlfilename);

@@ -37,6 +37,7 @@
             this.txtPrjPath = new System.Windows.Forms.TextBox();
             this.btnPrjPath = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.radJavaJFinal = new System.Windows.Forms.RadioButton();
             this.radJavaStruts2 = new System.Windows.Forms.RadioButton();
             this.radJavaSpring = new System.Windows.Forms.RadioButton();
             this.radCSharpMVC5 = new System.Windows.Forms.RadioButton();
@@ -48,6 +49,8 @@
             this.txtPrjRootPath = new System.Windows.Forms.TextBox();
             this.btnPrjRootPath = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
+            this.txtSchema = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -87,7 +90,7 @@
             // btnOK
             // 
             this.btnOK.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnOK.Location = new System.Drawing.Point(212, 249);
+            this.btnOK.Location = new System.Drawing.Point(214, 295);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 26);
             this.btnOK.TabIndex = 21;
@@ -124,15 +127,27 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.radJavaJFinal);
             this.groupBox3.Controls.Add(this.radJavaStruts2);
             this.groupBox3.Controls.Add(this.radJavaSpring);
             this.groupBox3.Controls.Add(this.radCSharpMVC5);
             this.groupBox3.Location = new System.Drawing.Point(14, 134);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(390, 46);
+            this.groupBox3.Size = new System.Drawing.Size(471, 46);
             this.groupBox3.TabIndex = 23;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "开发框架";
+            // 
+            // radJavaJFinal
+            // 
+            this.radJavaJFinal.AutoSize = true;
+            this.radJavaJFinal.Location = new System.Drawing.Point(345, 20);
+            this.radJavaJFinal.Name = "radJavaJFinal";
+            this.radJavaJFinal.Size = new System.Drawing.Size(101, 16);
+            this.radJavaJFinal.TabIndex = 3;
+            this.radJavaJFinal.TabStop = true;
+            this.radJavaJFinal.Text = "Java - JFinal";
+            this.radJavaJFinal.UseVisualStyleBackColor = true;
             // 
             // radJavaStruts2
             // 
@@ -176,7 +191,7 @@
             this.groupBox1.Controls.Add(this.radMySql);
             this.groupBox1.Location = new System.Drawing.Point(14, 186);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(390, 46);
+            this.groupBox1.Size = new System.Drawing.Size(471, 46);
             this.groupBox1.TabIndex = 24;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "数据库";
@@ -250,12 +265,30 @@
             this.label3.TabIndex = 22;
             this.label3.Text = "实际项目根目录：";
             // 
+            // txtSchema
+            // 
+            this.txtSchema.Location = new System.Drawing.Point(126, 253);
+            this.txtSchema.Name = "txtSchema";
+            this.txtSchema.Size = new System.Drawing.Size(100, 21);
+            this.txtSchema.TabIndex = 40;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(19, 256);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(77, 12);
+            this.label6.TabIndex = 39;
+            this.label6.Text = "默认Schema：";
+            // 
             // frmNewProject
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(497, 287);
+            this.ClientSize = new System.Drawing.Size(501, 331);
+            this.Controls.Add(this.txtSchema);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.label3);
@@ -302,5 +335,8 @@
         private System.Windows.Forms.TextBox txtPrjRootPath;
         private System.Windows.Forms.Button btnPrjRootPath;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.RadioButton radJavaJFinal;
+        private System.Windows.Forms.TextBox txtSchema;
+        private System.Windows.Forms.Label label6;
     }
 }

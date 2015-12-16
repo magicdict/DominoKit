@@ -51,13 +51,13 @@ namespace DevKit
         /// <param name="filename"></param>
         private void ShowTextFile(string filename)
         {
-            this.splitContainer1.Panel2.Controls.Clear();
+            splitContainer1.Panel2.Controls.Clear();
             var t = new TextBox();
             t.Multiline = true;
             var sr = new System.IO.StreamReader(filename);
             t.Text = sr.ReadToEnd();
             sr.Close();
-            this.splitContainer1.Panel2.Controls.Add(t);
+            splitContainer1.Panel2.Controls.Add(t);
             t.Dock = DockStyle.Fill;
             t.ScrollBars = ScrollBars.Both;
         }
@@ -67,11 +67,11 @@ namespace DevKit
         /// <param name="DBID"></param>
         private void ShowCodeSnippet(string DBID)
         {
-            this.splitContainer1.Panel2.Controls.Clear();
+            splitContainer1.Panel2.Controls.Clear();
             var t = new TextBox();
             t.Multiline = true;
             t.Text = SystemMonitor.db.SearchAsSimpleRecordByDBID(DBID).Code.Replace("\n", System.Environment.NewLine);
-            this.splitContainer1.Panel2.Controls.Add(t);
+            splitContainer1.Panel2.Controls.Add(t);
             t.Dock = DockStyle.Fill;
             t.ScrollBars = ScrollBars.Both;
         }
@@ -98,7 +98,7 @@ namespace DevKit
             //初始化目录
             proj.InitFolder();
             //树型结构表示
-            proj.SetProjectTree(this.trvProject);
+            proj.SetProjectTree(trvProject);
             //当前工程
             SystemMonitor.CurrentProject = proj;
             //ModelGenerator设定
@@ -131,7 +131,7 @@ namespace DevKit
             if (!string.IsNullOrEmpty(ModelName))
             {
                 SystemMonitor.CurrentProject.NewModel(ModelName);
-                SystemMonitor.CurrentProject.SetProjectTree(this.trvProject);
+                SystemMonitor.CurrentProject.SetProjectTree(trvProject);
             }
         }
         /// <summary>
@@ -141,8 +141,8 @@ namespace DevKit
         /// <param name="e"></param>
         private void GenerateAllModelCodeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SystemMonitor.CurrentProject.GenerateAllModelCode(SystemMonitor.CurrentProject.EntityPath);
-            SystemMonitor.CurrentProject.SetProjectTree(this.trvProject);
+            SystemMonitor.CurrentProject.GenerateAllModelCode(false,SystemMonitor.CurrentProject.EntityPath);
+            SystemMonitor.CurrentProject.SetProjectTree(trvProject);
         }
         /// <summary>
         /// 生成数据模型
@@ -154,6 +154,7 @@ namespace DevKit
             ModelCodeGenerator.CurrentProject = SystemMonitor.CurrentProject;
             Common.Utility.SetUp(new ModelCodeGenerator());
         }
+
         /// <summary>
         /// 增加枚举
         /// </summary>
@@ -165,7 +166,7 @@ namespace DevKit
             if (!string.IsNullOrEmpty(EnumName))
             {
                 SystemMonitor.CurrentProject.NewEnum(EnumName);
-                SystemMonitor.CurrentProject.SetProjectTree(this.trvProject);
+                SystemMonitor.CurrentProject.SetProjectTree(trvProject);
             }
         }
         /// <summary>
@@ -176,7 +177,7 @@ namespace DevKit
         private void GenerateAllEnumCodetoolStripMenuItem_Click(object sender, EventArgs e)
         {
             SystemMonitor.CurrentProject.GenerateAllEnumCode();
-            SystemMonitor.CurrentProject.SetProjectTree(this.trvProject);
+            SystemMonitor.CurrentProject.SetProjectTree(trvProject);
         }
         /// <summary>
         /// 枚举工具
@@ -204,7 +205,7 @@ namespace DevKit
             if (!string.IsNullOrEmpty(MasterName))
             {
                 SystemMonitor.CurrentProject.NewModel(MasterName);
-                SystemMonitor.CurrentProject.SetProjectTree(this.trvProject);
+                SystemMonitor.CurrentProject.SetProjectTree(trvProject);
             }
         }
         /// <summary>
@@ -214,8 +215,8 @@ namespace DevKit
         /// <param name="e"></param>
         private void GenerateAllMasterToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SystemMonitor.CurrentProject.GenerateAllModelCode(SystemMonitor.CurrentProject.MasterPath);
-            SystemMonitor.CurrentProject.SetProjectTree(this.trvProject);
+            SystemMonitor.CurrentProject.GenerateAllModelCode(false,SystemMonitor.CurrentProject.MasterPath);
+            SystemMonitor.CurrentProject.SetProjectTree(trvProject);
         }
         /// <summary>
         /// 生成辅助表
@@ -234,10 +235,10 @@ namespace DevKit
         /// <param name="e"></param>
         private void GenerateAllCodetoolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SystemMonitor.CurrentProject.GenerateAllModelCode(SystemMonitor.CurrentProject.EntityPath);
-            SystemMonitor.CurrentProject.GenerateAllModelCode(SystemMonitor.CurrentProject.MasterPath);
+            SystemMonitor.CurrentProject.GenerateAllModelCode(false, SystemMonitor.CurrentProject.EntityPath);
+            SystemMonitor.CurrentProject.GenerateAllModelCode(false, SystemMonitor.CurrentProject.MasterPath);
             SystemMonitor.CurrentProject.GenerateAllEnumCode();
-            SystemMonitor.CurrentProject.SetProjectTree(this.trvProject);
+            SystemMonitor.CurrentProject.SetProjectTree(trvProject);
         }
         private void ExportToPrjToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -250,7 +251,7 @@ namespace DevKit
         /// <param name="e"></param>
         private void RefreshToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SystemMonitor.CurrentProject.SetProjectTree(this.trvProject);
+            SystemMonitor.CurrentProject.SetProjectTree(trvProject);
         }
         /// <summary>
         /// 修改工程
@@ -339,6 +340,7 @@ namespace DevKit
                                   Environment.NewLine, Application.ProductVersion, Environment.NewLine);
             MessageBox.Show(strAbout, "关于");
         }
+
 
 
 

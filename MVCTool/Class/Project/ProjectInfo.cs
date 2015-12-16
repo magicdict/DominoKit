@@ -1,6 +1,7 @@
 ﻿using DevKit.Common;
 using Microsoft.VisualBasic;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 
@@ -27,11 +28,15 @@ namespace DevKit.MVCTool
         /// <summary>
         /// 开发框架
         /// </summary>
-        public string DevFramework = Common.CSharp.strCSharpMVC5;
+        public string DevFramework = CSharp.strCSharpMVC5;
         /// <summary>
         /// 数据库名称
         /// </summary>
         public EnumAndConst.DataBase DataBaseType = EnumAndConst.DataBase.MySql;
+        /// <summary>
+        /// 数据库Schema
+        /// </summary>
+        public string DataBaseSchema = "";
         /// <summary>
         /// 工程路径
         /// </summary>
@@ -213,25 +218,25 @@ namespace DevKit.MVCTool
                 Directory.CreateDirectory(ViewerPath);
             }
             //保存
-            Common.Utility.SaveObjAsXml<ProjectInfo>(PrjToolPath + "\\ProjectInfo.xml", this);
+            Utility.SaveObjAsXml<ProjectInfo>(PrjToolPath + "\\ProjectInfo.xml", this);
             //枚举扩展
             if (!Directory.Exists(EnumExtendSourceCodePath))
             {
                 Directory.CreateDirectory(EnumExtendSourceCodePath);
             }
-            Common.Utility.getResource(EnumExtendSourceCodePath + "\\EnumExtention.cs", "EnumExtention.cs");
-            Common.Utility.getResource(EnumExtendSourceCodePath + "\\EnumFlagsTemplate.cs", "EnumFlagsTemplate.cs");
-            Common.Utility.getResource(EnumExtendSourceCodePath + "\\EnumTemplate.cs", "EnumTemplate.cs");
-            Common.Utility.getResource(EnumExtendSourceCodePath + "\\EnumDisplayNameAttribute.cs", "EnumDisplayNameAttribute.cs");
+            Utility.getResource(EnumExtendSourceCodePath + "\\EnumExtention.cs", "EnumExtention.cs");
+            Utility.getResource(EnumExtendSourceCodePath + "\\EnumFlagsTemplate.cs", "EnumFlagsTemplate.cs");
+            Utility.getResource(EnumExtendSourceCodePath + "\\EnumTemplate.cs", "EnumTemplate.cs");
+            Utility.getResource(EnumExtendSourceCodePath + "\\EnumDisplayNameAttribute.cs", "EnumDisplayNameAttribute.cs");
             //基本类
             if (!Directory.Exists(ClassSourcePath))
             {
                 Directory.CreateDirectory(ClassSourcePath);
             }
 
-            Common.Utility.getResource(ClassSourcePath + "\\EntityBase.cs", "EntityBase.cs");
-            Common.Utility.getResource(ClassSourcePath + "\\CompanyTable.cs", "CompanyTable.cs");
-            Common.Utility.getResource(ClassSourcePath + "\\MasterTable.cs", "MasterTable.cs");
+            Utility.getResource(ClassSourcePath + "\\EntityBase.cs", "EntityBase.cs");
+            Utility.getResource(ClassSourcePath + "\\CompanyTable.cs", "CompanyTable.cs");
+            Utility.getResource(ClassSourcePath + "\\MasterTable.cs", "MasterTable.cs");
         }
         /// <summary>
         /// 将工程结构用树型控件表示
@@ -293,16 +298,19 @@ namespace DevKit.MVCTool
         /// <summary>
         /// 生成全部模型
         /// </summary>
-        public void GenerateAllModelCode(PathSet _PathSet)
+        public void GenerateAllModelCode(bool SingleFileMode, PathSet _PathSet)
         {
             foreach (var filename in Directory.GetFiles(_PathSet.DocPath))
             {
-                ModelInfo model = ModelUtility.ReadModelFromExcel(filename);
+                List<ModelInfo> models = ModelUtility.ReadModelFromExcel(SingleFileMode,filename);
                 //model.NameSpace = NameSpace;
                 if (DevLanguage == EnumAndConst.Language.CSharp)
                 {
-                    ModelGenerator.GenerateCSharp(_PathSet.SourcePath + "\\" + model.ModelName + ".cs", model, model.Items);
-                    ViewerGenerator.GenerateCSharp(ViewerPath + "\\" + model.ModelName + ".cshtml", model, model.Items);
+                    foreach (ModelInfo model in models)
+                    {
+                        ModelGenerator.GenerateCSharp(_PathSet.SourcePath + "\\" + model.ModelName + ".cs", model, model.Items);
+                        ViewerGenerator.GenerateCSharp(ViewerPath + "\\" + model.ModelName + ".cshtml", model, model.Items);
+                    }
                 }
             }
             GC.Collect();

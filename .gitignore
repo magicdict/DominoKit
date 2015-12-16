@@ -15,6 +15,7 @@
 *.doc
 *.xml
 *.scc
+*.edb
 /CodeSnippetKit/bin
 /CodeSnippetKit/obj
 /Common/bin
