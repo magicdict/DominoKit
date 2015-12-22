@@ -20,6 +20,7 @@
 /CodeSnippetKit/obj
 /Common/bin
 /Common/obj
+/.vs
 /DevKit/bin
 /DevKit/obj
 /MVCTool/bin

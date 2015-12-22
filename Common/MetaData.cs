@@ -2,7 +2,7 @@
 namespace DevKit.Common
 {
     /// <summary>
-    /// Dot Net
+    /// .Net
     /// </summary>
     public class CSharp
     {
@@ -15,6 +15,10 @@ namespace DevKit.Common
         /// </summary>
         public const string strCSharpMVC5 = "C# MVC5.0";
         /// <summary>
+        /// C# MVC6.0
+        /// </summary>
+        public const string strCSharpMVC6 = "C# MVC6.0";
+        /// <summary>
         /// 数据类型
         /// Key：中文数据类型说明
         /// Value：Net实际元数据类型
@@ -23,7 +27,10 @@ namespace DevKit.Common
             {"整型","int"},
             {"字符串","string"},
             {"布尔值","bool"},
-            {"日期","DateTime"}
+            {"日期","DateTime"},
+            {"单精度浮点","float"},
+            {"双精度浮点","double"},
+            {"高精度浮点","decimal"}
         };
     }
     /// <summary>
