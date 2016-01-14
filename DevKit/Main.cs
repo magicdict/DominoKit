@@ -17,6 +17,7 @@ namespace DevKit
             //开发中的内容，暂时不可用
             NETMVCRouteEditorToolStripMenuItem.Text += "[开发中]";
             NETMVCRouteEditorToolStripMenuItem.Enabled = false;
+            ModifyPrjToolStripMenuItem.Enabled = false;
             //加载知识库
             LoadCodeSnappet();
         }
@@ -92,7 +93,10 @@ namespace DevKit
                 return;
             RefreshProjectStatus(proj);
         }
-
+        /// <summary>
+        /// 刷新工程信息
+        /// </summary>
+        /// <param name="proj"></param>
         private void RefreshProjectStatus(ProjectInfo proj)
         {
             //初始化目录
@@ -106,6 +110,7 @@ namespace DevKit
             EnumGenerator.proinfo = proj;
             //恢复菜单
             ProjectToolStripMenuItem.Enabled = true;
+            ModifyPrjToolStripMenuItem.Enabled = true;
         }
         /// <summary>
         /// 打开工程
@@ -119,7 +124,15 @@ namespace DevKit
             ProjectInfo proj = Common.Utility.LoadObjFromXml<ProjectInfo>(projectfile);
             RefreshProjectStatus(proj);
         }
-
+        /// <summary>
+        /// 关闭
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CloseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
         /// <summary>
         /// 增加模型
         /// </summary>
@@ -261,6 +274,7 @@ namespace DevKit
         private void ModifyPrjToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var frm = new frmNewProject(SystemMonitor.CurrentProject);
+            frm.Text = "修改工程";
             Common.Utility.SetUp(frm);
             RefreshProjectStatus(SystemMonitor.CurrentProject);
         }
@@ -340,12 +354,6 @@ namespace DevKit
                                   Environment.NewLine, Application.ProductVersion, Environment.NewLine);
             MessageBox.Show(strAbout, "关于");
         }
-
-
-
-
-
-
         #endregion
 
 

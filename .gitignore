@@ -25,6 +25,8 @@
 /DevKit/obj
 /MVCTool/bin
 /MVCTool/obj
+/UpgradeMVC5ToMVC6/bin
+/UpgradeMVC5ToMVC6/obj
 !readme.txt
 Thumbs.db
 /CodeSnippetKit/CodeSnippetKit.csproj.user

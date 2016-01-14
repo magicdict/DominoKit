@@ -32,8 +32,9 @@
             this.文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.NewPrjToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenPrjToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ModifyPrjToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.关闭ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CloseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.模型ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.NewModelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -50,7 +51,6 @@
             this.GenerateAllCodetoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExportToPrjToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.ModifyPrjToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RefreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.工具ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.native2ASCIIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,7 +72,7 @@
             this.trvProject = new System.Windows.Forms.TreeView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.trvCodeSnippet = new System.Windows.Forms.TreeView();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtSource = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -101,8 +101,9 @@
             this.文件ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.NewPrjToolStripMenuItem,
             this.OpenPrjToolStripMenuItem,
+            this.ModifyPrjToolStripMenuItem,
             this.toolStripMenuItem1,
-            this.关闭ToolStripMenuItem});
+            this.CloseToolStripMenuItem});
             this.文件ToolStripMenuItem.Name = "文件ToolStripMenuItem";
             this.文件ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.文件ToolStripMenuItem.Text = "文件";
@@ -110,28 +111,36 @@
             // NewPrjToolStripMenuItem
             // 
             this.NewPrjToolStripMenuItem.Name = "NewPrjToolStripMenuItem";
-            this.NewPrjToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.NewPrjToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.NewPrjToolStripMenuItem.Text = "新建工程";
             this.NewPrjToolStripMenuItem.Click += new System.EventHandler(this.NewPrjToolStripMenuItem_Click);
             // 
             // OpenPrjToolStripMenuItem
             // 
             this.OpenPrjToolStripMenuItem.Name = "OpenPrjToolStripMenuItem";
-            this.OpenPrjToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.OpenPrjToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.OpenPrjToolStripMenuItem.Text = "打开工程";
             this.OpenPrjToolStripMenuItem.Click += new System.EventHandler(this.OpenPrjToolStripMenuItem_Click);
+            // 
+            // ModifyPrjToolStripMenuItem
+            // 
+            this.ModifyPrjToolStripMenuItem.Name = "ModifyPrjToolStripMenuItem";
+            this.ModifyPrjToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ModifyPrjToolStripMenuItem.Text = "修改工程";
+            this.ModifyPrjToolStripMenuItem.Click += new System.EventHandler(this.ModifyPrjToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(142, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(149, 6);
             // 
-            // 关闭ToolStripMenuItem
+            // CloseToolStripMenuItem
             // 
-            this.关闭ToolStripMenuItem.Name = "关闭ToolStripMenuItem";
-            this.关闭ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.关闭ToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
-            this.关闭ToolStripMenuItem.Text = "关闭";
+            this.CloseToolStripMenuItem.Name = "CloseToolStripMenuItem";
+            this.CloseToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
+            this.CloseToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.CloseToolStripMenuItem.Text = "关闭";
+            this.CloseToolStripMenuItem.Click += new System.EventHandler(this.CloseToolStripMenuItem_Click);
             // 
             // ProjectToolStripMenuItem
             // 
@@ -142,7 +151,6 @@
             this.GenerateAllCodetoolStripMenuItem,
             this.ExportToPrjToolStripMenuItem,
             this.toolStripSeparator1,
-            this.ModifyPrjToolStripMenuItem,
             this.RefreshToolStripMenuItem});
             this.ProjectToolStripMenuItem.Name = "ProjectToolStripMenuItem";
             this.ProjectToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
@@ -162,21 +170,21 @@
             // NewModelToolStripMenuItem
             // 
             this.NewModelToolStripMenuItem.Name = "NewModelToolStripMenuItem";
-            this.NewModelToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
+            this.NewModelToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.NewModelToolStripMenuItem.Text = "新建";
             this.NewModelToolStripMenuItem.Click += new System.EventHandler(this.NewModelToolStripMenuItem_Click);
             // 
             // GenerateModelCodeToolStripMenuItem
             // 
             this.GenerateModelCodeToolStripMenuItem.Name = "GenerateModelCodeToolStripMenuItem";
-            this.GenerateModelCodeToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
+            this.GenerateModelCodeToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.GenerateModelCodeToolStripMenuItem.Text = "生成代码";
             this.GenerateModelCodeToolStripMenuItem.Click += new System.EventHandler(this.GenerateModelCodeToolStripMenuItem_Click);
             // 
             // GenerateAllModelCodetoolStripMenuItem
             // 
             this.GenerateAllModelCodetoolStripMenuItem.Name = "GenerateAllModelCodetoolStripMenuItem";
-            this.GenerateAllModelCodetoolStripMenuItem.Size = new System.Drawing.Size(208, 22);
+            this.GenerateAllModelCodetoolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.GenerateAllModelCodetoolStripMenuItem.Text = "生成所有代码";
             this.GenerateAllModelCodetoolStripMenuItem.Click += new System.EventHandler(this.GenerateAllModelCodeToolStripMenuItem_Click);
             // 
@@ -260,13 +268,6 @@
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(161, 6);
-            // 
-            // ModifyPrjToolStripMenuItem
-            // 
-            this.ModifyPrjToolStripMenuItem.Name = "ModifyPrjToolStripMenuItem";
-            this.ModifyPrjToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.ModifyPrjToolStripMenuItem.Text = "修改工程";
-            this.ModifyPrjToolStripMenuItem.Click += new System.EventHandler(this.ModifyPrjToolStripMenuItem_Click);
             // 
             // RefreshToolStripMenuItem
             // 
@@ -393,7 +394,7 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.textBox1);
+            this.splitContainer1.Panel2.Controls.Add(this.txtSource);
             this.splitContainer1.Size = new System.Drawing.Size(726, 364);
             this.splitContainer1.SplitterDistance = 242;
             this.splitContainer1.TabIndex = 3;
@@ -449,14 +450,14 @@
             this.trvCodeSnippet.TabIndex = 0;
             this.trvCodeSnippet.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.OpenNode);
             // 
-            // textBox1
+            // txtSource
             // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Location = new System.Drawing.Point(0, 0);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(480, 364);
-            this.textBox1.TabIndex = 0;
+            this.txtSource.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtSource.Location = new System.Drawing.Point(0, 0);
+            this.txtSource.Multiline = true;
+            this.txtSource.Name = "txtSource";
+            this.txtSource.Size = new System.Drawing.Size(480, 364);
+            this.txtSource.TabIndex = 0;
             // 
             // Main
             // 
@@ -497,14 +498,14 @@
         private System.Windows.Forms.ToolStripMenuItem NewPrjToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem OpenPrjToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem 关闭ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem CloseToolStripMenuItem;
         private System.Windows.Forms.TreeView trvProject;
         private System.Windows.Forms.ToolStripMenuItem ProjectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem RefreshToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 工具ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 帮助ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 关于ToolStripMenuItem;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtSource;
         private System.Windows.Forms.ToolStripMenuItem 使用手册ToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem native2ASCIIToolStripMenuItem;
@@ -532,8 +533,8 @@
         private System.Windows.Forms.ToolStripMenuItem NewMasterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem GenerateMasterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem GenerateAllMasterToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ModifyPrjToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem struts2数据验证ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ModifyPrjToolStripMenuItem;
     }
 }
 

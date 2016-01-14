@@ -7,7 +7,7 @@ namespace DevKit.MVCTool
     {
         private ProjectInfo _proj;
         /// <summary>
-        /// 
+        /// 初始化
         /// </summary>
         public frmNewProject(ProjectInfo proj)
         {
@@ -38,16 +38,16 @@ namespace DevKit.MVCTool
                 }
                 switch (_proj.DataBaseType)
                 {
-                    case DevKit.Common.EnumAndConst.DataBase.MySql:
+                    case Common.EnumAndConst.DataBase.MySql:
                         radMySql.Checked = true;
                         break;
-                    case DevKit.Common.EnumAndConst.DataBase.Oracle:
+                    case Common.EnumAndConst.DataBase.Oracle:
                         radOracle.Checked = true;
                         break;
-                    case DevKit.Common.EnumAndConst.DataBase.MSSql:
+                    case Common.EnumAndConst.DataBase.MSSql:
                         radMsSql.Checked = true;
                         break;
-                    case DevKit.Common.EnumAndConst.DataBase.MongoDB:
+                    case Common.EnumAndConst.DataBase.MongoDB:
                         radMongo.Checked = true;
                         break;
                     default:
