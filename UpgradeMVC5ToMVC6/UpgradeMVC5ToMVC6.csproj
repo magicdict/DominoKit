@@ -46,6 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IOHelper.cs" />
+    <Compile Include="MainUpgrade.cs" />
+    <Compile Include="StructureAnalyze.cs" />
+    <Compile Include="SystemManagercs.cs" />
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>

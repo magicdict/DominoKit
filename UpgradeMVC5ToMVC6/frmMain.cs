@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace UpgradeMVC5ToMVC6
@@ -39,7 +32,7 @@ namespace UpgradeMVC5ToMVC6
             FolderBrowserDialog mvc6Root = new FolderBrowserDialog();
             if (mvc6Root.ShowDialog() == DialogResult.OK)
             {
-                txtMVC5Root.Text = mvc6Root.SelectedPath;
+                txtMVC6Root.Text = mvc6Root.SelectedPath;
             }
         }
         /// <summary>
@@ -49,7 +42,20 @@ namespace UpgradeMVC5ToMVC6
         /// <param name="e"></param>
         private void btnUpgrade_Click(object sender, EventArgs e)
         {
+            //TEST
+            txtMVC5Root.Text = @"E:\WorkSpace\Domino\WebSite";
+            txtMVC6Root.Text = @"E:\WorkSpace\Domino2\src\Domino2";
 
+            SystemManager.mvc5Root = txtMVC5Root.Text;
+            SystemManager.mvc6Root = txtMVC6Root.Text;
+            //Init
+            SystemManager.Init();
+            //Analyze The Folder
+            StructureAnalyze.Analyze();
+            //Upgrade
+            MainUpgrade.Upgrade();
+            //Terminte
+            SystemManager.Terminate();
         }
     }
 }
