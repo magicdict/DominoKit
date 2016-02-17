@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace UpgradeMVC5ToMVC6
 {
@@ -10,6 +11,21 @@ namespace UpgradeMVC5ToMVC6
         public static void Upgrade() {
             SystemManager.Log("Start To Upgrade Areas");
             if (StructureAnalyze.HasAreas) TransformAreas();
+            if (StructureAnalyze.HasFilter) TransformFilter();
+        }
+
+        private static void TransformFilter()
+        {
+            string FilterFolderFullName = StructureAnalyze.RootFolder[StructureAnalyze.strFilter];
+            string distFilterFolderFullName = SystemManager.mvc6Root + "\\" + StructureAnalyze.strFilter;
+            //No Sub Folder
+            if (!Directory.Exists(distFilterFolderFullName)) Directory.CreateDirectory(distFilterFolderFullName);
+            IOHelper.CopyFolder(FilterFolderFullName, distFilterFolderFullName, null, null);
+            foreach (var SomeControllerFullName in Directory.GetFiles(distFilterFolderFullName))
+            {
+                ModifyController(SomeControllerFullName);
+            }
+
         }
 
         /// <summary>
@@ -45,7 +61,7 @@ namespace UpgradeMVC5ToMVC6
         /// <summary>
         /// Modify Controller
         /// </summary>
-        static void ModifyController(string FullFileName,string AreaName) {
+        static void ModifyController(string FullFileName,string AreaName = "") {
             File.Move(FullFileName, FullFileName + ".old"); 
             StreamReader oldFile = new StreamReader(FullFileName + ".old");
             StreamWriter newFile = new StreamWriter(FullFileName);
@@ -55,9 +71,11 @@ namespace UpgradeMVC5ToMVC6
             //using Microsoft.AspNet.Http.Core.Collections;
             SystemManager.Log("Add@" + FullFileName + ": using Microsoft.AspNet");
             newFile.WriteLine("using Microsoft.AspNet.Mvc;");
-            newFile.WriteLine("using Microsoft.AspNet.Http;");
+            newFile.WriteLine("using Microsoft.AspNet.Mvc.ModelBinding;");
             newFile.WriteLine("using Microsoft.AspNet.Http.Core.Collections;");
             newFile.WriteLine("using System.Threading.Tasks;");
+            newFile.WriteLine("using Microsoft.AspNet.Mvc.Filters;");
+
             while (!oldFile.EndOfStream) {
                 string x = oldFile.ReadLine();
 
@@ -67,8 +85,10 @@ namespace UpgradeMVC5ToMVC6
 
                 //AddSomeLines
                 if (x.TrimStart().StartsWith("public class ")) {
-                    newFile.WriteLine("[Area(\"" + AreaName + "\")]");
-                    SystemManager.Log("Add@" + FullFileName + ": " + "[Area(\"" + AreaName + "\")]");
+                    if (!string.IsNullOrEmpty(AreaName)) {
+                        newFile.WriteLine("[Area(\"" + AreaName + "\")]");
+                        SystemManager.Log("Add@" + FullFileName + ": " + "[Area(\"" + AreaName + "\")]");
+                    }
                 }
                 //SKipSomeLine
                 if (x.Trim().Equals("using System.Web.Mvc;")) {
@@ -113,6 +133,22 @@ namespace UpgradeMVC5ToMVC6
                     newFile.WriteLine(@"//" + x);
                     newFile.WriteLine(x.Replace("TryUpdateModel(", "bool x = await TryUpdateModelAsync(").Replace(", collection", ""));
                     SystemManager.Log("Change@" + FullFileName + ":TryUpdateModel => TryUpdateModelAsync");
+                    continue;
+                }
+
+
+                if (x.Contains("ActionDescriptor.ActionName"))
+                {
+                    newFile.WriteLine(@"//" + x);
+                    newFile.WriteLine(x.Replace("ActionDescriptor.ActionName", "ActionDescriptor.Name"));
+                    SystemManager.Log("Change@" + FullFileName + ":ActionDescriptor.ActionName");
+                    continue;
+                }
+                if (x.Contains("ControllerDescriptor.ControllerName"))
+                {
+                    newFile.WriteLine(@"//" + x);
+                    newFile.WriteLine(x.Replace("ControllerDescriptor.ControllerName", "Controller.ToString()"));
+                    SystemManager.Log("Change@" + FullFileName + ":ControllerDescriptor.ControllerName");
                     continue;
                 }
 

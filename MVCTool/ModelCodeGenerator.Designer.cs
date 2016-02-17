@@ -59,6 +59,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.txtSchema = new System.Windows.Forms.TextBox();
             this.chkSingleFileMode = new System.Windows.Forms.CheckBox();
+            this.chkWithAttr = new System.Windows.Forms.CheckBox();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -319,6 +320,8 @@
             // chkCreateModel
             // 
             this.chkCreateModel.AutoSize = true;
+            this.chkCreateModel.Checked = true;
+            this.chkCreateModel.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkCreateModel.Location = new System.Drawing.Point(328, 346);
             this.chkCreateModel.Name = "chkCreateModel";
             this.chkCreateModel.Size = new System.Drawing.Size(96, 16);
@@ -365,6 +368,8 @@
             // chkSingleFileMode
             // 
             this.chkSingleFileMode.AutoSize = true;
+            this.chkSingleFileMode.Checked = true;
+            this.chkSingleFileMode.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkSingleFileMode.Location = new System.Drawing.Point(120, 176);
             this.chkSingleFileMode.Name = "chkSingleFileMode";
             this.chkSingleFileMode.Size = new System.Drawing.Size(150, 16);
@@ -372,12 +377,23 @@
             this.chkSingleFileMode.Text = "单个Excel数据定义模式";
             this.chkSingleFileMode.UseVisualStyleBackColor = true;
             // 
+            // chkWithAttr
+            // 
+            this.chkWithAttr.AutoSize = true;
+            this.chkWithAttr.Location = new System.Drawing.Point(286, 177);
+            this.chkWithAttr.Name = "chkWithAttr";
+            this.chkWithAttr.Size = new System.Drawing.Size(72, 16);
+            this.chkWithAttr.TabIndex = 41;
+            this.chkWithAttr.Text = "附带特性";
+            this.chkWithAttr.UseVisualStyleBackColor = true;
+            // 
             // ModelCodeGenerator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(655, 438);
+            this.Controls.Add(this.chkWithAttr);
             this.Controls.Add(this.chkSingleFileMode);
             this.Controls.Add(this.txtSchema);
             this.Controls.Add(this.label6);
@@ -446,5 +462,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtSchema;
         private System.Windows.Forms.CheckBox chkSingleFileMode;
+        private System.Windows.Forms.CheckBox chkWithAttr;
     }
 }

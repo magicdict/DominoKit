@@ -235,7 +235,7 @@ namespace DevKit.MVCTool
             }
 
             Utility.getResource(ClassSourcePath + "\\EntityBase.cs", "EntityBase.cs");
-            Utility.getResource(ClassSourcePath + "\\CompanyTable.cs", "CompanyTable.cs");
+            Utility.getResource(ClassSourcePath + "\\OwnerTable.cs", "OwnerTable.cs");
             Utility.getResource(ClassSourcePath + "\\MasterTable.cs", "MasterTable.cs");
         }
         /// <summary>
@@ -308,7 +308,7 @@ namespace DevKit.MVCTool
                 {
                     foreach (ModelInfo model in models)
                     {
-                        ModelGenerator.GenerateCSharp(_PathSet.SourcePath + "\\" + model.ModelName + ".cs", model, model.Items);
+                        ModelGenerator.GenerateCSharp(_PathSet.SourcePath + "\\" + model.ModelName + ".cs", model);
                         ViewerGenerator.GenerateCSharp(ViewerPath + "\\" + model.ModelName + ".cshtml", model, model.Items);
                     }
                 }

@@ -76,7 +76,7 @@ namespace DevKit.MVCTool
         private const string UsingCollections = "using System.Collections.Generic;";
         private const string UsingInfraDataBase = "using InfraStructure.DataBase;";
         private const string UsingFilterSet = "using InfraStructure.FilterSet;";
-        private const string UsingInfra = "using InfraStructure;";
+        private const string UsingInfra = "using InfraStructure.Table;";
 
         #endregion
 
@@ -85,9 +85,10 @@ namespace DevKit.MVCTool
         /// </summary>
         /// <param name="filename"></param>
         /// <param name="model"></param>
-        public static void GenerateCSharp(string filename, ModelInfo model, List<ModelItem> ModelItems)
+        /// <param name="WithAttr"></param>
+        public static void GenerateCSharp(string filename, ModelInfo model, bool WithAttr = false)
         {
-
+            List<ModelItem> ModelItems = model.Items;
             //数据操作
             bool NeedComponentModel = false;
             bool NeedDataAnnotations = false;
@@ -119,7 +120,7 @@ namespace DevKit.MVCTool
                 SuperClass = model.SuperClass;
             }
             isOrgClass = SuperClass == "EntityBase" ||
-                         SuperClass == "CompanyTable" ||
+                         SuperClass == "OwnerTable" ||
                          SuperClass == "MasterTable" ||
                          SuperClass == "StatusMasterTable" ||
                          SuperClass == "CatalogMasterTable";
@@ -128,7 +129,7 @@ namespace DevKit.MVCTool
             code.AppendLine(new string(space, indent) + "/// <summary>");
             code.AppendLine(new string(space, indent) + "/// " + model.Description);
             code.AppendLine(new string(space, indent) + "/// </summary>");
-            code.AppendLine(new string(space, indent) + "[DisplayName(\"" + model.Description + "\")]");
+            if (WithAttr) code.AppendLine(new string(space, indent) + "[DisplayName(\"" + model.Description + "\")]");
             code.AppendLine(new string(space, indent) + "public partial class " + model.ModelName + " : " + SuperClass);
             code.AppendLine(new string(space, indent) + "{");
             indent += 4;
@@ -142,94 +143,97 @@ namespace DevKit.MVCTool
                 code.AppendLine(new string(space, indent) + "/// <summary>");
                 code.AppendLine(new string(space, indent) + "/// " + item.DomainName);
                 code.AppendLine(new string(space, indent) + "/// </summary>");
-                if (item.Flag.Equals("HIDDEN"))
+                if (WithAttr)
                 {
-                    //Hidden
-                    code.AppendLine(new string(space, indent) + "[HiddenInput]");
-                    NeedWebMvc = true;
-                }
-
-                if (!string.IsNullOrEmpty(item.DisplayName))
-                {
-                    //DisplayName
-                    code.AppendLine(new string(space, indent) + "[DisplayName(\"" + item.DisplayName + "\")]");
-                    NeedComponentModel = true;
-                }
-                if (item.KeyField)
-                {
-                    //HiddenInput
-                    code.AppendLine(new string(space, indent) + "[HiddenInput]");
-                    //数据库的主键（EF用）
-                    code.AppendLine(new string(space, indent) + "[Key]");
-                    NeedWebMvc = true;
-                    NeedDataAnnotations = true;
-                }
-                if (item.Required)
-                {
-                    //Required Without Error Message
-                    if (!string.IsNullOrEmpty(item.RequiredMessage))
+                    if (item.Flag.Equals("HIDDEN"))
                     {
-                        code.AppendLine(new string(space, indent) + "[Required(ErrorMessage = \"" + item.RequiredMessage + "\")]");
+                        //Hidden
+                        code.AppendLine(new string(space, indent) + "[HiddenInput]");
+                        NeedWebMvc = true;
                     }
-                    else
-                    {
-                        code.AppendLine(new string(space, indent) + "[Required]");
-                    }
-                    NeedDataAnnotations = true;
-                }
 
-                if (item.RangeMin != 0 || item.RangeMax != 0)
-                {
-                    string strRange = new string(space, indent) + "[Range(@Min , @Max @ErrorMessage)]";
-                    strRange = strRange.Replace("@ErrorMessage", (string.IsNullOrEmpty(item.RangeMessage) ? string.Empty : ", ErrorMessage = \"@ErrorMessage\""));
-                    code.AppendLine(strRange.Replace("@Min", item.RangeMin.ToString())
-                                            .Replace("@Max", item.RangeMax.ToString())
-                                            .Replace("@ErrorMessage", item.RangeMessage));
-                    NeedDataAnnotations = true;
-                }
-
-                if (item.MinLength != 0 || item.MaxLength != 0)
-                {
-                    string strLength = string.Empty;
-                    if (item.MinLength != 0 && item.MaxLength != 0)
+                    if (!string.IsNullOrEmpty(item.DisplayName))
                     {
-                        strLength = new string(space, indent) + "[StringLength(@Max , MinimumLength= @Min @ErrorMessage)]";
+                        //DisplayName
+                        code.AppendLine(new string(space, indent) + "[DisplayName(\"" + item.DisplayName + "\")]");
+                        NeedComponentModel = true;
                     }
-                    else
+                    if (item.KeyField)
                     {
-                        if (item.MinLength != 0)
+                        //HiddenInput
+                        code.AppendLine(new string(space, indent) + "[HiddenInput]");
+                        //数据库的主键（EF用）
+                        code.AppendLine(new string(space, indent) + "[Key]");
+                        NeedWebMvc = true;
+                        NeedDataAnnotations = true;
+                    }
+                    if (item.Required)
+                    {
+                        //Required Without Error Message
+                        if (!string.IsNullOrEmpty(item.RequiredMessage))
                         {
-                            strLength = new string(space, indent) + "[MinLength(@Min @ErrorMessage)]";
+                            code.AppendLine(new string(space, indent) + "[Required(ErrorMessage = \"" + item.RequiredMessage + "\")]");
                         }
                         else
                         {
-                            strLength = new string(space, indent) + "[MaxLength(@Max @ErrorMessage)]";
+                            code.AppendLine(new string(space, indent) + "[Required]");
                         }
+                        NeedDataAnnotations = true;
                     }
-                    strLength = strLength.Replace("@ErrorMessage", (string.IsNullOrEmpty(item.LengthMessage) ? string.Empty : ", ErrorMessage = \"@ErrorMessage\""));
-                    code.AppendLine(strLength.Replace("@Min", item.MinLength.ToString())
-                                             .Replace("@Max", item.MaxLength.ToString())
-                                             .Replace("@ErrorMessage", item.LengthMessage));
-                    NeedDataAnnotations = true;
-                }
 
-                if (!string.IsNullOrEmpty(item.RegularExpress))
-                {
-                    string strRange = new string(space, indent) + "[RegularExpression(@\"@express\" @ErrorMessage)]";
-                    strRange = strRange.Replace("@ErrorMessage", (string.IsNullOrEmpty(item.RegularMessage) ? string.Empty : ", ErrorMessage = \"@ErrorMessage\""));
-                    code.AppendLine(strRange.Replace("@express", item.RegularExpress)
-                                            .Replace("@ErrorMessage", item.RegularMessage));
-                    NeedDataAnnotations = true;
-                }
-                if (!string.IsNullOrEmpty(item.DataType))
-                {
-                    code.AppendLine(new string(space, indent) + GetDataType(item.DataType));
-                    NeedDataAnnotations = true;
-                }
-                if (!string.IsNullOrEmpty(item.DisplayFormat))
-                {
-                    code.AppendLine(new string(space, indent) + "[DisplayFormat(DataFormatString = \"{0:" + item.DisplayFormat + "}\")]");
-                    NeedDataAnnotations = true;
+                    if (item.RangeMin != 0 || item.RangeMax != 0)
+                    {
+                        string strRange = new string(space, indent) + "[Range(@Min , @Max @ErrorMessage)]";
+                        strRange = strRange.Replace("@ErrorMessage", (string.IsNullOrEmpty(item.RangeMessage) ? string.Empty : ", ErrorMessage = \"@ErrorMessage\""));
+                        code.AppendLine(strRange.Replace("@Min", item.RangeMin.ToString())
+                                                .Replace("@Max", item.RangeMax.ToString())
+                                                .Replace("@ErrorMessage", item.RangeMessage));
+                        NeedDataAnnotations = true;
+                    }
+
+                    if (item.MinLength != 0 || item.MaxLength != 0)
+                    {
+                        string strLength = string.Empty;
+                        if (item.MinLength != 0 && item.MaxLength != 0)
+                        {
+                            strLength = new string(space, indent) + "[StringLength(@Max , MinimumLength= @Min @ErrorMessage)]";
+                        }
+                        else
+                        {
+                            if (item.MinLength != 0)
+                            {
+                                strLength = new string(space, indent) + "[MinLength(@Min @ErrorMessage)]";
+                            }
+                            else
+                            {
+                                strLength = new string(space, indent) + "[MaxLength(@Max @ErrorMessage)]";
+                            }
+                        }
+                        strLength = strLength.Replace("@ErrorMessage", (string.IsNullOrEmpty(item.LengthMessage) ? string.Empty : ", ErrorMessage = \"@ErrorMessage\""));
+                        code.AppendLine(strLength.Replace("@Min", item.MinLength.ToString())
+                                                 .Replace("@Max", item.MaxLength.ToString())
+                                                 .Replace("@ErrorMessage", item.LengthMessage));
+                        NeedDataAnnotations = true;
+                    }
+
+                    if (!string.IsNullOrEmpty(item.RegularExpress))
+                    {
+                        string strRange = new string(space, indent) + "[RegularExpression(@\"@express\" @ErrorMessage)]";
+                        strRange = strRange.Replace("@ErrorMessage", (string.IsNullOrEmpty(item.RegularMessage) ? string.Empty : ", ErrorMessage = \"@ErrorMessage\""));
+                        code.AppendLine(strRange.Replace("@express", item.RegularExpress)
+                                                .Replace("@ErrorMessage", item.RegularMessage));
+                        NeedDataAnnotations = true;
+                    }
+                    if (!string.IsNullOrEmpty(item.DataType))
+                    {
+                        code.AppendLine(new string(space, indent) + GetDataType(item.DataType));
+                        NeedDataAnnotations = true;
+                    }
+                    if (!string.IsNullOrEmpty(item.DisplayFormat))
+                    {
+                        code.AppendLine(new string(space, indent) + "[DisplayFormat(DataFormatString = \"{0:" + item.DisplayFormat + "}\")]");
+                        NeedDataAnnotations = true;
+                    }
                 }
                 //类型
                 string strType = string.Empty;
@@ -239,6 +243,7 @@ namespace DevKit.MVCTool
                 {
                     case "日期":
                         strType = Common.CSharp.MetaData[item.MetaType];
+                        if (!WithAttr) break;
                         code.AppendLine(new string(space, indent) + FilterDateTime);
                         if (string.IsNullOrEmpty(item.DisplayFormat))
                         {
@@ -252,23 +257,27 @@ namespace DevKit.MVCTool
                         break;
                     case "旗标枚举":
                         strType = item.EnumOrMasterType;
+                        if (!WithAttr) break;
                         code.AppendLine(new string(space, indent) + "[UIHint(\"EnumFlags\")]");
                         NeedDataAnnotations = true;
                         code.AppendLine(new string(space, indent) + FilterMultiEnum.Replace("@MasterName@", strType));
                         break;
                     case "普通枚举":
                         strType = item.EnumOrMasterType;
+                        if (!WithAttr) break;
                         code.AppendLine(new string(space, indent) + "[UIHint(\"Enum\")]");
                         NeedDataAnnotations = true;
                         code.AppendLine(new string(space, indent) + FilterSingleEnum.Replace("@MasterName@", strType));
                         break;
                     case "布尔值":
                         strType = Common.CSharp.MetaData[item.MetaType];
+                        if (!WithAttr) break;
                         code.AppendLine(new string(space, indent) + FilterBoolean);
                         strType = Common.CSharp.MetaData[item.MetaType];
                         break;
                     case "辅助表":
                         strType = Common.CSharp.MetaData["字符串"];
+                        if (!WithAttr) break;
                         if (!string.IsNullOrEmpty(item.EnumOrMasterType))
                         {
                             if (item.IsList)
@@ -284,6 +293,7 @@ namespace DevKit.MVCTool
                         break;
                     case "辅助评价表":
                         strType = "ItemWithGrade";
+                        if (!WithAttr) break;
                         if (!string.IsNullOrEmpty(item.EnumOrMasterType))
                         {
                             if (item.IsList)
@@ -299,6 +309,7 @@ namespace DevKit.MVCTool
                         break;
                     case "目录表":
                         strType = Common.CSharp.MetaData["字符串"];
+                        if (!WithAttr) break;
                         if (string.IsNullOrEmpty(item.CatalogType))
                         {
                             item.CatalogType = item.EnumOrMasterType + "Catalog";
@@ -322,6 +333,7 @@ namespace DevKit.MVCTool
                         strType = Common.CSharp.MetaData[item.MetaType];
                         break;
                 }
+
                 if (item.IsList)
                 {
                     strType = "List<" + strType + ">";
@@ -384,11 +396,12 @@ namespace DevKit.MVCTool
             code.AppendLine(new string(space, indent) + "/// <summary>");
             code.AppendLine(new string(space, indent) + "/// Mvc画面的标题");
             code.AppendLine(new string(space, indent) + "/// </summary>");
-            if (proinfo.DataBaseType == Common.EnumAndConst.DataBase.MongoDB)
-            {
-                code.AppendLine(new string(space, indent) + "[BsonIgnore]");
-                NeedMongo = true;
-            }
+            //静态字段默认不保存，下面的代码注释掉
+            //if (proinfo.DataBaseType == Common.EnumAndConst.DataBase.MongoDB)
+            //{
+            //    code.AppendLine(new string(space, indent) + "[BsonIgnore]");
+            //    NeedMongo = true;
+            //}
             code.AppendLine(new string(space, indent) + "public static " + (!isOrgClass ? "new " : "") + "string MvcTitle = \"" + model.Description + "\";");
 
             indent -= 4;

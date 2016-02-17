@@ -46,13 +46,13 @@
   <ItemGroup>
     <Compile Include="EnumAndConst.cs" />
     <EmbeddedResource Include="Resources\EnumDisplayNameAttribute.cs" />
-    <EmbeddedResource Include="Resources\CompanyTable.cs" />
     <EmbeddedResource Include="Resources\EasyQuery.cs" />
     <EmbeddedResource Include="Resources\MasterTable.cs" />
     <EmbeddedResource Include="Resources\EntityBase.cs" />
     <EmbeddedResource Include="Resources\MasterTableHtmlHelper.cs" />
     <EmbeddedResource Include="Resources\ConstHelper.cs" />
     <EmbeddedResource Include="Resources\HtmlUIHelper.cs" />
+    <EmbeddedResource Include="Resources\OwnerTable.cs" />
     <Compile Include="XmlDataBase.cs" />
     <Compile Include="MetaData.cs" />
     <Compile Include="Native2AsciiUtils.cs" />

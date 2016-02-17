@@ -16,6 +16,9 @@ namespace UpgradeMVC5ToMVC6
         /// FolderName of Areas
         /// </summary>
         public const string strAreas = "Areas";
+
+        public const string strFilter = "Filter";
+
         /// <summary>
         /// Top Level Folder
         /// </summary>
@@ -28,6 +31,16 @@ namespace UpgradeMVC5ToMVC6
                 return RootFolder.ContainsKey(strAreas);
             }
         }
+        /// <summary>
+        /// Has Filter
+        /// </summary>
+        public static bool HasFilter {
+            get
+            {
+                return RootFolder.ContainsKey(strFilter);
+            }
+        }
+
         /// <summary>
         /// Analyze 
         /// </summary>
@@ -45,7 +58,8 @@ namespace UpgradeMVC5ToMVC6
         /// Print Info 
         /// </summary>
         static void AppendReport() {
-            SystemManager.Log("Areas:" + HasAreas);            
+            SystemManager.Log("Areas:" + HasAreas);
+            SystemManager.Log("Filter:" + HasFilter);
         }
     }
 }

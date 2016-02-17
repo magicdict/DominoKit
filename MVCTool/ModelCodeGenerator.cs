@@ -81,7 +81,7 @@ namespace DevKit
             FileInfo f = new FileInfo(txtDocumentPath.Text);
             if (string.IsNullOrEmpty(txtModelSourcePath.Text))
             {
-                string extendsion = ".cs";
+                string extendsion = "_Model.cs";
                 if (radJavaSpring.Checked || radJavaStruts2.Checked || radJavaJFinal.Checked) {
                     extendsion = ".java";
                 }
@@ -115,7 +115,7 @@ namespace DevKit
                     var model = models[0];
                     if (chkCreateModel.Checked)
                     {
-                        ModelGenerator.GenerateCSharp(txtModelSourcePath.Text, model, model.Items);
+                        ModelGenerator.GenerateCSharp(txtModelSourcePath.Text, model,chkWithAttr.Checked);
                     }
                     if (chkCreateView.Checked)
                     {
@@ -123,7 +123,12 @@ namespace DevKit
                     }
                 }
                 else {
-                    MessageBox.Show("单文件模式未完成");    
+                    //单文件模式
+                    foreach (var model in models)
+                    {
+                        var sourcefilename = CurrentProject.EntityPath.SourcePath + "\\" + model.ModelName + "_Model.cs";
+                        ModelGenerator.GenerateCSharp(sourcefilename, model, chkWithAttr.Checked);
+                    }
                 }
             }
             if (radJavaSpring.Checked)
@@ -135,7 +140,7 @@ namespace DevKit
                 }
                 else
                 {
-                    MessageBox.Show("单文件模式未完成");
+                    MessageBox.Show("该功能的单文件模式未完成");
                 }
 
             }
@@ -192,7 +197,7 @@ namespace DevKit
         {
             txtSchema.Text = CurrentProject.DataBaseSchema;
             if (CurrentProject != null) {
-
+                //Load Project Configuration
                 switch (CurrentProject.DevFramework) {
                     case Java.strJavaJFinal:
                         radJavaJFinal.Checked = true;

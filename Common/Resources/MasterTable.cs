@@ -1,22 +1,26 @@
-﻿using InfraStructure.DataBase;
-using InfraStructure.Utility;
-using MongoDB.Driver.Builders;
-using NPOI.HSSF.UserModel;
-using NPOI.SS.UserModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Web;
-using MongoDB.Bson.Serialization.Attributes;
-namespace BussinessLogic.Entity
+using InfraStructure.DataBase;
+using InfraStructure.Helper;
+using InfraStructure.Utility;
+using MongoDB.Driver.Builders;
+using NPOI.HSSF.UserModel;
+using NPOI.SS.UserModel;
+
+namespace InfraStructure.Table
 {
     /// <summary>
     /// 辅助表
     /// </summary>
-    public abstract class MasterTable : CompanyTable
+    public abstract class MasterTable : OwnerTable
     {
+
+        //MasterCode和Owner的Code（内部编号）合并为一个编号
+
         /// <summary>
         ///     名字
         /// </summary>
@@ -48,151 +52,321 @@ namespace BussinessLogic.Entity
         /// 未知
         /// </summary>
         public const string UnKnownCode = "000000";
+
         /// <summary>
         /// 最大
         /// </summary>
         public const string MaxCode = "999999";
+
+        /// <summary>
+        /// Code格式
+        /// </summary>
+        public new const string CodeFormat = "D6";
+
+        /// <summary>
+        /// 辅助表前缀 
+        /// </summary>
+        public const string MasterPrefix = "M_";
+        /// <summary>
+        /// 空列表
+        /// </summary>
+        public const string StrEmptyList = "[空列表]";
+        /// <summary>
+        /// 未知
+        /// </summary>
+        public const string StrUnknown = "[未知]";
 
         #region Method
         /// <summary>
         ///     获得Rank列表
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="CompanyId"></param>
+        /// <param name="ownerId"></param>
         /// <returns></returns>
-        public static Dictionary<string, int> GetCodeRankDic<T>(string CompanyId) where T : MasterTable, new()
+        public static Dictionary<string, int> GetCodeRankDic<T>(string ownerId) where T : MasterTable, new()
         {
-            var RankDic = new Dictionary<string, int>();
-            var t = EasyQuery.GetRecListByCompanyId<T>(new T().GetCollectionName(), CompanyId);
+            var rankDic = new Dictionary<string, int>();
+            var t = EasyQuery.GetRecListByOwnerId<T>(new T().GetCollectionName(), ownerId);
             foreach (var item in t)
             {
-                RankDic.Add(item.Code, item.Rank);
+                rankDic.Add(item.Code, item.Rank);
             }
-            return RankDic;
+            return rankDic;
         }
 
         /// <summary>
         ///     将MasterCode列表转换为Master描述字符
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="MasterCodeList"></param>
-        /// <param name="CompanyId"></param>
+        /// <param name="masterCodeList"></param>
+        /// <param name="ownerId"></param>
         /// <returns></returns>
-        public static List<string> GetMasterNameList<T>(List<string> MasterCodeList, string CompanyId)
+        public static List<string> GetMasterNameList<T>(List<string> masterCodeList, string ownerId)
             where T : MasterTable, new()
         {
             var rtn = new List<string>();
-            if (MasterCodeList == null) return rtn;
-            foreach (var code in MasterCodeList)
+            if (masterCodeList == null) return rtn;
+            foreach (var code in masterCodeList)
             {
-                rtn.Add(GetMasterName<T>(code, CompanyId));
+                rtn.Add(GetMasterName<T>(code, ownerId));
+            }
+            if (rtn.Count == 0)
+            {
+                rtn.Add(StrEmptyList);
             }
             return rtn;
         }
-
-        public static List<string> GetMasterNameList<T>(List<ItemWithGrade> MasterCodeList, string CompanyId)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="collectionName"></param>
+        /// <param name="masterCodeList"></param>
+        /// <param name="ownerId"></param>
+        /// <returns></returns>
+        public static List<string> GetMasterNameList(string collectionName, List<string> masterCodeList, string ownerId)
+        {
+            var rtn = new List<string>();
+            if (masterCodeList == null) return rtn;
+            foreach (var code in masterCodeList)
+            {
+                rtn.Add(GetMasterName(collectionName, code, ownerId));
+            }
+            if (rtn.Count == 0)
+            {
+                rtn.Add(StrEmptyList);
+            }
+            return rtn;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="masterCodeList"></param>
+        /// <param name="ownerId"></param>
+        /// <returns></returns>
+        public static List<string> GetMasterNameList<T>(List<ItemWithGrade> masterCodeList, string ownerId)
             where T : MasterTable, new()
         {
             var rtn = new List<string>();
-            if (MasterCodeList == null) return rtn;
-            foreach (var gradeItem in MasterCodeList)
+            if (masterCodeList == null) return rtn;
+            foreach (var gradeItem in masterCodeList)
             {
-                rtn.Add(GetMasterName<T>(gradeItem.MasterCode, CompanyId) + "-" + gradeItem.Grade.ToString());
+                rtn.Add(GetMasterName<T>(gradeItem.MasterCode, ownerId) + "-" + gradeItem.Grade);
+            }
+            if (rtn.Count == 0)
+            {
+                rtn.Add(StrEmptyList);
             }
             return rtn;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="collectionName"></param>
+        /// <param name="masterCodeList"></param>
+        /// <param name="ownerId"></param>
+        /// <returns></returns>
+        public static List<string> GetMasterNameList(string collectionName, List<ItemWithGrade> masterCodeList, string ownerId)
+        {
+            var rtn = new List<string>();
+            if (masterCodeList == null) return rtn;
+            foreach (var gradeItem in masterCodeList)
+            {
+                rtn.Add(GetMasterName(collectionName, gradeItem.MasterCode, ownerId) + "-" + gradeItem.Grade);
+            }
+            if (rtn.Count == 0)
+            {
+                rtn.Add(StrEmptyList);
+            }
+            return rtn;
+        }
 
         /// <summary>
         ///     将MasterCode转换为Master描述字符
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="MasterCode"></param>
-        /// <param name="CompanyId"></param>
+        /// <param name="masterCode"></param>
+        /// <param name="ownerId"></param>
         /// <returns></returns>
-        public static string GetMasterName<T>(string MasterCode, string CompanyId) where T : MasterTable, new()
+        public static string GetMasterName<T>(string masterCode, string ownerId) where T : MasterTable, new()
         {
-            if (MasterCode == null || string.IsNullOrEmpty(MasterCode) || MasterCode == UnKnownCode)
+            if (masterCode == null || string.IsNullOrEmpty(masterCode) || masterCode == UnKnownCode)
             {
-                return "未知";
+                return StrUnknown;
             }
-            var CacheKey = CompanyId + "." + new T().GetCollectionName() + "." + MasterCode;
-            var CacheValue = CacheSystem.GetMasterNameCache(CacheKey);
-            if (!string.IsNullOrEmpty(CacheValue)) return CacheValue;
+            var cacheKey = ownerId + "." + new T().GetCollectionName() + "." + masterCode;
+            var cacheValue = CacheSystem.GetMasterNameCache(cacheKey);
+            if (!string.IsNullOrEmpty(cacheValue)) return cacheValue;
             //检索
-            var m = EasyQuery.GetRecByCodeAtCompany<T>(new T().GetCollectionName(), CompanyId, MasterCode);
+            var m = EasyQuery.GetRecByCodeAtOwner<T>(new T().GetCollectionName(), ownerId, masterCode);
             if (m == null)
             {
-                return "未知";
+                return StrUnknown;
             }
-            CacheSystem.PutMasterNameCache(CacheKey, m.Name);
+            CacheSystem.PutMasterNameCache(cacheKey, m.Name);
             return m.Name;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="collectionName"></param>
+        /// <param name="masterCode"></param>
+        /// <param name="ownerId"></param>
+        /// <returns></returns>
+        public static string GetMasterName(string collectionName, string masterCode, string ownerId)
+        {
+            if (masterCode == null || string.IsNullOrEmpty(masterCode) || masterCode == UnKnownCode)
+            {
+                return StrUnknown;
+            }
+            var cacheKey = ownerId + "." + collectionName + "." + masterCode;
+            var cacheValue = CacheSystem.GetMasterNameCache(cacheKey);
+            if (!string.IsNullOrEmpty(cacheValue)) return cacheValue;
+            //检索
+            var m = EasyQuery.GetRecByCodeAtOwner(collectionName, ownerId, masterCode);
+            if (m == null)
+            {
+                return StrUnknown;
+            }
+            CacheSystem.PutMasterNameCache(cacheKey, m.GetValue(nameof(Name)).ToString());
+            return m.GetValue(nameof(Name)).ToString();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="CollectionName"></typeparam>
+        /// <param name="gradeList"></param>
+        /// <param name="ownerId"></param>
+        /// <returns></returns>
+        public static List<string> GetMasterNameGradeList(string collectionName, List<ItemWithGrade> gradeList, string ownerId)
+        {
+            var resultList = new List<string>();
+            foreach (var item in gradeList)
+            {
+                resultList.Add(GetMasterName(collectionName, item.MasterCode, ownerId) + "-" + item.Grade);
+            }
+            if (resultList.Count == 0)
+            {
+                resultList.Add(StrEmptyList);
+            }
+            return resultList;
+        }
+
 
         /// <summary>
         /// GetMasterCode
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="MasterName"></param>
-        /// <param name="CompanyId"></param>
+        /// <param name="masterName"></param>
+        /// <param name="ownerId"></param>
         /// <returns></returns>
 
-        public static string GetMasterCode<T>(string MasterName, string CompanyId) where T : MasterTable, new()
+        public static string GetMasterCode<T>(string masterName, string ownerId) where T : MasterTable, new()
         {
-            if (MasterName == null || string.IsNullOrEmpty(MasterName))
+            if (masterName == null || string.IsNullOrEmpty(masterName))
             {
                 return UnKnownCode;
             }
-            var CacheKey = CompanyId + "." + new T().GetCollectionName() + "." + MasterName;
-            var CacheValue = CacheSystem.GetMasterCodeCache(CacheKey);
-            if (!string.IsNullOrEmpty(CacheValue)) return CacheValue;
+            var cacheKey = ownerId + "." + new T().GetCollectionName() + "." + masterName;
+            var cacheValue = CacheSystem.GetMasterCodeCache(cacheKey);
+            if (!string.IsNullOrEmpty(cacheValue)) return cacheValue;
 
-            var CompanyQuery = EasyQuery.CompanyIdQuery(CompanyId);
-            var NameQuery = Query.EQ("Name", MasterName);
-            var query = Query.And(CompanyQuery, NameQuery);
-            var m = InfraStructure.DataBase.Repository.GetFirstRec<T>(new T().GetCollectionName(), query);
+            var ownerQuery = EasyQuery.OwnerIdQuery(ownerId);
+            var nameQuery = Query.EQ(nameof(Name), masterName);
+            var query = Query.And(ownerQuery, nameQuery);
+            var m = MongoDbRepository.GetFirstRec<T>(query);
             if (m == null)
             {
                 return UnKnownCode;
             }
-            CacheSystem.PutMasterCodeCache(CacheKey, m.Code);
+            CacheSystem.PutMasterCodeCache(cacheKey, m.Code);
             return m.Code;
         }
-        /// <summary>
-        /// GetMasterCodeList
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="MasterNameList"></param>
-        /// <param name="CompanyId"></param>
-        /// <returns></returns>
-        public static List<string> GetMasterCodeList<T>(List<string> MasterNameList, string CompanyId) where T : MasterTable, new()
+
+        public static string GetMasterCode(string collectionName, string masterName, string ownerId)
         {
-            var rtn = new List<string>();
-            if (MasterNameList == null) return rtn;
-            foreach (var code in MasterNameList)
+            if (masterName == null || string.IsNullOrEmpty(masterName))
             {
-                rtn.Add(GetMasterCode<T>(code, CompanyId));
+                return UnKnownCode;
             }
-            return rtn;
+            var cacheKey = ownerId + "." + collectionName + "." + masterName;
+            var cacheValue = CacheSystem.GetMasterCodeCache(cacheKey);
+            if (!string.IsNullOrEmpty(cacheValue)) return cacheValue;
+
+            var ownerIdQuery = EasyQuery.OwnerIdQuery(ownerId);
+            var nameQuery = Query.EQ(nameof(Name), masterName);
+            var query = Query.And(ownerIdQuery, nameQuery);
+            var m = MongoDbRepository.GetFirstRec(collectionName, query);
+            if (m == null)
+            {
+                return UnKnownCode;
+            }
+            CacheSystem.PutMasterCodeCache(cacheKey, m.GetValue(nameof(Code)).ToString());
+            return m.GetValue(nameof(Code)).ToString();
         }
 
         /// <summary>
         /// GetMasterCodeList
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="MasterNameList"></param>
-        /// <param name="CompanyId"></param>
+        /// <param name="masterNameList"></param>
+        /// <param name="ownerId"></param>
         /// <returns></returns>
-        public static List<ItemWithGrade> GetMasterCodeGradeList<T>(List<string> MasterNameList, string CompanyId) where T : MasterTable, new()
+        public static List<string> GetMasterCodeList<T>(List<string> masterNameList, string ownerId) where T : MasterTable, new()
+        {
+            var rtn = new List<string>();
+            if (masterNameList == null) return rtn;
+            foreach (var code in masterNameList)
+            {
+                rtn.Add(GetMasterCode<T>(code, ownerId));
+            }
+            if (rtn.Count == 0)
+            {
+                rtn.Add(StrEmptyList);
+            }
+            return rtn;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="collectionName"></param>
+        /// <param name="masterNameList"></param>
+        /// <param name="OrganizationId"></param>
+        /// <returns></returns>
+        public static List<string> GetMasterCodeList(string collectionName, List<string> masterNameList, string ownerId)
+        {
+            var rtn = new List<string>();
+            if (masterNameList == null) return rtn;
+            foreach (var code in masterNameList)
+            {
+                rtn.Add(GetMasterCode(collectionName, code, ownerId));
+            }
+            if (rtn.Count == 0)
+            {
+                rtn.Add(StrEmptyList);
+            }
+            return rtn;
+        }
+        /// <summary>
+        /// GetMasterCodeList
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="masterNameList"></param>
+        /// <param name="ownerId"></param>
+        /// <returns></returns>
+        public static List<ItemWithGrade> GetMasterCodeGradeList<T>(List<string> masterNameList, string ownerId) where T : MasterTable, new()
         {
             var rtn = new List<ItemWithGrade>();
-            if (MasterNameList == null) return rtn;
-            foreach (var gradeItem in MasterNameList)
+            if (masterNameList == null) return rtn;
+            foreach (var gradeItem in masterNameList)
             {
                 var t = gradeItem.Split("-".ToCharArray());
-                rtn.Add( new ItemWithGrade(){ 
-                    MasterCode = GetMasterCode<T>(t[0], CompanyId),
-                    Grade = t[1].GetEnum<CommonGrade>(CommonGrade.NotAvaliable)
+                rtn.Add(new ItemWithGrade
+                {
+                    MasterCode = GetMasterCode<T>(t[0], ownerId),
+                    Grade = t[1].GetEnum(CommonGrade.NotAvaliable)
                 });
             }
             return rtn;
@@ -202,59 +376,255 @@ namespace BussinessLogic.Entity
         /// <summary>
         /// 根据Rank获得Code
         /// </summary>
-        /// <param name="Rank"></param>
-        /// <param name="CompanyId"></param>
+        /// <param name="rank"></param>
+        /// <param name="ownerId"></param>
         /// <returns></returns>
-        public static string GetCodeByRank<T>(int Rank, string CompanyId) where T : MasterTable, new()
+        public static string GetCodeByRank<T>(int rank, string ownerId) where T : MasterTable, new()
         {
-            var t = EasyQuery.GetRecListByCompanyId<T>(new T().GetCollectionName(), CompanyId);
-            var r = string.Empty;
+            var t = EasyQuery.GetRecListByOwnerId<T>(new T().GetCollectionName(), ownerId);
             foreach (var status in t)
             {
-                if (status.Rank == Rank)
+                if (status.Rank == rank)
                 {
                     return status.Code;
                 }
             }
-            return r;
+            return string.Empty;
         }
+        #region Master
+
+        /// <summary>
+        /// 获得启用Master
+        /// </summary>
+        /// <param name="collectionName"></param>
+        /// <param name="ownerId"></param>
+        /// <returns></returns>
+        public static List<MasterWrapper> GetActiveMasterWrapper(string collectionName, string ownerId) 
+        {
+            var query = Query.And(EasyQuery.OwnerIdQuery(ownerId), Query.EQ(nameof(IsActive), true));
+            return MongoDbRepository.GetRecList<MasterWrapper>(collectionName, query);
+        }
+        /// <summary>
+        /// 获得启用Master
+        /// </summary>
+        /// <param name="collectionName"></param>
+        /// <returns></returns>
+        public static List<MasterWrapper> GetActiveMasterWrapper(string collectionName)
+        {
+            var query = Query.And(EasyQuery.OwnerIdQuery(DefaultOwnerId), Query.EQ(nameof(IsActive), true));
+            return MongoDbRepository.GetRecList<MasterWrapper>(collectionName, query);
+        }
+        /// <summary>
+        ///     获得启用Master
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="collectionName"></param>
+        /// <param name="ownerId"></param>
+        /// <returns></returns>
+        [Obsolete]
+        public static List<T> GetActiveMasterRec<T>(string collectionName, string ownerId) where T : MasterTable
+        {
+            var query = Query.And(EasyQuery.OwnerIdQuery(ownerId), Query.EQ(nameof(IsActive), true));
+            return MongoDbRepository.GetRecList<T>(collectionName, query);
+        }
+
+        /// <summary>
+        ///     获得启用Master
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="ownerId"></param>
+        /// <returns></returns>
+        public static List<T> GetActiveMasterRec<T>(string ownerId) where T : MasterTable, new()
+        {
+            var query = Query.And(EasyQuery.OwnerIdQuery(ownerId), Query.EQ(nameof(IsActive), true));
+            return MongoDbRepository.GetRecList<T>(new T().GetCollectionName(), query);
+        }
+        #endregion
+        /// <summary>
+        /// 插入Master
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="ownerId"></param>
+        /// <param name=nameof(MasterTable.Name)></param>
+        /// <param name="rank"></param>
+        public static void InsertMasterItem<T>(string ownerId, string name, int rank)
+            where T : MasterTable, new()
+        {
+            var master = new T
+            {
+                OwnerId = ownerId,
+                Name = name,
+                Description = name,
+                Rank = rank,
+                IsActive = true
+            };
+            master.Code = GetNewCodeByOwnerId(master);
+            MongoDbRepository.InsertRec(master);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="ownerId"></param>
+        /// <param name="name"></param>
+        /// <param name="description"></param>
+        /// <param name="rank"></param>
+        public static void InsertMasterItem<T>(string ownerId, string name, string description, int rank)
+            where T : MasterTable, new()
+        {
+            var master = new T
+            {
+                OwnerId = ownerId,
+                Name = name,
+                Description = description,
+                Rank = rank,
+                IsActive = true
+            };
+            master.Code = GetNewCodeByOwnerId(master);
+            MongoDbRepository.InsertRec(master);
+        }
+
         /// <summary>
         /// 更新缓存
         /// </summary>
         /// <param name="obj"></param>
         public static void UpdateCache(EntityBase obj)
         {
-            string typeName = obj.GetType().Name;
-            if (typeName.StartsWith(CacheSystem.MasterPrefix))
+            var typeName = obj.GetType().Name;
+            if (typeName.StartsWith(MasterPrefix))
             {
-                MasterTable masterTable = (MasterTable)obj;
-                string CacheKey = masterTable.CompanyId + "." + typeName + "." + masterTable.Code;
-                CacheSystem.PutMasterNameCache(CacheKey, masterTable.Name);
-                CacheKey = masterTable.CompanyId + "." + typeName + "." + masterTable.Name;
-                CacheSystem.PutMasterCodeCache(CacheKey, masterTable.Code);
+                var masterTable = (MasterTable)obj;
+                var cacheKey = masterTable.OwnerId + "." + typeName + "." + masterTable.Code;
+                CacheSystem.PutMasterNameCache(cacheKey, masterTable.Name);
+                cacheKey = masterTable.OwnerId + "." + typeName + "." + masterTable.Name;
+                CacheSystem.PutMasterCodeCache(cacheKey, masterTable.Code);
             }
 
             if (typeName == typeof(MasterWrapper).Name)
             {
                 //MasterWrapper
-                MasterWrapper masterWrapper = (MasterWrapper)obj;
-                string CacheKey = masterWrapper.CompanyId + "." + masterWrapper.CollectionName + "." + masterWrapper.Code;
-                CacheSystem.PutMasterNameCache(CacheKey, masterWrapper.Name);
-                CacheKey = masterWrapper.CompanyId + "." + masterWrapper.CollectionName + "." + masterWrapper.Name;
-                CacheSystem.PutMasterCodeCache(CacheKey, masterWrapper.Code);
+                var masterWrapper = (MasterWrapper)obj;
+                var cacheKey = masterWrapper.OwnerId + "." + masterWrapper.CollectionName + "." + masterWrapper.Code;
+                CacheSystem.PutMasterNameCache(cacheKey, masterWrapper.Name);
+                cacheKey = masterWrapper.OwnerId + "." + masterWrapper.CollectionName + "." + masterWrapper.Name;
+                CacheSystem.PutMasterCodeCache(cacheKey, masterWrapper.Code);
             }
         }
         #endregion
 
-        #region Import & Export
-
-        public static MemoryStream ExportToExcel(List<string> MasterNameList, string CompanyId)
+        #region WithoutOwner
+        /// <summary>
+        /// 获得启用Master
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static List<T> GetActiveMasterRec<T>() where T : MasterTable, new()
         {
-            HSSFWorkbook workbook = new HSSFWorkbook();
-            MemoryStream ms = new MemoryStream();
-            foreach (var mastername in MasterNameList)
+            return GetActiveMasterRec<T>(DefaultOwnerId);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static List<MasterWrapper> GetActiveMasterWrapperByCache(string masterName)
+        {
+            return CacheSystem.GetMasterTableCache(masterName);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="name"></param>
+        /// <param name="description"></param>
+        /// <param name="rank"></param>
+        /// <returns></returns>
+        public static MasterWrapper GetMasterWrapper(int code, string name, string description, int rank)
+        {
+            var master = new MasterWrapper
             {
-                ExportToExcelSheet(workbook.CreateSheet(mastername), EasyQuery.GetRecListByCompanyId<MasterWrapper>(mastername, CompanyId)); ;
+                Code = code.ToString(CodeFormat),
+                OwnerId = DefaultOwnerId,
+                Name = description,
+                Description = name,
+                Rank = rank,
+                IsActive = true
+            };
+            return master;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="name"></param>
+        /// <param name="description"></param>
+        /// <param name="catalogCode"></param>
+        /// <param name="rank"></param>
+        /// <returns></returns>
+        public static MasterWrapper GetCatalogMasterWrapper(int code, string name, string description, int catalogCode, int rank)
+        {
+            var master = new MasterWrapper
+            {
+                Code = code.ToString(CodeFormat),
+                CatalogCode = catalogCode.ToString(CodeFormat),
+                OwnerId = DefaultOwnerId,
+                Name = description,
+                Description = name,
+                Rank = rank,
+                IsActive = true
+            };
+            return master;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="masterCode"></param>
+        /// <returns></returns>
+        public static string GetMasterName<T>(string masterCode) where T : MasterTable, new()
+        {
+            return GetMasterName<T>(masterCode, DefaultOwnerId);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="catalogCode"></param>
+        /// <param name="name"></param>
+        /// <param name="rank"></param>
+        public static void InsertCatalogMasterItem<T>(string catalogCode, string name, int rank)
+            where T : CatalogMasterTable, new()
+        {
+            var master = new T
+            {
+                OwnerId = DefaultOwnerId,
+                CatalogCode = catalogCode,
+                Name = name,
+                Description = name,
+                Rank = rank,
+                IsActive = true
+            };
+            master.Code = GetNewCodeByOwnerId(master);
+            MongoDbRepository.InsertRec(master);
+        }
+        #endregion
+
+        #region Import & Export
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="masterNameList"></param>
+        /// <param name="ownerId"></param>
+        /// <returns></returns>
+        public static MemoryStream ExportToExcel(List<string> masterNameList, string ownerId)
+        {
+            var workbook = new HSSFWorkbook();
+            var ms = new MemoryStream();
+            foreach (var mastername in masterNameList)
+            {
+                ExportToExcelSheet(workbook.CreateSheet(mastername), EasyQuery.GetRecListByOwnerId<MasterWrapper>(mastername, ownerId)); ;
             }
             workbook.Write(ms);
             workbook = null;
@@ -264,31 +634,31 @@ namespace BussinessLogic.Entity
         /// <summary>
         /// 导出到Excel
         /// </summary>
-        /// <param name="MasterList"></param>
+        /// <param name="masterList"></param>
         /// <returns></returns>
-        private static void ExportToExcelSheet<T>(ISheet sheet, List<T> MasterList) where T : MasterTable
+        private static void ExportToExcelSheet<T>(ISheet sheet, List<T> masterList) where T : MasterTable
         {
-            int colcnt = 0;
-            int rowcnt = 0;
+            var colcnt = 0;
+            var rowcnt = 0;
             // Header
             var header = sheet.CreateRow(rowcnt); rowcnt++;
             colcnt = 0;
 
             var typeObj = typeof(T);
-            Func<string, string> GetName = (x) =>
+            Func<string, string> getName = x =>
             {
                 return EasyQuery.GetDisplayName(x, typeObj);
             };
 
-            header.CreateCell(colcnt).SetCellValue("Code"); colcnt++;
-            header.CreateCell(colcnt).SetCellValue(GetName("Name")); colcnt++;
-            header.CreateCell(colcnt).SetCellValue(GetName("Description")); colcnt++;
-            header.CreateCell(colcnt).SetCellValue(GetName("Rank")); colcnt++;
-            header.CreateCell(colcnt).SetCellValue(GetName("IsActive")); colcnt++;
+            header.CreateCell(colcnt).SetCellValue(nameof(Code)); colcnt++;
+            header.CreateCell(colcnt).SetCellValue(getName(nameof(Name))); colcnt++;
+            header.CreateCell(colcnt).SetCellValue(getName("Description")); colcnt++;
+            header.CreateCell(colcnt).SetCellValue(getName("Rank")); colcnt++;
+            header.CreateCell(colcnt).SetCellValue(getName("IsActive")); colcnt++;
 
-            for (int i = 0; i < MasterList.Count; i++)
+            for (var i = 0; i < masterList.Count; i++)
             {
-                T t = MasterList[i];
+                var t = masterList[i];
                 var row = sheet.CreateRow(rowcnt); rowcnt++;
                 colcnt = 0;
                 row.CreateCell(colcnt).SetCellValue(t.Code); colcnt++;
@@ -304,23 +674,23 @@ namespace BussinessLogic.Entity
         /// 从Excel导入
         /// </summary>
         /// <param name="file"></param>
-        /// <param name="CompanyId"></param>
+        /// <param name="ownerId"></param>
         /// <returns></returns>
-        public static string ImportFromExcelSheet(HttpPostedFileBase file, string CollectionName, string CompanyId)
+        public static string ImportFromExcelSheet(HttpPostedFileBase file, string collectionName, string ownerId)
         {
-            string strResult = string.Empty;
-            int colcnt = 0;
+            var strResult = string.Empty;
+            var colcnt = 0;
             try
             {
                 var excelFileStream = file.InputStream;
                 IWorkbook workbook = new HSSFWorkbook(excelFileStream);
-                ISheet sheet = workbook.GetSheetAt(0);
-                int rowCount = sheet.LastRowNum;
-                List<MasterWrapper> MasterList = new List<MasterWrapper>();
-                Boolean ErrorFlg = false;
-                for (int i = 1; i <= rowCount; i++)
+                var sheet = workbook.GetSheetAt(0);
+                var rowCount = sheet.LastRowNum;
+                var masterList = new List<MasterWrapper>();
+                var errorFlg = false;
+                for (var i = 1; i <= rowCount; i++)
                 {
-                    IRow row = sheet.GetRow(i);
+                    var row = sheet.GetRow(i);
                     if (string.IsNullOrEmpty(row.GetCell(1).ToString())) break;
                     colcnt = 0;
                     var code = row.GetCell(colcnt, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(); colcnt++;
@@ -331,49 +701,46 @@ namespace BussinessLogic.Entity
                     }
                     else
                     {
-                        t = EasyQuery.GetRecByCodeAtCompany<MasterWrapper>(CollectionName, CompanyId, code);
+                        t = EasyQuery.GetRecByCodeAtOwner<MasterWrapper>(collectionName, ownerId, code);
                         if (t == null)
                         {
-                            strResult += "记录号码为:[" + code + "]的记录没有找到！" + System.Environment.NewLine;
-                            ErrorFlg = true;
+                            strResult += "记录号码为:[" + code + "]的记录没有找到！" + Environment.NewLine;
+                            errorFlg = true;
                             continue;
                         }
-                        else
-                        {
-                            t.Code = code;
-                        }
+                        t.Code = code;
                     }
-                    t.CompanyId = CompanyId;
+                    t.OwnerId = ownerId;
                     t.Name = row.GetCell(colcnt, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(); colcnt++;
                     t.Description = row.GetCell(colcnt, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(); colcnt++;
-                    t.Rank = NPOIExtend.GetInt(row.GetCell(colcnt, MissingCellPolicy.CREATE_NULL_AS_BLANK), 0); colcnt++;
+                    t.Rank = row.GetCell(colcnt, MissingCellPolicy.CREATE_NULL_AS_BLANK).GetInt(0); colcnt++;
                     t.IsActive = row.GetCell(colcnt, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString().Equals("是"); colcnt++;
-                    MasterList.Add(t);
+                    masterList.Add(t);
                 }
-                if (!ErrorFlg)
+                if (!errorFlg)
                 {
-                    int InsertCnt = 0;
-                    int UpDateCnt = 0;
-                    for (int i = 0; i < MasterList.Count; i++)
+                    var insertCnt = 0;
+                    var upDateCnt = 0;
+                    for (var i = 0; i < masterList.Count; i++)
                     {
                         //根据有无Code进行不同操作
-                        if (string.IsNullOrEmpty(MasterList[i].Code))
+                        if (string.IsNullOrEmpty(masterList[i].Code))
                         {
                             //新增模式
-                            MasterList[i].Code = CompanyTable.GetCode(CollectionName, CompanyId);
-                            InfraStructure.DataBase.Repository.InsertRec(MasterList[i], CollectionName, "SYSTEM_IMPORT");
-                            InsertCnt++;
+                            masterList[i].Code = GetNewCodeByOwnerId(collectionName, ownerId);
+                            MongoDbRepository.InsertRec(masterList[i], collectionName, "SYSTEM_IMPORT");
+                            insertCnt++;
                         }
                         else
                         {
                             //修改模式
-                            InfraStructure.DataBase.Repository.UpdateRec(MasterList[i], CollectionName, "SYSTEM_IMPORT");
-                            UpDateCnt++;
+                            MongoDbRepository.UpdateRec(masterList[i], collectionName, "SYSTEM_IMPORT");
+                            upDateCnt++;
                         }
                     }
-                    strResult = "全体件数:" + MasterList.Count.ToString() + System.Environment.NewLine;
-                    strResult += "追加件数:" + InsertCnt + System.Environment.NewLine;
-                    strResult += "修改件数:" + UpDateCnt + System.Environment.NewLine;
+                    strResult = "全体件数:" + masterList.Count + Environment.NewLine;
+                    strResult += "追加件数:" + insertCnt + Environment.NewLine;
+                    strResult += "修改件数:" + upDateCnt + Environment.NewLine;
                 }
             }
             catch (Exception ex)
@@ -386,85 +753,5 @@ namespace BussinessLogic.Entity
 
     }
 
-    /// <summary>
-    /// StatusMasterTable
-    /// </summary>
-    public abstract class StatusMasterTable : MasterTable
-    {
-        /// <summary>
-        ///     表示顺序
-        /// </summary>
-        [DisplayName("表示顺序")]
-        [Range(1, 99, ErrorMessage = "请输入1-99的数字")]
-        public int SortRank { get; set; }
 
-        /// <summary>
-        ///     背景颜色
-        /// </summary>
-        [DisplayName("背景颜色")]
-        public WarningType BGColor { get; set; }
-
-        /// <summary>
-        /// 获得Code Vs SortRank 字典
-        /// </summary>
-        /// <param name="CompanyId"></param>
-        /// <returns></returns>
-        public static Dictionary<string, int> GetCodeSortRankDic<T>(string CompanyId) where T : StatusMasterTable, new()
-        {
-            var RankDic = new Dictionary<string, int>();
-            var t = EasyQuery.GetRecListByCompanyId<T>(new T().GetCollectionName(), CompanyId);
-            foreach (var item in t)
-            {
-                RankDic.Add(item.Code, item.SortRank);
-            }
-            return RankDic;
-        }
-    }
-
-    /// <summary>
-    ///     MasterTable的包装
-    /// </summary>
-    public class MasterWrapper : MasterTable
-    {
-        /// <summary>
-        /// 这个字段不是Static的，所以必须要忽略，不然的话，会保存到数据库中
-        /// 在反序列化的时候会报错，因为真实的Master没有这个非静态字段
-        /// </summary>
-        [BsonIgnore]
-        public string CollectionName = string.Empty;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public override string GetCollectionName()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public override string GetPrefix()
-        {
-            throw new NotImplementedException();
-        }
-
-        public static List<MasterWrapper> GenerateFromEnum<T>()
-        {
-            List<MasterWrapper> t = new List<MasterWrapper>();
-            foreach (var ItemName in Enum.GetNames(typeof(T)))
-            {
-                t.Add(new MasterWrapper()
-                {
-                    Name = ItemName,
-                    Description = ItemName,
-                    Rank = Enum.Parse(typeof(T), ItemName).GetHashCode(),
-                    Code = Enum.Parse(typeof(T), ItemName).GetHashCode().ToString()
-                });
-            }
-            return t;
-        }
-    }
 }
