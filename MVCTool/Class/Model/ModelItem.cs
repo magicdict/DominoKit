@@ -61,7 +61,7 @@ namespace DevKit.MVCTool
         /// 从Excel读取Model
         /// </summary>
         /// <returns></returns>
-        public static List<ModelInfo> ReadModelFromExcel(bool SingleFileMode,string ExcelFilename = "")
+        public static List<ModelInfo> ReadModelFromExcel(bool SingleFileMode, string ExcelFilename = "")
         {
             if (string.IsNullOrEmpty(ExcelFilename))
             {
@@ -79,14 +79,14 @@ namespace DevKit.MVCTool
                 for (int i = 0; i < workbook.Sheets.Count; i++)
                 {
                     ModelInfo model = ModelUtility.ReadModelFromExcelSheet(workbook.Sheets(i + 1));
-                    models.Add(model);
-                    //TODO:MasterTable Check
+                    if (model !=null) models.Add(model);
                 }
                 workbook.Close();
                 excelObj.Quit();
                 excelObj = null;
             }
-            else {
+            else
+            {
                 ModelInfo model = ModelUtility.ReadModelFromExcelSheet(workbook.Sheets(1));
                 workbook.Close();
                 excelObj.Quit();
@@ -116,6 +116,7 @@ namespace DevKit.MVCTool
         /// <returns></returns>
         public static ModelInfo ReadModelFromExcelSheet(dynamic ExcelSheet)
         {
+            if (ExcelSheet.Cells(1, 1).Text != "M") return null;
             ModelInfo model = new ModelInfo();
             model.ModelName = ExcelSheet.Cells(2, 3).Text;
             model.NameSpace = ExcelSheet.Cells(3, 3).Text;

@@ -1,5 +1,6 @@
 ﻿using DevKit.Common;
 using DevKit.MVCTool;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -108,6 +109,7 @@ namespace DevKit
                 }
                 if (!singleFileMode) txtViewSourcePath.Text = CurrentProject.ViewerPath + "\\" + f.Name.Replace(".xlsx", extendsion);
             }
+            //MVC5
             if (radCSharpMVC5.Checked)
             {
                 if (!singleFileMode)
@@ -129,8 +131,25 @@ namespace DevKit
                         var sourcefilename = CurrentProject.EntityPath.SourcePath + "\\" + model.ModelName + "_Model.cs";
                         ModelGenerator.GenerateCSharp(sourcefilename, model, chkWithAttr.Checked);
                     }
+                    if (chkSingleFileModeWithEnum.Checked)
+                    {
+                        //单文档模式带枚举
+                        dynamic excelObj = Interaction.CreateObject("Excel.Application");
+                        excelObj.Visible = true;
+                        dynamic workbook;
+                        workbook = excelObj.Workbooks.Open(txtDocumentPath.Text);
+                        for (int i = 0; i < workbook.Sheets.Count; i++) {
+                            dynamic ExcelSheet = workbook.Sheets(i + 1);
+                            var SourceCodefilename = CurrentProject.EntityPath.SourcePath + "\\" + workbook.Sheets(i+1).name + ".cs"; ;
+                            EnumGenerator.GenerateEnum(ExcelSheet, SourceCodefilename);
+                        }
+                        workbook.Close();
+                        excelObj.Quit();
+                        excelObj = null;
+                    }
                 }
             }
+            //Spring
             if (radJavaSpring.Checked)
             {
                 if (!singleFileMode)

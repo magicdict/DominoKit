@@ -60,6 +60,7 @@
             this.txtSchema = new System.Windows.Forms.TextBox();
             this.chkSingleFileMode = new System.Windows.Forms.CheckBox();
             this.chkWithAttr = new System.Windows.Forms.CheckBox();
+            this.chkSingleFileModeWithEnum = new System.Windows.Forms.CheckBox();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -380,12 +381,24 @@
             // chkWithAttr
             // 
             this.chkWithAttr.AutoSize = true;
-            this.chkWithAttr.Location = new System.Drawing.Point(286, 177);
+            this.chkWithAttr.Location = new System.Drawing.Point(436, 176);
             this.chkWithAttr.Name = "chkWithAttr";
             this.chkWithAttr.Size = new System.Drawing.Size(72, 16);
             this.chkWithAttr.TabIndex = 41;
             this.chkWithAttr.Text = "附带特性";
             this.chkWithAttr.UseVisualStyleBackColor = true;
+            // 
+            // chkSingleFileModeWithEnum
+            // 
+            this.chkSingleFileModeWithEnum.AutoSize = true;
+            this.chkSingleFileModeWithEnum.Checked = true;
+            this.chkSingleFileModeWithEnum.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkSingleFileModeWithEnum.Location = new System.Drawing.Point(287, 176);
+            this.chkSingleFileModeWithEnum.Name = "chkSingleFileModeWithEnum";
+            this.chkSingleFileModeWithEnum.Size = new System.Drawing.Size(108, 16);
+            this.chkSingleFileModeWithEnum.TabIndex = 42;
+            this.chkSingleFileModeWithEnum.Text = "单文件包含枚举";
+            this.chkSingleFileModeWithEnum.UseVisualStyleBackColor = true;
             // 
             // ModelCodeGenerator
             // 
@@ -393,6 +406,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(655, 438);
+            this.Controls.Add(this.chkSingleFileModeWithEnum);
             this.Controls.Add(this.chkWithAttr);
             this.Controls.Add(this.chkSingleFileMode);
             this.Controls.Add(this.txtSchema);
@@ -463,5 +477,6 @@
         private System.Windows.Forms.TextBox txtSchema;
         private System.Windows.Forms.CheckBox chkSingleFileMode;
         private System.Windows.Forms.CheckBox chkWithAttr;
+        private System.Windows.Forms.CheckBox chkSingleFileModeWithEnum;
     }
 }

@@ -76,8 +76,7 @@ namespace DevKit.MVCTool
         private const string UsingCollections = "using System.Collections.Generic;";
         private const string UsingInfraDataBase = "using InfraStructure.DataBase;";
         private const string UsingFilterSet = "using InfraStructure.FilterSet;";
-        private const string UsingInfra = "using InfraStructure.Table;";
-
+        private const string UsingInfraTable = "using InfraStructure.Table;";
         #endregion
 
         /// <summary>
@@ -403,6 +402,62 @@ namespace DevKit.MVCTool
             //    NeedMongo = true;
             //}
             code.AppendLine(new string(space, indent) + "public static " + (!isOrgClass ? "new " : "") + "string MvcTitle = \"" + model.Description + "\";");
+            code.AppendLine(string.Empty);
+
+            //基本数据操作
+            code.AppendLine(new string(space, indent) + "/// <summary>");
+            code.AppendLine(new string(space, indent) + "/// 按照序列号查找" + model.Description);
+            code.AppendLine(new string(space, indent) + "/// </summary>");
+            code.AppendLine(new string(space, indent) + "/// <param name=\"Sn\"></param>");
+            code.AppendLine(new string(space, indent) + "/// <returns>" + model.Description + "</returns>");
+            code.AppendLine(new string(space, indent) + "public static @ Get@BySn(string Sn)".Replace("@",model.ModelName));
+            code.AppendLine(new string(space, indent) + "{");
+            code.AppendLine(new string(space, indent) + "    return MongoDbRepository.GetRecBySN<@>(Sn);".Replace("@", model.ModelName));
+            code.AppendLine(new string(space, indent) + "}");
+            code.AppendLine(string.Empty);
+
+            code.AppendLine(new string(space, indent) + "/// <summary>");
+            code.AppendLine(new string(space, indent) + "/// 插入" + model.Description);
+            code.AppendLine(new string(space, indent) + "/// </summary>");
+            code.AppendLine(new string(space, indent) + "/// <param name=\"New@\"></param>".Replace("@", model.ModelName.ToLower()));
+            if (model.SuperClass == "OwnerTable")
+            {
+                code.AppendLine(new string(space, indent) + "/// <param name=\"OwnerId\"></param>".Replace("@", model.ModelName.ToLower()));
+            }
+            code.AppendLine(new string(space, indent) + "/// <returns>序列号</returns>");
+            if (model.SuperClass == "OwnerTable")
+            {
+                code.AppendLine(new string(space, indent) + "public static string Insert@(@ New@,string OwnerId)".Replace("@", model.ModelName));
+                code.AppendLine(new string(space, indent) + "{");
+                code.AppendLine(new string(space, indent) + "    return OwnerTableOperator.InsertRec(New@, OwnerId);".Replace("@", model.ModelName));
+                code.AppendLine(new string(space, indent) + "}");
+            }
+            else
+            {
+                code.AppendLine(new string(space, indent) + "public static string Insert@(@ New@)".Replace("@", model.ModelName));
+                code.AppendLine(new string(space, indent) + "{");
+                code.AppendLine(new string(space, indent) + "    return MongoDbRepository.InsertRec(New@);".Replace("@", model.ModelName));
+                code.AppendLine(new string(space, indent) + "}");
+            }
+            code.AppendLine(string.Empty);
+
+            code.AppendLine(new string(space, indent) + "/// <summary>");
+            code.AppendLine(new string(space, indent) + "/// 删除" + model.Description);
+            code.AppendLine(new string(space, indent) + "/// </summary>");
+            code.AppendLine(new string(space, indent) + "/// <param name=\"Drop@\"></param>".Replace("@", model.ModelName));
+            code.AppendLine(new string(space, indent) + "public static void Drop@(Artical Drop@)".Replace("@", model.ModelName));
+            code.AppendLine(new string(space, indent) + "{");
+            code.AppendLine(new string(space, indent) + "    MongoDbRepository.DeleteRec(Drop@);".Replace("@", model.ModelName));
+            code.AppendLine(new string(space, indent) + "}");
+            code.AppendLine(string.Empty);
+            code.AppendLine(new string(space, indent) + "/// <summary>");
+            code.AppendLine(new string(space, indent) + "/// 修改" + model.Description);
+            code.AppendLine(new string(space, indent) + "/// </summary>");
+            code.AppendLine(new string(space, indent) + "/// <param name=\"Old@\"></param>".Replace("@", model.ModelName));
+            code.AppendLine(new string(space, indent) + "public static void Update@(@ Old@)".Replace("@", model.ModelName));
+            code.AppendLine(new string(space, indent) + "{");
+            code.AppendLine(new string(space, indent) + "    MongoDbRepository.UpdateRec(Old@);".Replace("@", model.ModelName));
+            code.AppendLine(new string(space, indent) + "}");
 
             indent -= 4;
             code.AppendLine(string.Empty);
@@ -412,8 +467,12 @@ namespace DevKit.MVCTool
             indent -= 4;
             code.AppendLine("}");
             //Using List
-            codeWriter.WriteLine(UsingInfra);
-            codeWriter.WriteLine(UsingFilterSet);
+            codeWriter.WriteLine(UsingInfraDataBase);
+            if (!SuperClass.Equals("EntityBase"))
+            {
+                codeWriter.WriteLine(UsingInfraTable);
+            }
+            if (WithAttr) codeWriter.WriteLine(UsingFilterSet);
             if (NeedMongo) codeWriter.WriteLine(UsingMongo);
             codeWriter.WriteLine(UsingSystem);
             if (NeedList) codeWriter.WriteLine(UsingCollections);
