@@ -123,6 +123,8 @@ namespace DevKit
             if (string.IsNullOrEmpty(projectfile)) return;
             ProjectInfo proj = Common.Utility.LoadObjFromXml<ProjectInfo>(projectfile);
             RefreshProjectStatus(proj);
+            ModelCodeGenerator.CurrentProject = SystemMonitor.CurrentProject;
+            Common.Utility.SetUp(new ModelCodeGenerator());
         }
         /// <summary>
         /// 关闭
@@ -350,7 +352,7 @@ namespace DevKit
         /// <param name="e"></param>
         private void 关于ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string strAbout = string.Format("MVC开发辅助工具{0}版本号：{1}{2}版权所有：上海中和软件公司{2}研发部门：信息技术推进室 2014 - 2015",
+            string strAbout = string.Format("MVC开发辅助工具{0}版本号：{1}{2}版权所有：上海中和软件公司{2}研发部门：信息技术推进室 2014 - 2016",
                                   Environment.NewLine, Application.ProductVersion, Environment.NewLine);
             MessageBox.Show(strAbout, "关于");
         }

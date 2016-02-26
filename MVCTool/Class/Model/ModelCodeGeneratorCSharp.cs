@@ -134,7 +134,7 @@ namespace DevKit.MVCTool
             indent += 4;
             code.AppendLine(new string(space, indent) + "#region \"model\"");
             code.AppendLine(string.Empty);
-            indent += 4;
+            //indent += 4;
             foreach (var item in ModelItems)
             {
                 //# Skip
@@ -427,7 +427,7 @@ namespace DevKit.MVCTool
             code.AppendLine(new string(space, indent) + "/// <returns>序列号</returns>");
             if (model.SuperClass == "OwnerTable")
             {
-                code.AppendLine(new string(space, indent) + "public static string Insert@(@ New@,string OwnerId)".Replace("@", model.ModelName));
+                code.AppendLine(new string(space, indent) + "public static string Insert@(@ New@, string OwnerId)".Replace("@", model.ModelName));
                 code.AppendLine(new string(space, indent) + "{");
                 code.AppendLine(new string(space, indent) + "    return OwnerTableOperator.InsertRec(New@, OwnerId);".Replace("@", model.ModelName));
                 code.AppendLine(new string(space, indent) + "}");
@@ -445,7 +445,7 @@ namespace DevKit.MVCTool
             code.AppendLine(new string(space, indent) + "/// 删除" + model.Description);
             code.AppendLine(new string(space, indent) + "/// </summary>");
             code.AppendLine(new string(space, indent) + "/// <param name=\"Drop@\"></param>".Replace("@", model.ModelName));
-            code.AppendLine(new string(space, indent) + "public static void Drop@(Artical Drop@)".Replace("@", model.ModelName));
+            code.AppendLine(new string(space, indent) + "public static void Drop@(@ Drop@)".Replace("@", model.ModelName));
             code.AppendLine(new string(space, indent) + "{");
             code.AppendLine(new string(space, indent) + "    MongoDbRepository.DeleteRec(Drop@);".Replace("@", model.ModelName));
             code.AppendLine(new string(space, indent) + "}");
@@ -459,7 +459,7 @@ namespace DevKit.MVCTool
             code.AppendLine(new string(space, indent) + "    MongoDbRepository.UpdateRec(Old@);".Replace("@", model.ModelName));
             code.AppendLine(new string(space, indent) + "}");
 
-            indent -= 4;
+            //indent -= 4;
             code.AppendLine(string.Empty);
             code.AppendLine(new string(space, indent) + "#endregion");
             indent -= 4;
